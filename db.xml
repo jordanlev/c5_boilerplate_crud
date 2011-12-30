@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+	<!--
+	Name the tables very explicitly, all with the same prefix (package name as prefix makes sense),
+	otherwise it is confusing when someone looks at the database and expects to only see C5 tables.
+	-->
+	<table name="BoilerplateCrudCategories">
+		<field name="id" type="I"><KEY/><AUTOINCREMENT/><UNSIGNED/></field>
+		<field name="name" type="C" size="255"><NOTNULL/></field>
+		<field name="description" type="X"></field>
+	</table>
+	<table name="BoilerplateCrudWidgets">
+		<field name="id" type="I"><KEY/><AUTOINCREMENT/><UNSIGNED/></field>
+		<field name="categoryId" type="I"><NOTNULL/><UNSIGNED/></field>
+		<field name="name" type="C" size="255"><NOTNULL/></field>
+		<field name="isSomething" type="L"></field>
+		<field name="rating" type="F"></field>
+	</table>
+	<!-- SEE http://phplens.com/lens/adodb/docs-datadict.htm FOR XML SCHEMA DOCS -->
+</schema>
