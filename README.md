@@ -17,9 +17,9 @@ I started off following the general pattern outlined in this most excellent how-
 ### Controller
 In the controller (`controllers/dashboard/boilerplate_crud.php`), I tried to use a very streamlined and DRY approach. Most notably, I prefer to have a separate view file for each action, even when the action methods are in a single controller file (as opposed to having a single view file for all of a controller's actions, as demonstrated in the afore-linked "[How-To](http://www.concrete5.org/documentation/how-tos/developers/build-a-single-page-powered-editing-interface-for-concrete5/)").
 
-The general workflow is: there are 4 pages for each data entity, corresponding to the 4 CRUD operations: list all records, add a new record, edit an existing record, delete a record. Each of these pages has a separate view file, but all action methods are in a single controller file (I actually combine the actions of two entities in the controller, but splitting it up into two controllers wouldn't be a terrible idea). The add and edit actions are combined into one method because they are basically the same thing (one just starts out with pre-populated data). The add/edit workflow can be distilled down to this:
+The general workflow is: there are 4 pages for each data entity, corresponding to the 4 CRUD operations: list all records, add a new record, edit an existing record, delete a record. Each of these pages has a separate view file, but all action methods are in a single controller file (I actually combine the actions of two entities in the controller, but splitting it up into two controllers wouldn't be a terrible idea). The add and edit actions are combined into one method because they are basically the same thing (one just starts out with pre-populated data). The add/edit workflow can be distilled down to:
 	
-	//INSERT/UPDATE a record (empty/missing id means INSERT)
+	//INSERT or UPDATE a record (empty/missing id means INSERT)
 	public function something_edit($id = null) {
 		//Check for form submissions
 		if ($this->post()) {
@@ -28,21 +28,20 @@ The general workflow is: there are 4 pages for each data entity, corresponding t
 			if ($error->has()) {
 				//Redisplay form with error messages at top (C5 will automatically repopulate user's POST'ed data via the form helpers in the view)
 				$this->set('error', $error);
-			} else { //Validation succeeded:
-				//Save and redirect (displaying success message after redirect)
+			} else {
+				//Validation success: save, redirect, and display message
 				$this->data->save($this->post());
 				$this->flash('Something Saved!');
 				$this->redirect('something_list');
 			}
-		} else { //Initial form display
-			//Retrieve database record and send all fields to the view
+		} else {
+			//Pre-populate form fields: retrieve database record and send all its fields to the view
 			$this->setArray($this->data->findById($id));
 		}
 		
-		//Display the view (overridden render method assumes a view file in package single_pages directory)
+		//Display the view single_pages directory)
 		$this->set('id', $id); //so view knows if it's an insert or update (and can pass it back to us in the submit)
-		$this->render('something/edit');
-		
+		$this->render('something/edit'); //overridden render method assumes a view file in package
 	}
 
 ### Database CRUD
