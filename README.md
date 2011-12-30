@@ -32,16 +32,17 @@ The general workflow is: there are 4 pages for each data entity, corresponding t
 				//Validation success: save, redirect, and display message
 				$this->data->save($this->post());
 				$this->flash('Something Saved!');
-				$this->redirect('something_list');
+				$this->redirect('something_list'); //assumes action in same controller
 			}
 		} else {
 			//Pre-populate form fields: retrieve database record and send all its fields to the view
-			$this->setArray($this->data->findById($id));
+			$something = $this->data->findById($id);
+			$this->setArray($something);
 		}
 		
-		//Display the view single_pages directory)
+		//Display the view
 		$this->set('id', $id); //so view knows if it's an insert or update (and can pass it back to us in the submit)
-		$this->render('something/edit'); //overridden render method assumes a view file in package
+		$this->render('something/edit'); //assumes view file in package's single_pages directory
 	}
 
 ### Database CRUD
