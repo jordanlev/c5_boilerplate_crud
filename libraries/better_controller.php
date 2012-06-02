@@ -29,7 +29,7 @@ class BetterController extends Controller {
 	
 	//Render a view file with the given name that exists in the single_pages
 	// directory that corresponds with this controller's location / class name.
-	//NOTE: THIS FUNCTIONALITY REQUIRES THAT A CORE HACK BE APPLIED TO concrete/libraries/view.php!!!
+	//NOTE: Requires Concrete 5.5+ (or for 5.4 compatibility you could hack the core file concrete/libraries/view.php, as per https://github.com/concrete5/concrete5/pull/147/files)
 	public function render($view) {
 		$path = $this->path($view);
 		parent::render($path);
