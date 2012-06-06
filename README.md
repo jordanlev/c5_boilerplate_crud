@@ -10,7 +10,7 @@ My aims were to have both a skeleton file/directory structure and to simplify an
 I started off following the general pattern outlined in this most excellent how-to:
 [How-To: Build a Single-Page Powered Editing Interface for concrete5 Pages](http://www.concrete5.org/documentation/how-tos/developers/build-a-single-page-powered-editing-interface-for-concrete5/), then added a few libraries to smooth out the rough edges -- routing/rendering/redirecting, basic database CRUD operations, and form/data validation:
 
- * `libraries/better_controller.php`: overrides render(), redirect(), and url() methods of the base Controller class to make them easier to call (fewer and shorter arguments), and provides simple "flash message" functionality for displaying a message after a redirect.
+ * `libraries/crud_controller.php`: overrides render(), redirect(), and url() methods of the base Controller class to make them easier to call (fewer and shorter arguments), and provides simple "flash message" functionality for displaying a message after a redirect.
  * `libraries/basic_crud_model.php`: a super basic data model class you can build your own models on top of -- provides automatic INSERT/UPDATE, DELETE, and 'SELECT ONE' functionality, and that's it! All it does is allow you easily perform single record inserts/updates/deletes/selects -- because I've found that everything else always requires custom queries anyway, so why bother abstracting it (there's nothing wrong with SQL, as long as you can keep it DRY).
  * `libraries/kohana_validation.php`: provides a *much* more robust set of validation rules than C5's built-in validation helpers. (Ported from the awesome Kohana 2.3.4 framework, hence the name.)
 

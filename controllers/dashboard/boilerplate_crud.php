@@ -1,7 +1,7 @@
 <?php defined('C5_EXECUTE') or die(_("Access Denied."));
 
-Loader::library('better_controller', 'boilerplate_crud'); //Superset of Concrete5's Controller class -- provides simpler interface and some extra useful features.
-class DashboardBoilerplateCrudController extends BetterController {
+Loader::library('crud_controller', 'boilerplate_crud'); //Superset of Concrete5's Controller class -- provides simpler interface and some extra useful features.
+class DashboardBoilerplateCrudController extends CrudController {
 
 	public $helpers = array('form'); //Makes form helper automatically available to all views
 	
