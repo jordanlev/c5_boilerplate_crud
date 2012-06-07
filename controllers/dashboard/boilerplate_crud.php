@@ -54,6 +54,10 @@ class DashboardBoilerplateCrudController extends CrudController {
 	}
 	
 	public function category_edit($id = null) {
+		
+		# Prevent Cross site scripting by forcing it to an int
+		# If you need a string then be sure to clean it in the view as Concrete5 does not clean hidden fields by default at this time
+		$id = (int)$id
 		if ($this->post()) {
 			$error = $this->category->validate($this->post());
 			if ($error->has()) {
@@ -78,6 +82,10 @@ class DashboardBoilerplateCrudController extends CrudController {
 	}
 	
 	public function category_delete($id) {
+		# Prevent Cross site scripting by forcing it to an int
+		# If you need a string then be sure to clean it in the view as Concrete5 does not clean hidden fields by default at this time
+		$id = (int)$id
+
 		if ($this->post() && !empty($id)) {
 			$this->category->delete($id);
 			$this->flash('Category Deleted.');
@@ -95,6 +103,11 @@ class DashboardBoilerplateCrudController extends CrudController {
 	 * "Widget" (child record) actions
 	 */
 	public function widget_list($categoryId) {
+		
+		# Prevent Cross site scripting by forcing it to an int
+		# If you need a string then be sure to clean it in the view as Concrete5 does not clean hidden fields by default at this time
+		$categoryId = (int)$categoryId
+
 		$category = $this->category->findById($categoryId);
 		$widgets = $this->widget->getCategoryWidgets($categoryId);
 		$this->set('category', $category);
@@ -108,6 +121,15 @@ class DashboardBoilerplateCrudController extends CrudController {
 	}
 	
 	public function widget_edit($id = null, $categoryId = null) {
+		
+		# Prevent Cross site scripting by forcing it to an int
+		# If you need a string then be sure to clean it in the view as Concrete5 does not clean hidden fields by default at this time
+		$categoryId = (int)$categoryId
+		# Prevent Cross site scripting by forcing it to an int
+		# If you need a string then be sure to clean it in the view as Concrete5 does not clean hidden fields by default at this time
+		$id = (int)$id
+		
+
 		if (empty($id) && empty($categoryId)) {
 			die('ERROR: No widget or category ID provided!');
 		}
@@ -140,6 +162,10 @@ class DashboardBoilerplateCrudController extends CrudController {
 	}
 	
 	public function widget_delete($id) {
+		
+		# Prevent Cross site scripting by forcing it to an int
+		# If you need a string then be sure to clean it in the view as Concrete5 does not clean hidden fields by default at this time
+		$id = (int)$id		
 		if (empty($id)) {
 			die('ERROR: No widget ID provided!');
 		}
