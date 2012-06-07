@@ -5,18 +5,18 @@ $ih = Loader::helper('concrete/interface');
 $isNew = empty($id);
 $categoryId = $category['id'];
 $heading = ($isNew ? 'Add New' : 'Edit') . ' Widget in Category ' . htmlentities($category['name']);
-$action = $isNew ? $this->action('widget_add', $categoryId) : $this->action('widget_edit', $id);
+$action = $isNew ? $this->action('widget_add', $categoryId) : $this->action('widget_edit', (int)$id);
 ?>
 
 <?php echo $dh->getDashboardPaneHeaderWrapper($heading); ?>
 
 	<form method="post" action="<?php echo $action; ?>">
-		<?php echo $form->hidden('id', $id); /* redundant, but simplifies validation */ ?>
+		<?php echo $form->hidden('id', (int)$id); /* redundant, but simplifies validation */ ?>
 		<?php echo $form->hidden('categoryId', $categoryId); ?>
 		<table id="boilerplate_crud_form_table">
 			<tr>
 				<td class="right"><?php echo $form->label('name', 'Name:'); ?></td>
-				<td><?php echo $form->text('name', $name); ?></td>
+				<td><?php echo $form->text('name', htmlentities($name)); ?></td>
 			</tr>
 			<tr>
 				<td class="right">&nbsp;</td>
@@ -27,7 +27,7 @@ $action = $isNew ? $this->action('widget_add', $categoryId) : $this->action('wid
 			</tr>
 			<tr>
 				<td class="right"><?php echo $form->label('rating', 'Rating:'); ?></td>
-				<td><?php echo $form->text('rating', $rating); ?></td>
+				<td><?php echo $form->text('rating', htmlentities($rating)); ?></td>
 			</tr>
 			<tr>
 				<td class="right">&nbsp;</td>
