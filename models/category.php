@@ -39,7 +39,7 @@ class CategoryModel extends BasicCRUDModel {
 			$sql .= " AND {$this->pkid} <> ?";
 			$vals[] = $array[$this->pkid];
 		}
-		$count = $this->db->findById($sql, $vals);
+		$count = $this->db->GetOne($sql, $vals);
 
 		if ($count > 0) {
 			$array->add_error($field_name, 'validateUniqueName'); //2nd arg MUST match the function name

@@ -18,14 +18,14 @@ $ih = Loader::helper('concrete/interface');
 		<tr>
 			<td><?php echo htmlentities($cat['name']); ?></td>
 			<td><?php echo htmlentities($cat['description']); ?></td>
-			<td><?php echo $ih->button('View Widgets...', $this->controller->url('widget_list', $cat['id']), false); ?></td>
-			<td><?php echo $ih->button('Edit', $this->controller->url('category_edit', $cat['id']), false); ?></td>
-			<td><?php echo $ih->button('Delete', $this->controller->url('category_delete', $cat['id']), false); ?></td>
+			<td><?php echo $ih->button('View Widgets...', $this->action('widget_list', $cat['id']), false); ?></td>
+			<td><?php echo $ih->button('Edit', $this->action('category_edit', $cat['id']), false); ?></td>
+			<td><?php echo $ih->button('Delete', $this->action('category_delete', $cat['id']), false); ?></td>
 
 		</tr>
 		<?php endforeach; ?>
 	</table>
 	
-	<p><?php echo $ih->button('Add New...', $this->controller->url('category_add'), false, 'primary'); ?></p>
+	<p><?php echo $ih->button('Add New...', $this->action('category_add'), false, 'primary'); ?></p>
 
 <?php echo $dh->getDashboardPaneFooterWrapper(); ?>

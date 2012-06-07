@@ -25,7 +25,7 @@ $ih = Loader::helper('concrete/interface');
 				<form method="post" action="<?php echo $this->action('widget_delete', (int)$id); ?>">
 					<?php echo $ih->submit('Delete', false, false, 'error'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?php echo $ih->button('Cancel', $this->controller->url('widget_list', $categoryId), false); ?>
+					<?php echo $ih->button('Cancel', $this->action('widget_list', $categoryId), false); ?>
 				</form>
 			</td>
 		</tr>

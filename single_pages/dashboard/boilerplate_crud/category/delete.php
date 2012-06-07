@@ -21,7 +21,7 @@ $ih = Loader::helper('concrete/interface');
 				<form method="post" action="<?php echo $this->action('category_delete', (int)$id); ?>">
 					<?php echo $ih->submit('Delete', false, false, 'error'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?php echo $ih->button('Cancel', $this->controller->url('category_list'), false); ?>
+					<?php echo $ih->button('Cancel', $this->action('category_list'), false); ?>
 				</form>
 			</td>
 		</tr>

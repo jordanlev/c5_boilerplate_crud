@@ -34,7 +34,7 @@ $action = $isNew ? $this->action('widget_add', $categoryId) : $this->action('wid
 				<td>
 					<?php echo $ih->submit('Save', false, false, 'primary'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?php echo $ih->button('Cancel', $this->controller->url('widget_list', $categoryId), false); ?>
+					<?php echo $ih->button('Cancel', $this->action('widget_list', $categoryId), false); ?>
 				</td>
 			</tr>
 		</table>

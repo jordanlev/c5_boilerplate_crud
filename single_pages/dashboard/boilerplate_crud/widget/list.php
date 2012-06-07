@@ -21,16 +21,16 @@ $heading = 'Widgets in Category: ' . htmlentities($category['name']);
 			<td><?php echo htmlentities($widget['name']); ?></td>
 			<td><?php echo $widget['isSomething'] ? 'Yes' : 'No'; ?></td>
 			<td><?php echo $widget['rating']; ?></td>
-			<td><?php echo $ih->button('Edit', $this->controller->url('widget_edit', $widget['id']), false); ?></td>
-			<td><?php echo $ih->button('Delete', $this->controller->url('widget_delete', $widget['id']), false); ?></td>
+			<td><?php echo $ih->button('Edit', $this->action('widget_edit', $widget['id']), false); ?></td>
+			<td><?php echo $ih->button('Delete', $this->action('widget_delete', $widget['id']), false); ?></td>
 		</tr>
 		<?php endforeach; ?>
 	</table>
 	
 	<p>
-		<?php echo $ih->button('&laquo; Go Back', $this->controller->url('category_list'), false); ?>
+		<?php echo $ih->button('&laquo; Go Back', $this->action('category_list'), false); ?>
 		&nbsp;&nbsp;&nbsp;
-		<?php echo $ih->button('Add New...', $this->controller->url('widget_add', $category['id']), false, 'primary'); ?>
+		<?php echo $ih->button('Add New...', $this->action('widget_add', $category['id']), false, 'primary'); ?>
 	</p>
 	
 <?php echo $dh->getDashboardPaneFooterWrapper(); ?>

@@ -25,7 +25,7 @@ $action = $isNew ? $this->action('category_add') : $this->action('category_edit'
 				<td>
 					<?php echo $ih->submit('Save', false, false, 'primary'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?php echo $ih->button('Cancel', $this->controller->url('category_list'), false); ?>
+					<?php echo $ih->button('Cancel', $this->action('category_list'), false); ?>
 				</td>
 			</tr>
 		</table>
