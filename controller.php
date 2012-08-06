@@ -4,10 +4,16 @@ defined('C5_EXECUTE') or die(_("Access Denied."));
 class BoilerplateCrudPackage extends Package {
 	
 	protected $pkgHandle = 'boilerplate_crud';
-	protected $pkgName = 'Boilerplate CRUD';
-	protected $pkgDescription = 'Custom Dashboard Management - Boilerplate CRUD Operations';
 	protected $appVersionRequired = '5.5';
 	protected $pkgVersion = '0.1';
+	
+	public function getPackageName() {
+		return t('Boilerplate CRUD');
+	}
+	
+	public function getPackageDescription() {
+		return t('Custom Dashboard Management - Boilerplate CRUD Operations');
+	}
 	
 	public function install() {
 		$pkg = parent::install(); //this will automatically install our package-level db.xml schema for us (among other things)
