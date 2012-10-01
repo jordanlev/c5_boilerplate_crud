@@ -65,4 +65,12 @@ class CrudController extends Controller {
 		}
 	}
 	
+	//Renders the 404 page (and send appropriate http header).
+	//Useful when the user hits an actual controller method,
+	// but passes in the wrong id number or some other parameter makes the request invalid.
+	public function render404() {
+		header("HTTP/1.0 404 Not Found");
+		parent::render('/page_not_found');
+	}
+
 }
