@@ -72,7 +72,7 @@ class BasicCRUDModel {
 			
 			$sql = "UPDATE {$this->table}"
 				 . " SET {$update_field_string}"
-				 . " WHERE id = ?";
+				 . " WHERE {$this->pkid} = ?";
 			$vals[] = intval($id); //force integer type, otherwise ADODB escapes it as a string
 			$this->db->Execute($sql, $vals);
 			return $id;
