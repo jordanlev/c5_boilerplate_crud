@@ -10,6 +10,7 @@ $action = $isNew ? $this->action('category_add') : $this->action('category_edit'
 <?php echo $dh->getDashboardPaneHeaderWrapper($heading); ?>
 
 	<form method="post" action="<?php echo $action; ?>">
+		<?php echo $token; ?>
 		<?php echo $form->hidden('id', (int)$id); /* redundant, but simplifies validation */ ?>
 		<table id="boilerplate_crud_form_table">
 			<tr>

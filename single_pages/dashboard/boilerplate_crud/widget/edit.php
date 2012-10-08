@@ -11,6 +11,7 @@ $action = $isNew ? $this->action('widget_add', $categoryId) : $this->action('wid
 <?php echo $dh->getDashboardPaneHeaderWrapper($heading); ?>
 
 	<form method="post" action="<?php echo $action; ?>">
+		<?php echo $token; ?>
 		<?php echo $form->hidden('id', (int)$id); /* redundant, but simplifies validation */ ?>
 		<?php echo $form->hidden('categoryId', $categoryId); ?>
 		<table id="boilerplate_crud_form_table">

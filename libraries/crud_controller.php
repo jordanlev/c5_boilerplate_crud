@@ -6,12 +6,25 @@ class CrudController extends Controller {
 	
 	public function __construct() {
 		parent::__construct();
-		
+		$this->initCSRFToken();
+		$this->initFlashMessage();
+	}
+	
+	private function initCSRFToken() {
+		$token = Loader::helper('validation/token');
+		if (!empty($_POST) && !$token->validate()) {
+			die($token->getErrorMessage());
+		}
+		$this->set('token', $token->output('', true));
+	}
+	
+	private function initFlashMessage() {
 		if (!empty($_SESSION['flash_message'])) {
 			$this->set('message', $_SESSION['flash_message']); //C5 automagically displays this message for us in the view
 			unset($_SESSION['flash_message']);
 		}
 	}
+	
 	
 	//Uses session to set 'message' variable next time the page is loaded
 	public function flash($message) {
@@ -72,5 +85,5 @@ class CrudController extends Controller {
 		header("HTTP/1.0 404 Not Found");
 		parent::render('/page_not_found');
 	}
-
+	
 }
