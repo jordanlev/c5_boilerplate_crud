@@ -7,24 +7,28 @@ $heading = 'Widgets in Category: ' . htmlentities($category['name']);
 
 <?php echo $dh->getDashboardPaneHeaderWrapper($heading); ?>
 
-	<table id="boilerplate_crud_list_table">
-		<tr>
-			<th>Name</th>
-			<th>Is Something?</th>
-			<th>Rating</th>
-			<th>&nbsp;</th>
-			<th>&nbsp;</th>
-		</tr>
-
-		<?php foreach ($widgets as $widget): ?>
-		<tr>
-			<td><?php echo htmlentities($widget['name']); ?></td>
-			<td><?php echo $widget['isSomething'] ? 'Yes' : 'No'; ?></td>
-			<td><?php echo $widget['rating']; ?></td>
-			<td><?php echo $ih->button('Edit', $this->action('widget_edit', $widget['id']), false); ?></td>
-			<td><?php echo $ih->button('Delete', $this->action('widget_delete', $widget['id']), false); ?></td>
-		</tr>
-		<?php endforeach; ?>
+	<table id="boilerplate_crud_list_table" class="table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Is Something?</th>
+				<th>Rating</th>
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<?php foreach ($widgets as $widget): ?>
+			<tr>
+				<td><?php echo htmlentities($widget['name']); ?></td>
+				<td><?php echo $widget['isSomething'] ? 'Yes' : 'No'; ?></td>
+				<td><?php echo $widget['rating']; ?></td>
+				<td><?php echo $ih->button('Edit', $this->action('widget_edit', $widget['id']), false); ?></td>
+				<td><?php echo $ih->button('Delete', $this->action('widget_delete', $widget['id']), false); ?></td>
+			</tr>
+			<?php endforeach; ?>
+		</tbody>
 	</table>
 	
 	<p>

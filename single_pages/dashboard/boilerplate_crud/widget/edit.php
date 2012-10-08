@@ -21,8 +21,10 @@ $action = $isNew ? $this->action('widget_add', $categoryId) : $this->action('wid
 			<tr>
 				<td class="right">&nbsp;</td>
 				<td>
-					<?php echo $form->checkbox('isSomething', 1, $isSomething); ?>
-					<?php echo $form->label('isSomething', 'Is Something'); ?>
+					<label class="checkbox">
+						<?php echo $form->checkbox('isSomething', 1, $isSomething); ?>
+						Is Something
+					</label>
 				</td>
 			</tr>
 			<tr>
