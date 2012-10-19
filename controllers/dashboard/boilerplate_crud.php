@@ -34,7 +34,7 @@ class DashboardBoilerplateCrudController extends CrudController {
 	public function refresh_schema() {
 		Package::getByHandle('boilerplate_crud')->upgrade();
 		$this->set('message', 'Package Schema Refreshed!');
-	    $this->category_list();
+		$this->category_list();
 	}
 	
 	
