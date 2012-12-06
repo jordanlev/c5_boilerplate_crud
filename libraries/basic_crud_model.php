@@ -72,4 +72,12 @@ class BasicCRUDModel {
 		return $record;
 	}
 	
+	public static function selectOptionsFromArray($arr, $keyField, $valField) {
+		$options = array();
+		foreach ($arr as $item) {
+			$options[$item[$keyField]] = htmlentities($item[$valField], ENT_QUOTES, APP_CHARSET);
+		}
+		return $options;
+	}
+
 }
