@@ -74,7 +74,10 @@ class CrudController extends Controller {
 	public function setArray($arr, $restrict_to_keys = array()) {
 		$restrict_to_keys = empty($restrict_to_keys) ? array_keys($arr) : $restrict_to_keys;
 		foreach ($restrict_to_keys as $key) {
-			$this->set($key, $arr[$key]);
+			// Account for NULL/Empty fields
+			if (!empty($arr[$key])) {
+				$this->set($key, $arr[$key]);
+			}
 		}
 	}
 	
