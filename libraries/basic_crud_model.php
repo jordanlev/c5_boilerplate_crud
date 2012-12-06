@@ -72,8 +72,8 @@ class BasicCRUDModel {
 		return $record;
 	}
 	
-	public static function selectOptionsFromArray($arr, $keyField, $valField) {
-		$options = array();
+	public static function selectOptionsFromArray($arr, $keyField, $valField, $headerItem = array()) {
+		$options = $headerItem;
 		foreach ($arr as $item) {
 			$options[$item[$keyField]] = htmlentities($item[$valField], ENT_QUOTES, APP_CHARSET);
 		}
