@@ -377,7 +377,11 @@ class KohanaValidation extends ArrayObject { //ArrayObject is a built-in PHP thi
 	public function add_rule($field, $rule, $error_message = null) {
 		$this->add_rules($field, $rule);
 		if (!is_null($error_message)) {
-			list($rule, $args) = $this->split_rule_string($rule); //extract just the rule name (ignore "args" -- e.g. if "length[0,10]" is the rule, we just want "length")
+			if (is_string($rule)) {
+				list($rule, $args) = $this->split_rule_string($rule); //extract just the rule name (ignore "args" -- e.g. if "length[0,10]" is the rule, we just want "length")
+			} else {
+				$rule = $rule[1]; //$rule is an array (object and method name), so just grab the method name
+			}
 			$this->add_message($field, $rule, $error_message);
 		}
 	}
