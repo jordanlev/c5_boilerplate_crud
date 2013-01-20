@@ -20,7 +20,7 @@ class CrudController extends Controller {
 	
 	private function initFlashMessage() {
 		if (!empty($_SESSION['flash_message'])) {
-			$this->set('message', $_SESSION['flash_message']); //C5 automagically displays this message for us in the view
+			$this->set('message', $_SESSION['flash_message']); //C5 automagically displays 'message' for us in dashboard views
 			unset($_SESSION['flash_message']);
 		}
 	}
@@ -86,4 +86,82 @@ class CrudController extends Controller {
 		parent::render('/page_not_found');
 	}
 	
+	public function render404AndExit() {
+		$this->render404();
+		exit;
+	}
+	
+	//process_edit_form()
+	//
+	//Pass in the record id (or null for new records)
+	// and the corresponding model object (which must extend basic_crud_model).
+	//We check $_POST and do various things to it, then return a code that tells you the result.
+	//
+	// * If data has been POSTed, we validate the data (via model's validate() method).
+	//    ->If validation succeeds, we save the data (via model's save() method),
+	//      set the given $id to the record's id (useful for new records), and return code 'success'.
+	//    ->If validation false, we send error messages to the view, and return code 'error'.
+	// * If no data has been POSTed and the given $id is empty, we do nothing and return code 'add'.
+	// * If no data has been POSTed and the given $id is not empty, we retrieve the record (via model's getById() method).
+	//    -> If record is found, we send its data to the view and return code 'edit'.
+	//    -> If no record is found for the given id, we render the 404 page and halt execution.
+	//
+	// Regardless of the result code, we also always call $this->set('id', $id) for you.
+	//
+	//WHAT YOU SHOULD DO WITH THE RETURNED RESULT CODE:
+	// Under normal circumstances, the only result code you need to worry about is 'success',
+	//  in which case you should set a flash message and redirect.
+	// But occasionally you might need to do things for other result codes as well:
+	//  -'add': initialize default form fields for new records (unless their default is empty/0, in which case you don't need to do anything)
+	//  -'edit': populate data that doesn't come from the database record (unless it's common to all results -- see below)
+	//  -'error': populate data that isn't in $_POST (unless it's common to all results -- see below)
+	// (Note that the situations where you'd need to do something for 'edit' and 'error' are extremely rare,
+	//  so don't worry about it until you run into a problem where it's obvious that's what you need to do!)
+	//
+	// Under most circumstances, you should also always do the following 2 things which are common to all results:
+	// 1) set data that doesn't come from the database and isn't POSTed (e.g. dropdown list choices)
+	// 2) call the render function to display the form
+	//
+	//EXAMPLE USAGE:
+	// public function edit($id = null) {
+	//     $model = new ThingyModel;
+	//     
+	//     $result = $this->process_edit_form($id, $model);
+	//     if ($result == 'success') {
+	//         $this->flash('Thingy Saved!');
+	//         $this->redirect('view');
+	//     }
+	//     
+	//     $choice_options = array('0' => 'Choose One', '1' => 'First Choice', '2' => 'Second Choice', '3' => 'Third Choice');
+	//     $this->set('choice_options', $choice_options);
+	//     
+	//     $this->render('edit');
+	// }
+	public function process_edit_form(&$id, $model) {
+		$this->set('id', $id);
+		
+		$post = $this->post();
+		if ($post) {
+			$error = $model->validate($post);
+			if ($error->has()) {
+				$this->set('error', $error); //C5 automagically displays these errors for us in the view
+				//C5 form helpers will automatically repopulate form fields from $_POST data
+				return 'error'; // caller should manually repopulate data that isn't in $_POST
+			} else {
+				$id = $model->save($post);
+				return 'success'; // caller should set flash message and redirect
+			}
+		} else if (empty($id)) {
+			return 'add'; // caller should initialize form fields that don't start out empty/0
+		} else {
+			//Populate form fields with existing record data
+			$record = $model->getById($id);
+			if (!$record) {
+				$this->render404AndExit();
+			}
+			$this->setArray($record);
+			
+			return 'edit'; // caller should populate form fields with existing record data
+		}
+	}
 }

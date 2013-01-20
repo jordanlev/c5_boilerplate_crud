@@ -1,20 +1,35 @@
 <?xml version="1.0"?>
 <schema version="0.3">
+	
 	<!--
 	Name the tables very explicitly, all with the same prefix (package name as prefix makes sense),
 	otherwise it is confusing when someone looks at the database and expects to only see C5 tables.
 	-->
-	<table name="BoilerplateCrudCategories">
-		<field name="id" type="I"><KEY/><AUTOINCREMENT/><UNSIGNED/></field>
+	
+	<table name="AutomobileCars">
+		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
+		<field name="manufacturerId" type="I"><UNSIGNED/><NOTNULL/></field>
+		<field name="colorId" type="I"><UNSIGNED/><NOTNULL/></field>
+		<field name="year" type="I"><UNSIGNED/><NOTNULL/></field>
 		<field name="name" type="C" size="255"><NOTNULL/></field>
 		<field name="description" type="X"></field>
+		<field name="photoFID" type="I"><UNSIGNED/></field>
+		<field name="price" type="F"></field>
 	</table>
-	<table name="BoilerplateCrudWidgets">
-		<field name="id" type="I"><KEY/><AUTOINCREMENT/><UNSIGNED/></field>
-		<field name="categoryId" type="I"><NOTNULL/><UNSIGNED/></field>
+	
+	<table name="AutomobileManufacturers">
+		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
 		<field name="name" type="C" size="255"><NOTNULL/></field>
-		<field name="isSomething" type="L"></field>
-		<field name="rating" type="F"></field>
+		<field name="country" type="C" size="255"><NOTNULL/></field>
+		<field name="isLuxury" type="L"></field>
+		<field name="displayOrder" type="I"><UNSIGNED/><NOTNULL/></field>
 	</table>
-	<!-- SEE http://phplens.com/lens/adodb/docs-datadict.htm FOR XML SCHEMA DOCS -->
+	
+	<table name="AutomobileColors">
+		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
+		<field name="name" type="C" size="255"><NOTNULL/></field>
+	</table>
+	
 </schema>
+
+<!-- SEE http://phplens.com/lens/adodb/docs-datadict.htm FOR XML SCHEMA DOCS -->

@@ -33,10 +33,15 @@ class BasicCRUDModel {
 		}
 	}
 	
-	public function findById($id) {
+	public function getAll() {
+		$sql = "SELECT * FROM {$this->table} ORDER BY {$this->pkid}";
+		return $this->db->GetArray($sql);
+	}
+	
+	public function getById($id) {
 		$sql = "SELECT * FROM {$this->table} WHERE {$this->pkid} = ? LIMIT 1";
 		$vals = array($id);
-		return $this->db->query($sql, $vals)->fetchRow();
+		return $this->db->GetRow($sql, $vals);
 	}
 	
 	public function delete($id) {
@@ -45,21 +50,33 @@ class BasicCRUDModel {
 		$this->db->Execute($sql, $vals);
 	}
 	
+	public function validate(&$post) {
+		//This method should always be over-ridden.
+		//Note that we don't bother calling add_standard_rules() here
+		// because we don't know what the labels should be or which fields to ignore.
+		return Loader::helper('validation/error');
+	}
+	
 	//Saves a record in the database using data from the provided $post array.
 	// The $post array must have our "pkid" field name as an item key
 	// (if its value is empty we INSERT, otherwise we UPDATE the record having that id).
 	//Returns the id of the inserted/updated record.
 	public function save($post) {
 		$record = $this->recordFromPost($post);
-		$id = isset($post[$this->pkid]) ? intval($post[$this->pkid]) : null;
 		
-		if (empty($id)) {
+		if ($this->isNewRecord($post)) {
 			$this->db->AutoExecute($this->table, $record, 'INSERT');
 			return $this->db->Insert_ID();
 		} else {
-			$this->db->AutoExecute($this->table, $record, 'UPDATE', "{$this->pkid}={$id}"); //NOTE that we already intval()'ed the $id.
+			$id = intval($post[$this->pkid]);
+			$this->db->AutoExecute($this->table, $record, 'UPDATE', "{$this->pkid}={$id}");
 			return $id;
 		}
+	}
+	
+	protected function isNewRecord($post) {
+		$id = isset($post[$this->pkid]) ? intval($post[$this->pkid]) : 0;
+		return ($id == 0);
 	}
 	
 	private function recordFromPost($post) {
@@ -73,11 +90,113 @@ class BasicCRUDModel {
 	}
 	
 	public static function selectOptionsFromArray($arr, $keyField, $valField, $headerItem = array()) {
-		$options = $headerItem;
+		$options = $headerItem; //e.g. array(0 => 'Choose One')
 		foreach ($arr as $item) {
 			$options[$item[$keyField]] = htmlentities($item[$valField], ENT_QUOTES, APP_CHARSET);
 		}
 		return $options;
 	}
+	
+	//Calls add_rule() on the given KohanaValidation object for a variety of "standard" rules.
+	//We will only add rules for fields that exist in the given $fields_and_labels array,
+	// which should have keys of field names and values of human-readable labels (for error messages).
+	//
+	//The following rules are added (depending on field's definition in db.xml):
+	// -'required' rule is added to any fields having <NOTNULL/>
+	// -'length[0,x]' rule is added to varchar fields ("x" is field size)
+	// -'numeric' rule is added to float fields
+	// -'digit' rule is added to integer fields
+	// -'atleast[0]' rule is added to non-required unsigned integer fields
+	// -'atleast[1]' rule is added to required unsigned integer fields
+	protected function add_standard_rules(KohanaValidation &$v, $fields_and_labels) {
+		$cols = $this->db->MetaColumns($this->table);
+		foreach ($cols as $col) {
+			if (array_key_exists($col->name, $fields_and_labels)) {
+				$field = $col->name;
+				$label = $fields_and_labels[$field];
+				$type = $col->type;
+				
+				if ($col->not_null) {
+					$v->add_rule($field, 'required', "{$label} is required.");
+				}
+				
+				if ($type == 'varchar') {
+					$v->add_rule($field, "length[0,{$col->max_length}]", "{$label} cannot exceed {$col->max_length} characters in length.");
+				}
+				
+				if ($type == 'float') {
+					$v->add_rule($field, 'numeric', "{$label} must be a number.");
+				}
+				
+				if ($type == 'int') {
+					$v->add_rule($field, 'digit', "{$label} must be a whole number.");
+					if ($col->unsigned) {
+						if ($col->not_null) {
+							$v->add_rule($field, 'atleast[1]', "You must choose a {$label}."); //Assumes required unsigned ints are foreign key id's, and hence have a dropdown list for selections
+						} else {
+							$v->add_rule($field, 'atleast[0]', "{$label} must be a positive number");
+						}
+					}
+				}
+			}
+		}
+	}
 
+}
+
+//Extends the basic crud model with functionality for a display order field.
+class SortableCRUDModel extends BasicCRUDModel {
+	
+	protected $order = 'displayOrder'; //display order field name (must be an INT)
+	
+	public function save($post) {
+		if ($this->isNewRecord($post)) {
+			//Add new records at the end of the sort order
+			$post[$this->order] = $this->maxDisplayOrder() + 1;
+		} else if (empty($post[$this->order])) {
+			//Remove the display order field from the fields list,
+			// so existing value doesn't get null'ed by recordFromPost().
+			$this->fields = array_diff($this->fields, array($this->order));
+		}
+		
+		return parent::save($post);
+	}
+	
+	private function maxDisplayOrder() {
+		$sql = "SELECT MAX({$this->order}) FROM {$this->table}";
+		$max = $this->db->GetOne($sql);
+		return intval($max);
+	}
+	
+	public function getAll() {
+		$sql = "SELECT * FROM {$this->table} ORDER BY {$this->order}";
+		return $this->db->GetArray($sql);
+	}
+	
+	//Pass in a comma-separated string of id's, in the order you want those records to be.
+	//The given id string should contain ALL id's for the table -- records whose id's
+	// are not in the string will be moved to the end of the display order.
+	public function setDisplayOrder($idString) {
+		$sql = "UPDATE {$this->table} SET {$this->order} = 0";
+		$this->db->Execute($sql);
+		
+		$nextDisplayOrder = $this->setPartialDisplayOrder($idString, 1);
+		
+		//Now move all the ones we didn't have an id for to the end
+		$sql = "SELECT {$this->pkid} FROM {$this->table} WHERE {$this->order} = 0 ORDER BY {$this->pkid}";
+		$idString = $this->db->GetCol($sql);
+		$this->setPartialDisplayOrder($idString, $nextDisplayOrder);
+	}
+		//Helper function for setDisplayOrder()...
+		private function setPartialDisplayOrder($idString, $startingDisplayOrder) {
+			$currentDisplayOrder = $startingDisplayOrder;
+			foreach ($idString as $id) {
+				$sql = "UPDATE {$this->table} SET {$this->order} = ? WHERE {$this->pkid} = ?";
+				$vals = array($currentDisplayOrder, intval($id));
+				$this->db->Execute($sql, $vals);
+				$currentDisplayOrder++;
+			}
+			return $currentDisplayOrder;
+		}
+	//END setDisplayOrder()
 }
