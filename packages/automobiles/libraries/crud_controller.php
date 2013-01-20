@@ -164,4 +164,10 @@ class CrudController extends Controller {
 			return 'edit'; // caller should populate form fields with existing record data
 		}
 	}
+	
+	public function model($entity) {
+		$class = ucfirst($entity) . 'Model';
+		$model = new $class;
+		return $model;
+	}
 }
