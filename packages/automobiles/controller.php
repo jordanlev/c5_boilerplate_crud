@@ -31,6 +31,10 @@ class AutomobilesPackage extends Package {
 	// (just make sure the actions you perform are "non-destructive",
 	//  for example, check if a page exists before adding it).
 	private function installAndUpgrade($pkg) {
+		//Frontend Page:
+		$this->getOrAddSinglePage($pkg, '/automobiles', 'Automobiles');
+		
+		//Dashboard Pages:
 		//Install one page for each *controller* (not each view),
 		// plus one at the top-level to serve as a placeholder in the dashboard menu
 		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles', 'Automobiles'); //top-level pleaceholder
