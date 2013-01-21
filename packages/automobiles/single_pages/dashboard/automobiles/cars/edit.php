@@ -28,12 +28,7 @@ $action = $is_new ? $this->action('add', $bodyTypeId) : $this->action('edit', (i
 				<td class="right"><?php echo $form->label('manufacturerId', 'Manufacturer:'); ?></td>
 				<td><?php echo $form->select('manufacturerId', $manufacturer_options, $manufacturerId); ?></td>
 			</tr>
-
-			<tr>
-				<td class="right"><?php echo $form->label('colorId', 'Color:'); ?></td>
-				<td><?php echo $form->select('colorId', $color_options, $colorId); ?></td>
-			</tr>
-
+			
 			<tr>
 				<td class="right"><?php echo $form->label('year', 'Model Year:'); ?></td>
 				<td>
@@ -82,6 +77,25 @@ $action = $is_new ? $this->action('add', $bodyTypeId) : $this->action('edit', (i
 				</td>
 			</tr>
 			
+	<tr><td colspan="2"><hr></td></tr>
+		
+			<tr>
+				<td>&nbsp;</td>
+				<td><h2>Colors</h2></td>
+			</tr>
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<?php foreach ($colors as $color): ?>
+					<label class="checkbox">
+						<input type="checkbox" name="colorIds[]" value="<?php echo $color['id']; ?>" <?php echo $color['has'] ? 'checked="checked"' : ''; ?>>
+						<?php echo htmlentities($color['name']); ?>
+					</label>
+					<?php endforeach; ?>
+				</td>
+			</tr>
+
 	<tr><td colspan="2"><hr></td></tr>
 
 			<tr>

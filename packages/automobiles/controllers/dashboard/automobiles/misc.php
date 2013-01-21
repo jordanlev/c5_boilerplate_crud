@@ -97,7 +97,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 		$model = $this->model('color');
 		
 		if ($model->hasChildren($id)) {
-			$this->set('error', 'This color cannot be deleted because it is on one or more cars.');
+			$this->set('error', 'This color cannot be deleted because it is assigned to one or more cars.');
 			$this->set('disabled', true);
 		} else if ($this->post()) {
 			$model->delete($id);

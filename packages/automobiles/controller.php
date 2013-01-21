@@ -5,7 +5,7 @@ class AutomobilesPackage extends Package {
 	
 	protected $pkgHandle = 'automobiles';
 	protected $pkgName = 'Automobiles';
-	protected $pkgDescription = 'Manage and Display Automobiles';
+	protected $pkgDescription = 'Manage and display automobile inventory';
 	protected $appVersionRequired = '5.5';
 	protected $pkgVersion = '0.1';
 	
@@ -16,7 +16,8 @@ class AutomobilesPackage extends Package {
 		$this->seedData($pkg, 'colors.sql');
 		$this->seedData($pkg, 'manufacturers.sql');
 		$this->seedData($pkg, 'cars.sql');
-		
+		$this->seedData($pkg, 'car_colors.sql');
+				
 		$this->installAndUpgrade($pkg);
 	}
 	
@@ -80,7 +81,7 @@ class AutomobilesPackage extends Package {
 	
 		//Manually remove database tables (C5 doesn't do this automatically)
 		$db = Loader::db();
-		$sql = 'DROP TABLE AutomobileCars, AutomobileColors, AutomobileManufacturers, AutomobileBodyTypes';
+		$sql = 'DROP TABLE AutomobileCarColors, AutomobileColors, AutomobileCars, AutomobileManufacturers, AutomobileBodyTypes';
 		$db->Execute($sql);
 	}
 }

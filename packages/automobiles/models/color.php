@@ -10,6 +10,14 @@ class ColorModel extends BasicCRUDModel {
 		return $this->db->GetArray($sql);
 	}
 	
+	//returns *all* color records, with an additional column called 'has'
+	// that denotes if the given car has the color or not
+	public function getAllWithCar($carId) {
+		$sql = "SELECT *, (SELECT COUNT(*) FROM AutomobileCarColors AS cc WHERE cc.carId = ? AND cc.colorId = c.id) AS has FROM {$this->table} AS c ORDER BY name";
+		$vals = array($carId);
+		return $this->db->GetArray($sql, $vals);
+	}
+	
 	public function getSelectOptions() {
 		return $this->selectOptionsFromArray($this->getAll(), 'id', 'name', array(0 => '&lt;Choose One&gt;'));
 	}
@@ -27,7 +35,7 @@ class ColorModel extends BasicCRUDModel {
 	}
 	
 	public function hasChildren($id) {
-		$sql = "SELECT COUNT(*) FROM AutomobileCars WHERE colorId = ?";
+		$sql = "SELECT COUNT(*) FROM AutomobileCarColors WHERE colorId = ?";
 		$vals = array($id);
 		return (bool)$this->db->GetOne($sql, $vals);
 	}

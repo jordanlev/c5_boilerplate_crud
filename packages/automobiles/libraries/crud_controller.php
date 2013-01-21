@@ -115,8 +115,9 @@ class CrudController extends Controller {
 	//  -'add': initialize default form fields for new records (unless their default is empty/0, in which case you don't need to do anything)
 	//  -'edit': populate data that doesn't come from the database record (unless it's common to all results -- see below)
 	//  -'error': populate data that isn't in $_POST (unless it's common to all results -- see below)
-	// (Note that the situations where you'd need to do something for 'edit' and 'error' are extremely rare,
-	//  so don't worry about it until you run into a problem where it's obvious that's what you need to do!)
+	// (Note that the situations where you'd need to do something for 'edit' and 'error' are extremely rare
+	//   [e.g. repopulating checkbox lists that represent many-to-many relationships, since C5 form helpers don't handle those]
+	//   so don't worry about them until you run into a problem where it's obvious that's what you need to do!)
 	//
 	// Under most circumstances, you should also always do the following 2 things which are common to all results:
 	// 1) set data that doesn't come from the database and isn't POSTed (e.g. dropdown list choices)

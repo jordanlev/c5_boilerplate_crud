@@ -23,7 +23,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 		$this->set('body_type_id', $body_type_id);
 		$this->set('body_type_options', $btm->getSelectOptions());
 		
-		$this->set('cars', $this->model('car')->getAll());
+		$this->set('cars', $this->model('car')->getByBodyTypeId($body_type_id));
 	}
 	
 	public function add($body_type_id) {
@@ -38,14 +38,28 @@ class DashboardAutomobilesCarsController extends CrudController {
 			$this->flash('Car Saved!');
 			$this->redirect("view?type={$_POST['bodyTypeId']}");
 			
+		} else if ($result == 'error') {
+			$this->set('bodyTypeId', $parent_id);
+			
+			//Manually repopulate the checkbox list
+			$colors = $this->model('color')->getAll();
+			$chosen_color_ids = $this->post('colorIds', array());
+			foreach ($colors as $key => $color) {
+				$colors[$key]['has'] = in_array($color['id'], $chosen_color_ids);
+			}
+			
 		} else if ($result == 'add') {
 			$this->set('bodyTypeId', $parent_id);
-		
+			$colors = $this->model('color')->getAll();
+			
+		} else if ($result == 'edit') {
+			$colors = $this->model('color')->getAllWithCar($id);
+			
 		}
 		
-		//populate lookup data
+		//populate data
+		$this->set('colors', $colors);
 		$this->set('body_type_options', $this->model('body_type')->getSelectOptions());
-		$this->set('color_options', $this->model('color')->getSelectOptions());
 		$this->set('manufacturer_options', $this->model('manufacturer')->getSelectOptions());
 		
 		//display the form

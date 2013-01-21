@@ -20,10 +20,6 @@ $ih = Loader::helper('concrete/interface');
 			<td><?php echo htmlentities($manufacturer_name); ?></td>
 		</tr>
 		<tr>
-			<td class="right">Color:</td>
-			<td><?php echo htmlentities($color_name); ?></td>
-		</tr>
-		<tr>
 			<td class="right">Model Year:</td>
 			<td><?php echo htmlentities($year); ?></td>
 		</tr>

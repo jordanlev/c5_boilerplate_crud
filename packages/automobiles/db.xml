@@ -16,7 +16,6 @@
 		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
 		<field name="bodyTypeId" type="I"><UNSIGNED/><NOTNULL/></field>
 		<field name="manufacturerId" type="I"><UNSIGNED/><NOTNULL/></field>
-		<field name="colorId" type="I"><UNSIGNED/><NOTNULL/></field>
 		<field name="year" type="I"><UNSIGNED/><NOTNULL/></field>
 		<field name="name" type="C" size="255"><NOTNULL/></field>
 		<field name="description" type="X"></field>
@@ -34,6 +33,11 @@
 	<table name="AutomobileColors">
 		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
 		<field name="name" type="C" size="255"><NOTNULL/></field>
+	</table>
+	
+	<table name="AutomobileCarColors">
+		<field name="carId" type="I"><KEY/><UNSIGNED/></field>
+		<field name="colorId" type="I"><KEY/><UNSIGNED/></field>
 	</table>
 	
 </schema>

@@ -5,14 +5,31 @@ class CarModel extends BasicCRUDModel {
 	
 	protected $table = 'AutomobileCars';
 	
-	public function getAll() {
-		$sql = "SELECT car.*, body_type.name AS body_type_name, color.name AS color_name, manufacturer.name AS manufacturer_name"
+	public function getById($id) {
+		$sql = "SELECT car.*, body_type.name AS body_type_name, manufacturer.name AS manufacturer_name"
 		     . " FROM {$this->table} car"
 		     . " INNER JOIN AutomobileBodyTypes body_type ON body_type.id = car.bodyTypeId"
-		     . " INNER JOIN AutomobileColors color ON color.id = car.colorId"
 		     . " INNER JOIN AutomobileManufacturers manufacturer ON manufacturer.id = car.manufacturerId"
-		     . " ORDER BY car.name";
-		return $this->db->GetArray($sql);
+		     . " WHERE car.{$this->pkid} = ?"
+		     . " LIMIT 1";
+		$vals = array($id);
+		return $this->db->GetRow($sql, $vals);
+	}
+	
+	public function getByBodyTypeId($bodyTypeId) {
+		$sql = "SELECT car.*, manufacturer.name AS manufacturer_name"
+		     . " FROM {$this->table} car"
+		     . " INNER JOIN AutomobileManufacturers manufacturer ON manufacturer.id = car.manufacturerId";
+		$vals = array();
+		
+		if (!empty($bodyTypeId)) {
+			$sql .= " WHERE car.bodyTypeId = ?";
+			$vals[] = intval($bodyTypeId);
+		}
+		
+		$sql .= " ORDER BY car.name";
+		
+		return $this->db->GetArray($sql, $vals);
 	}
 	
 	public function validate(&$post) {
@@ -22,7 +39,6 @@ class CarModel extends BasicCRUDModel {
 		$this->add_standard_rules($v, array(
 			'bodyTypeId' => 'Body Type',
 			'manufacturerId' => 'Manufacturer',
-			'colorId' => 'Color',
 			'year' => 'Model Year',
 			'name' => 'Name',
 			'description' => 'Description',
@@ -41,4 +57,34 @@ class CarModel extends BasicCRUDModel {
 	public function filter_strip_commas($value) {
 		return str_replace(',', '', $value);
 	}
+	
+	public function save($post) {
+		$id = parent::save($post);
+		$this->saveColors($id, $post);
+		return $id;
+	}
+		private function saveColors($carId, $post) {
+			$sql = "DELETE FROM AutomobileCarColors WHERE carId = ?";
+			$vals = array($carId);
+			$this->db->Execute($sql, $vals);
+		
+			$color_ids = empty($post['colorIds']) ? array() : $post['colorIds'];
+			$stmt = $this->db->Prepare("INSERT INTO AutomobileCarColors (carId, colorId) VALUES (?, ?)");
+			foreach ($color_ids as $colorId) {
+				$vals = array($carId, intval($colorId));
+				$this->db->Execute($stmt, $vals);
+			}
+		}
+	/* end save */
+	
+	public function delete($id) {
+		parent::delete($id);
+		
+		//delete car's color associations
+		$sql = "DELETE FROM AutomobileCarColors WHERE carId = ?";
+		$vals = array($id);
+		$this->db->Execute($sql, $vals);
+	}
+	
+	
 }

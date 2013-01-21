@@ -23,7 +23,6 @@ $form = Loader::helper('form');
 		<?php
 		$display_columns = array(
 			'manufacturer_name' => 'Manufacturer',
-			'color_name' => 'Color',
 			'year' => 'Model Year',
 			'name' => 'Name',
 		);
