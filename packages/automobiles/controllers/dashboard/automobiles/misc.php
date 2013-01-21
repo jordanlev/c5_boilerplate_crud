@@ -2,6 +2,7 @@
 
 Loader::model('car', 'automobiles');
 Loader::model('color', 'automobiles');
+Loader::model('body_type', 'automobiles');
 Loader::model('manufacturer', 'automobiles');
 
 Loader::library('crud_controller', 'automobiles'); //Superset of Concrete5's Controller class -- provides simpler interface and some extra useful features.
@@ -18,6 +19,55 @@ class DashboardAutomobilesMiscController extends CrudController {
 	
 	public function view() {
 		//this page just shows some links ot other pages, so we don't need to do anything here
+	}
+	
+	
+	
+	
+	/*** BODY TYPES **********************************************************/
+	
+	public function body_types_list() {
+		$this->set('body_types', $this->model('body_type')->getAll());
+		$this->render('body_types/list');
+	}
+	
+	public function body_types_add() {
+		$this->body_types_edit(null);
+	}
+	
+	public function body_types_edit($id = null) {
+		$result = $this->process_edit_form($id, $this->model('body_type'));
+		if ($result == 'success') {
+			$this->flash('Body Type Saved!');
+			$this->redirect('body_types_list');
+		}
+		
+		$this->render('body_types/edit');
+	}
+	
+	public function body_types_sort() {
+		if ($this->post()) {
+			$ids = explode(',', $this->post('ids', ''));
+			$this->model('body_type')->setDisplayOrder($ids);
+		}
+		exit; //this is an ajax function, so no need to render anything
+	}
+	
+	public function body_types_delete($id) {
+		$model = $this->model('body_type');
+		
+		if ($model->hasChildren($id)) {
+			$this->set('error', 'This body type cannot be deleted because one or more cars is assigned to it.');
+			$this->set('disabled', true);
+		} else if ($this->post()) {
+			$model->delete($id);
+			$this->flash('Body Type Deleted.');
+			$this->redirect('body_types_list');
+		}
+		
+		$this->setArray($model->getById($id));
+		
+		$this->render('body_types/delete');
 	}
 	
 	
@@ -90,14 +140,6 @@ class DashboardAutomobilesMiscController extends CrudController {
 		));
 		
 		$this->render('manufacturers/edit');
-	}
-	
-	public function manufacturers_sort() {
-		if ($this->post()) {
-			$ids = explode(',', $this->post('ids', ''));
-			$this->model('manufacturer')->setDisplayOrder($ids);
-		}
-		exit; //this is an ajax function, so no need to render anything
 	}
 	
 	public function manufacturers_delete($id) {

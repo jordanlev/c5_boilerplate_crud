@@ -9,7 +9,7 @@ $al = Loader::helper('concrete/asset_library'); //for image chooser
 
 $is_new = empty($id);
 $heading = ($is_new ? 'Add New' : 'Edit') . ' Car';
-$action = $is_new ? $this->action('add') : $this->action('edit', (int)$id);
+$action = $is_new ? $this->action('add', $bodyTypeId) : $this->action('edit', (int)$id);
 ?>
 
 <?php echo $dh->getDashboardPaneHeaderWrapper($heading); ?>
@@ -17,7 +17,13 @@ $action = $is_new ? $this->action('add') : $this->action('edit', (int)$id);
 	<form method="post" action="<?php echo $action; ?>">
 		<?php echo $token; ?>
 		<?php echo $form->hidden('id', (int)$id); /* redundant, but simplifies processing */ ?>
+		
 		<table class="form-table">
+			<tr>
+				<td class="right"><?php echo $form->label('bodyTypeId', 'Body Type:'); ?></td>
+				<td><?php echo $form->select('bodyTypeId', $body_type_options, $bodyTypeId); ?></td>
+			</tr>
+			
 			<tr>
 				<td class="right"><?php echo $form->label('manufacturerId', 'Manufacturer:'); ?></td>
 				<td><?php echo $form->select('manufacturerId', $manufacturer_options, $manufacturerId); ?></td>
@@ -83,7 +89,7 @@ $action = $is_new ? $this->action('add') : $this->action('edit', (int)$id);
 				<td>
 					<?php echo $ih->submit('Save', false, false, 'primary'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?php echo $ih->button('Cancel', $this->action('view'), false); ?>
+					<?php echo $ih->button('Cancel', $this->action("view?type={$bodyTypeId}"), false); ?>
 				</td>
 			</tr>
 			

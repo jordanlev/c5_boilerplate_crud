@@ -34,7 +34,9 @@ class BasicCRUDModel {
 	}
 	
 	public function getAll() {
-		$sql = "SELECT * FROM {$this->table} ORDER BY {$this->pkid}";
+		//You should always override this (so there's a sort order,
+		// and possibly to include extra related data not from the primary record).
+		$sql = "SELECT * FROM {$this->table}";
 		return $this->db->GetArray($sql);
 	}
 	
@@ -42,6 +44,12 @@ class BasicCRUDModel {
 		$sql = "SELECT * FROM {$this->table} WHERE {$this->pkid} = ? LIMIT 1";
 		$vals = array($id);
 		return $this->db->GetRow($sql, $vals);
+	}
+	
+	public function exists($id) {
+		$sql = "SELECT COUNT(*) FROM {$this->table} WHERE {$this->pkid} = ?";
+		$vals = array(intval($id));
+		return (bool)$this->db->GetOne($sql, $vals);
 	}
 	
 	public function delete($id) {

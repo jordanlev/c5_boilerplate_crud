@@ -12,6 +12,7 @@ class AutomobilesPackage extends Package {
 	public function install() {
 		$pkg = parent::install(); //this will automatically install our package-level db.xml schema for us (among other things)
 		
+		$this->seedData($pkg, 'body_types.sql');
 		$this->seedData($pkg, 'colors.sql');
 		$this->seedData($pkg, 'manufacturers.sql');
 		$this->seedData($pkg, 'cars.sql');
@@ -79,7 +80,7 @@ class AutomobilesPackage extends Package {
 	
 		//Manually remove database tables (C5 doesn't do this automatically)
 		$db = Loader::db();
-		$sql = 'DROP TABLE AutomobileCars, AutomobileColors, AutomobileManufacturers';
+		$sql = 'DROP TABLE AutomobileCars, AutomobileColors, AutomobileManufacturers, AutomobileBodyTypes';
 		$db->Execute($sql);
 	}
 }

@@ -6,8 +6,15 @@
 	otherwise it is confusing when someone looks at the database and expects to only see C5 tables.
 	-->
 	
+	<table name="AutomobileBodyTypes">
+		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
+		<field name="name" type="C" size="255"><NOTNULL/></field>
+		<field name="displayOrder" type="I"><UNSIGNED/><NOTNULL/></field>
+	</table>
+	
 	<table name="AutomobileCars">
 		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
+		<field name="bodyTypeId" type="I"><UNSIGNED/><NOTNULL/></field>
 		<field name="manufacturerId" type="I"><UNSIGNED/><NOTNULL/></field>
 		<field name="colorId" type="I"><UNSIGNED/><NOTNULL/></field>
 		<field name="year" type="I"><UNSIGNED/><NOTNULL/></field>
@@ -22,7 +29,6 @@
 		<field name="name" type="C" size="255"><NOTNULL/></field>
 		<field name="country" type="C" size="255"><NOTNULL/></field>
 		<field name="isLuxury" type="L"></field>
-		<field name="displayOrder" type="I"><UNSIGNED/><NOTNULL/></field>
 	</table>
 	
 	<table name="AutomobileColors">

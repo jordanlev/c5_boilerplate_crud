@@ -166,7 +166,8 @@ class CrudController extends Controller {
 	}
 	
 	public function model($entity) {
-		$class = ucfirst($entity) . 'Model';
+		$th = Loader::helper('text');
+		$class = $th->camelcase($entity) . 'Model'; //camelcase() is built-in to C5's "Object" base class
 		$model = new $class;
 		return $model;
 	}

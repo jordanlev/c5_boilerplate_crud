@@ -2,6 +2,7 @@
 
 Loader::model('car', 'automobiles');
 Loader::model('color', 'automobiles');
+Loader::model('body_type', 'automobiles');
 Loader::model('manufacturer', 'automobiles');
 
 Loader::library('crud_controller', 'automobiles'); //Superset of Concrete5's Controller class -- provides simpler interface and some extra useful features.
@@ -17,22 +18,33 @@ class DashboardAutomobilesCarsController extends CrudController {
 	}
 	
 	public function view() {
+		$btm = $this->model('body_type');
+		$body_type_id = empty($_GET['type']) ? 0 : ( $btm->exists($_GET['type']) ? intval($_GET['type']) : 0 );
+		$this->set('body_type_id', $body_type_id);
+		$this->set('body_type_options', $btm->getSelectOptions());
+		
 		$this->set('cars', $this->model('car')->getAll());
 	}
 	
-	public function add() {
-		$this->edit(null);
+	public function add($body_type_id) {
+		$this->edit(null, $body_type_id);
 	}
 	
-	public function edit($id = null) {
+	public function edit($id = null, $parent_id = null) { //2nd arg is for adding new records only
 		//process the form
 		$result = $this->process_edit_form($id, $this->model('car'));
+		
 		if ($result == 'success') {
 			$this->flash('Car Saved!');
-			$this->redirect('view');
+			$this->redirect("view?type={$_POST['bodyTypeId']}");
+			
+		} else if ($result == 'add') {
+			$this->set('bodyTypeId', $parent_id);
+		
 		}
 		
 		//populate lookup data
+		$this->set('body_type_options', $this->model('body_type')->getSelectOptions());
 		$this->set('color_options', $this->model('color')->getSelectOptions());
 		$this->set('manufacturer_options', $this->model('manufacturer')->getSelectOptions());
 		
@@ -44,15 +56,21 @@ class DashboardAutomobilesCarsController extends CrudController {
 	public function delete($id) {
 	//Note that we don't need to check for empty $id, because it's
 	// a required function arg (so an error is thrown if it's missing).
+	
 		$model = $this->model('car');
+		
+		$record = $model->getById($id);
+		if (!$record) {
+			$this->render404AndExit();
+		}
 		
 		if ($this->post()) {
 			$model->delete($id);
 			$this->flash('Car Deleted.');
-			$this->redirect('view');
+			$this->redirect("view?type={$record['bodyTypeId']}");
 		}
 		
-		$this->setArray($model->getById($id));
+		$this->setArray($record);
 		
 		$this->render('delete');
 	}

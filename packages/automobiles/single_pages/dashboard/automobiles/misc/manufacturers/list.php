@@ -16,7 +16,7 @@ echo $dh->getDashboardPaneHeaderWrapper('Manufacturers');
 		'country' => 'Country',
 		'isLuxury' => 'Luxury Brand?',
 	);
-	echo $vh->listTable($this, $manufacturers, $display_columns, 'manufacturers_edit', 'manufacturers_delete', 'manufacturers_sort');
+	echo $vh->listTable($this, $manufacturers, $display_columns, 'manufacturers_edit', 'manufacturers_delete');
 	
 	echo '<p>' . $ih->button('Add New...', $this->action('manufacturers_add'), false, 'primary') . '</p>';
 	

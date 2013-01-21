@@ -12,6 +12,10 @@ $ih = Loader::helper('concrete/interface');
 	
 	<table class="form-table">
 		<tr>
+			<td class="right">Body Type:</td>
+			<td><?php echo htmlentities($body_type_name); ?></td>
+		</tr>
+		<tr>
 			<td class="right">Manufacturer:</td>
 			<td><?php echo htmlentities($manufacturer_name); ?></td>
 		</tr>
@@ -35,7 +39,7 @@ $ih = Loader::helper('concrete/interface');
 					<?php echo $token; ?>
 					<?php echo $ih->submit('Delete', false, false, 'error'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?php echo $ih->button('Cancel', $this->action('view'), false); ?>
+					<?php echo $ih->button('Cancel', $this->action("view?type={$bodyTypeId}"), false); ?>
 				</form>
 			</td>
 		</tr>

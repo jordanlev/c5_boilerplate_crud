@@ -63,3 +63,14 @@
 		background-color: #ccc; /* maintain hover bg color while dragging (even if mouse moves off the drag handle) */
 	}
 
+
+
+/* Body Types dropdown filter on cars/view page */
+	.loading-indicator {
+		display: none;
+	}
+	
+	.loading-indicator img {
+		vertical-align: middle;
+		padding-left: 5px;
+	}

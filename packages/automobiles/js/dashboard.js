@@ -31,3 +31,14 @@ $(document).ready(function() {
 		$.post(url, data);
 	}
 });
+
+
+/*** Body Types dropdown filter on cars/view page ***/
+$(document).ready(function() {
+	$('.body-type-filter input[type="submit"]').hide();
+	$('.body-type-filter select').on('change', function() {
+		var $form = $(this).closest('form');
+		$form.find('.loading-indicator').show();
+		$form.trigger('submit');
+	});
+});

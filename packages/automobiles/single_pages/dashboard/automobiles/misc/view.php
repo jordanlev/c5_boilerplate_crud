@@ -7,6 +7,7 @@ $ih = Loader::helper('concrete/interface');
 <?php echo $dh->getDashboardPaneHeaderWrapper('Misc. Settings'); ?>
 
 	<ul class="unstyled">
+		<li><a href="<?php echo $this->action('body_types_list'); ?>">Body Types</a></li>
 		<li><a href="<?php echo $this->action('colors_list'); ?>">Colors</a></li>
 		<li><a href="<?php echo $this->action('manufacturers_list'); ?>">Manufacturers</a></li>
 	</ul>

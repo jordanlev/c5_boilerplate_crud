@@ -6,8 +6,9 @@ class CarModel extends BasicCRUDModel {
 	protected $table = 'AutomobileCars';
 	
 	public function getAll() {
-		$sql = "SELECT car.*, color.name AS color_name, manufacturer.name AS manufacturer_name"
+		$sql = "SELECT car.*, body_type.name AS body_type_name, color.name AS color_name, manufacturer.name AS manufacturer_name"
 		     . " FROM {$this->table} car"
+		     . " INNER JOIN AutomobileBodyTypes body_type ON body_type.id = car.bodyTypeId"
 		     . " INNER JOIN AutomobileColors color ON color.id = car.colorId"
 		     . " INNER JOIN AutomobileManufacturers manufacturer ON manufacturer.id = car.manufacturerId"
 		     . " ORDER BY car.name";
@@ -19,6 +20,7 @@ class CarModel extends BasicCRUDModel {
 		$v = new KohanaValidation($post);
 		
 		$this->add_standard_rules($v, array(
+			'bodyTypeId' => 'Body Type',
 			'manufacturerId' => 'Manufacturer',
 			'colorId' => 'Color',
 			'year' => 'Model Year',
