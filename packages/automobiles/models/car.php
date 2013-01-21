@@ -3,28 +3,28 @@
 Loader::library('basic_crud_model', 'automobiles');
 class CarModel extends BasicCRUDModel {
 	
-	protected $table = 'AutomobileCars';
+	protected $table = 'automobile_cars';
 	
 	public function getById($id) {
 		$sql = "SELECT car.*, body_type.name AS body_type_name, manufacturer.name AS manufacturer_name"
 		     . " FROM {$this->table} car"
-		     . " INNER JOIN AutomobileBodyTypes body_type ON body_type.id = car.bodyTypeId"
-		     . " INNER JOIN AutomobileManufacturers manufacturer ON manufacturer.id = car.manufacturerId"
+		     . " INNER JOIN automobile_body_types body_type ON body_type.id = car.body_type_id"
+		     . " INNER JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id"
 		     . " WHERE car.{$this->pkid} = ?"
 		     . " LIMIT 1";
 		$vals = array($id);
 		return $this->db->GetRow($sql, $vals);
 	}
 	
-	public function getByBodyTypeId($bodyTypeId) {
+	public function getByBodyTypeId($body_type_id) {
 		$sql = "SELECT car.*, manufacturer.name AS manufacturer_name"
 		     . " FROM {$this->table} car"
-		     . " INNER JOIN AutomobileManufacturers manufacturer ON manufacturer.id = car.manufacturerId";
+		     . " INNER JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id";
 		$vals = array();
 		
-		if (!empty($bodyTypeId)) {
-			$sql .= " WHERE car.bodyTypeId = ?";
-			$vals[] = intval($bodyTypeId);
+		if (!empty($body_type_id)) {
+			$sql .= " WHERE car.body_type_id = ?";
+			$vals[] = intval($body_type_id);
 		}
 		
 		$sql .= " ORDER BY car.name";
@@ -37,12 +37,12 @@ class CarModel extends BasicCRUDModel {
 		$v = new KohanaValidation($post);
 		
 		$this->add_standard_rules($v, array(
-			'bodyTypeId' => 'Body Type',
-			'manufacturerId' => 'Manufacturer',
+			'body_type_id' => 'Body Type',
+			'manufacturer_id' => 'Manufacturer',
 			'year' => 'Model Year',
 			'name' => 'Name',
 			'description' => 'Description',
-			'photoFID' => 'Photo',
+			'photo_fID' => 'Photo',
 			'price' => 'Price',
 		));
 		
@@ -63,15 +63,15 @@ class CarModel extends BasicCRUDModel {
 		$this->saveColors($id, $post);
 		return $id;
 	}
-		private function saveColors($carId, $post) {
-			$sql = "DELETE FROM AutomobileCarColors WHERE carId = ?";
-			$vals = array($carId);
+		private function saveColors($car_id, $post) {
+			$sql = "DELETE FROM automobile_car_colors WHERE car_id = ?";
+			$vals = array($car_id);
 			$this->db->Execute($sql, $vals);
 		
-			$color_ids = empty($post['colorIds']) ? array() : $post['colorIds'];
-			$stmt = $this->db->Prepare("INSERT INTO AutomobileCarColors (carId, colorId) VALUES (?, ?)");
-			foreach ($color_ids as $colorId) {
-				$vals = array($carId, intval($colorId));
+			$color_ids = empty($post['color_ids']) ? array() : $post['color_ids'];
+			$stmt = $this->db->Prepare("INSERT INTO automobile_car_colors (car_id, color_id) VALUES (?, ?)");
+			foreach ($color_ids as $color_id) {
+				$vals = array($car_id, intval($color_id));
 				$this->db->Execute($stmt, $vals);
 			}
 		}
@@ -81,7 +81,7 @@ class CarModel extends BasicCRUDModel {
 		parent::delete($id);
 		
 		//delete car's color associations
-		$sql = "DELETE FROM AutomobileCarColors WHERE carId = ?";
+		$sql = "DELETE FROM automobile_car_colors WHERE car_id = ?";
 		$vals = array($id);
 		$this->db->Execute($sql, $vals);
 	}

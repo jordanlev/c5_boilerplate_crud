@@ -48,7 +48,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 	public function body_types_sort() {
 		if ($this->post()) {
 			$ids = explode(',', $this->post('ids', ''));
-			$this->model('body_type')->setDisplayOrder($ids);
+			$this->model('body_type')->setSortOrder($ids);
 		}
 		exit; //this is an ajax function, so no need to render anything
 	}

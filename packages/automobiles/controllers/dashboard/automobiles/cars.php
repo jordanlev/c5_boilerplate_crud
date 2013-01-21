@@ -36,20 +36,20 @@ class DashboardAutomobilesCarsController extends CrudController {
 		
 		if ($result == 'success') {
 			$this->flash('Car Saved!');
-			$this->redirect("view?type={$_POST['bodyTypeId']}");
+			$this->redirect("view?type={$_POST['body_type_id']}");
 			
 		} else if ($result == 'error') {
-			$this->set('bodyTypeId', $parent_id);
+			$this->set('body_type_id', $parent_id);
 			
 			//Manually repopulate the checkbox list
 			$colors = $this->model('color')->getAll();
-			$chosen_color_ids = $this->post('colorIds', array());
+			$chosen_color_ids = $this->post('color_ids', array());
 			foreach ($colors as $key => $color) {
 				$colors[$key]['has'] = in_array($color['id'], $chosen_color_ids);
 			}
 			
 		} else if ($result == 'add') {
-			$this->set('bodyTypeId', $parent_id);
+			$this->set('body_type_id', $parent_id);
 			$colors = $this->model('color')->getAll();
 			
 		} else if ($result == 'edit') {
@@ -81,7 +81,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 		if ($this->post()) {
 			$model->delete($id);
 			$this->flash('Car Deleted.');
-			$this->redirect("view?type={$record['bodyTypeId']}");
+			$this->redirect("view?type={$record['body_type_id']}");
 		}
 		
 		$this->setArray($record);

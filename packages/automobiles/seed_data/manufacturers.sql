@@ -1,6 +1,6 @@
 -- NOTE: only 1 query per file!
 
-INSERT INTO AutomobileManufacturers (id, name, country, isLuxury) VALUES
+INSERT INTO automobile_manufacturers (id, name, country, is_luxury) VALUES
 (1, 'Honda', 'Japan', 0),
 (2, 'Toyota', 'Japan', 0),
 (3, 'Nissan', 'Japan', 0),

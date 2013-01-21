@@ -9,7 +9,7 @@ $al = Loader::helper('concrete/asset_library'); //for image chooser
 
 $is_new = empty($id);
 $heading = ($is_new ? 'Add New' : 'Edit') . ' Car';
-$action = $is_new ? $this->action('add', $bodyTypeId) : $this->action('edit', (int)$id);
+$action = $is_new ? $this->action('add', $body_type_id) : $this->action('edit', (int)$id);
 ?>
 
 <?php echo $dh->getDashboardPaneHeaderWrapper($heading); ?>
@@ -20,13 +20,13 @@ $action = $is_new ? $this->action('add', $bodyTypeId) : $this->action('edit', (i
 		
 		<table class="form-table">
 			<tr>
-				<td class="right"><?php echo $form->label('bodyTypeId', 'Body Type:'); ?></td>
-				<td><?php echo $form->select('bodyTypeId', $body_type_options, $bodyTypeId); ?></td>
+				<td class="right"><?php echo $form->label('body_type_id', 'Body Type:'); ?></td>
+				<td><?php echo $form->select('body_type_id', $body_type_options, $body_type_id); ?></td>
 			</tr>
 			
 			<tr>
-				<td class="right"><?php echo $form->label('manufacturerId', 'Manufacturer:'); ?></td>
-				<td><?php echo $form->select('manufacturerId', $manufacturer_options, $manufacturerId); ?></td>
+				<td class="right"><?php echo $form->label('manufacturer_id', 'Manufacturer:'); ?></td>
+				<td><?php echo $form->select('manufacturer_id', $manufacturer_options, $manufacturer_id); ?></td>
 			</tr>
 			
 			<tr>
@@ -57,11 +57,11 @@ $action = $is_new ? $this->action('add', $bodyTypeId) : $this->action('edit', (i
 			</tr>
 		
 			<tr>
-				<td class="right"><?php echo $form->label('photoFID', 'Photo:'); ?></td>
+				<td class="right"><?php echo $form->label('photo_fID', 'Photo:'); ?></td>
 				<td>
 					<?php
-					$photo_file = empty($photoFile) ? null : File::getByID($photoFID);
-					echo $al->image('photoFID', 'photoFID', 'Photo', $photo_file);
+					$file = empty($photo_fID) ? null : File::getByID($photo_fID);
+					echo $al->image('photo_fID', 'photo_fID', 'Photo', $file);
 					?>
 				</td>
 			</tr>
@@ -89,7 +89,7 @@ $action = $is_new ? $this->action('add', $bodyTypeId) : $this->action('edit', (i
 				<td>
 					<?php foreach ($colors as $color): ?>
 					<label class="checkbox">
-						<input type="checkbox" name="colorIds[]" value="<?php echo $color['id']; ?>" <?php echo $color['has'] ? 'checked="checked"' : ''; ?>>
+						<input type="checkbox" name="color_ids[]" value="<?php echo $color['id']; ?>" <?php echo $color['has'] ? 'checked="checked"' : ''; ?>>
 						<?php echo htmlentities($color['name']); ?>
 					</label>
 					<?php endforeach; ?>
@@ -103,7 +103,7 @@ $action = $is_new ? $this->action('add', $bodyTypeId) : $this->action('edit', (i
 				<td>
 					<?php echo $ih->submit('Save', false, false, 'primary'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?php echo $ih->button('Cancel', $this->action("view?type={$bodyTypeId}"), false); ?>
+					<?php echo $ih->button('Cancel', $this->action("view?type={$body_type_id}"), false); ?>
 				</td>
 			</tr>
 			

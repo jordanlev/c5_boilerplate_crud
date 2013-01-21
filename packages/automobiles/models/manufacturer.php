@@ -3,7 +3,7 @@
 Loader::library('basic_crud_model', 'automobiles');
 class ManufacturerModel extends BasicCRUDModel {
 	
-	protected $table = 'AutomobileManufacturers';
+	protected $table = 'automobile_manufacturers';
 	
 	public function getAll() {
 		$sql = "SELECT * FROM {$this->table} ORDER BY name";
@@ -22,14 +22,14 @@ class ManufacturerModel extends BasicCRUDModel {
 			'name' => 'Name',
 			'country' => 'Country',
 		));
-		// Don't validate isLuxury -- it's a boolean / checkbox so it either exists or it doesn't.
+		// Don't validate is_luxury -- it's a boolean / checkbox so it either exists or it doesn't.
 		
 		$v->validate();
 		return $v->errors(true); //pass true to get a C5 "validation/error" object back
 	}
 	
 	public function hasChildren($id) {
-		$sql = "SELECT COUNT(*) FROM AutomobileCars WHERE manufacturerId = ?";
+		$sql = "SELECT COUNT(*) FROM automobile_cars WHERE manufacturer_id = ?";
 		$vals = array($id);
 		return (bool)$this->db->GetOne($sql, $vals);
 	}

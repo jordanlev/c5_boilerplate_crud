@@ -155,12 +155,12 @@ class BasicCRUDModel {
 //Extends the basic crud model with functionality for a display order field.
 class SortableCRUDModel extends BasicCRUDModel {
 	
-	protected $order = 'displayOrder'; //display order field name (must be an INT)
+	protected $order = 'sort_order'; //display order field name (must be an INT)
 	
 	public function save($post) {
 		if ($this->isNewRecord($post)) {
 			//Add new records at the end of the sort order
-			$post[$this->order] = $this->maxDisplayOrder() + 1;
+			$post[$this->order] = $this->maxSortOrder() + 1;
 		} else if (empty($post[$this->order])) {
 			//Remove the display order field from the fields list,
 			// so existing value doesn't get null'ed by recordFromPost().
@@ -170,7 +170,7 @@ class SortableCRUDModel extends BasicCRUDModel {
 		return parent::save($post);
 	}
 	
-	private function maxDisplayOrder() {
+	private function maxSortOrder() {
 		$sql = "SELECT MAX({$this->order}) FROM {$this->table}";
 		$max = $this->db->GetOne($sql);
 		return intval($max);
@@ -184,27 +184,27 @@ class SortableCRUDModel extends BasicCRUDModel {
 	//Pass in a comma-separated string of id's, in the order you want those records to be.
 	//The given id string should contain ALL id's for the table -- records whose id's
 	// are not in the string will be moved to the end of the display order.
-	public function setDisplayOrder($idString) {
+	public function setSortOrder($id_string) {
 		$sql = "UPDATE {$this->table} SET {$this->order} = 0";
 		$this->db->Execute($sql);
 		
-		$nextDisplayOrder = $this->setPartialDisplayOrder($idString, 1);
+		$next_sort_order = $this->setPartialSortOrder($id_string, 1);
 		
 		//Now move all the ones we didn't have an id for to the end
 		$sql = "SELECT {$this->pkid} FROM {$this->table} WHERE {$this->order} = 0 ORDER BY {$this->pkid}";
-		$idString = $this->db->GetCol($sql);
-		$this->setPartialDisplayOrder($idString, $nextDisplayOrder);
+		$id_string = $this->db->GetCol($sql);
+		$this->setPartialSortOrder($id_string, $next_sort_order);
 	}
-		//Helper function for setDisplayOrder()...
-		private function setPartialDisplayOrder($idString, $startingDisplayOrder) {
-			$currentDisplayOrder = $startingDisplayOrder;
-			foreach ($idString as $id) {
+		//Helper function for setSortOrder()...
+		private function setPartialSortOrder($id_string, $starting_sort_order) {
+			$current_sort_order = $starting_sort_order;
+			foreach ($id_string as $id) {
 				$sql = "UPDATE {$this->table} SET {$this->order} = ? WHERE {$this->pkid} = ?";
-				$vals = array($currentDisplayOrder, intval($id));
+				$vals = array($current_sort_order, intval($id));
 				$this->db->Execute($sql, $vals);
-				$currentDisplayOrder++;
+				$current_sort_order++;
 			}
-			return $currentDisplayOrder;
+			return $current_sort_order;
 		}
-	//END setDisplayOrder()
+	//END setSortOrder()
 }

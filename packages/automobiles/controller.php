@@ -81,7 +81,7 @@ class AutomobilesPackage extends Package {
 	
 		//Manually remove database tables (C5 doesn't do this automatically)
 		$db = Loader::db();
-		$sql = 'DROP TABLE AutomobileCarColors, AutomobileColors, AutomobileCars, AutomobileManufacturers, AutomobileBodyTypes';
+		$sql = 'DROP TABLE automobile_car_colors, automobile_colors, automobile_cars, automobile_manufacturers, automobile_body_types';
 		$db->Execute($sql);
 	}
 }

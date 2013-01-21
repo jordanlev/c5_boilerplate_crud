@@ -7,14 +7,14 @@ $vh = Loader::helper('crud_view', 'automobiles');
 echo $dh->getDashboardPaneHeaderWrapper('Manufacturers');
 	
 	//Reformat boolean column to show "yes" or "no" instead of "1" or "0"
-	foreach ($manufacturers as $key => $color) {
-		$manufacturers[$key]['isLuxury'] = $color['isLuxury'] ? 'yes'  : 'no';
+	foreach ($manufacturers as $key => $mfg) {
+		$manufacturers[$key]['is_luxury'] = $mfg['is_luxury'] ? 'yes'  : 'no';
 	}
 	
 	$display_columns = array(
 		'name' => 'Name',
 		'country' => 'Country',
-		'isLuxury' => 'Luxury Brand?',
+		'is_luxury' => 'Luxury Brand?',
 	);
 	echo $vh->listTable($this, $manufacturers, $display_columns, 'manufacturers_edit', 'manufacturers_delete');
 	

@@ -31,7 +31,7 @@ $action = $is_new ? $this->action('manufacturers_add') : $this->action('manufact
 				<td class="right">&nbsp;</td>
 				<td>
 					<label class="checkbox">
-						<?php echo $form->checkbox('isLuxury', 1, $isLuxury); ?>
+						<?php echo $form->checkbox('is_luxury', 1, $is_luxury); ?>
 						Luxury Brand
 					</label>
 				</td>

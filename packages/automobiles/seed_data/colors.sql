@@ -1,6 +1,6 @@
 -- NOTE: only 1 query per file!
 
-INSERT INTO AutomobileColors (id, name) VALUES
+INSERT INTO automobile_colors (id, name) VALUES
 (1, 'Black'),
 (2, 'White'),
 (3, 'Blue'),

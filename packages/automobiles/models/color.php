@@ -3,7 +3,7 @@
 Loader::library('basic_crud_model', 'automobiles');
 class ColorModel extends BasicCRUDModel {
 	
-	protected $table = 'AutomobileColors';
+	protected $table = 'automobile_colors';
 	
 	public function getAll() {
 		$sql = "SELECT * FROM {$this->table} ORDER BY name";
@@ -12,9 +12,9 @@ class ColorModel extends BasicCRUDModel {
 	
 	//returns *all* color records, with an additional column called 'has'
 	// that denotes if the given car has the color or not
-	public function getAllWithCar($carId) {
-		$sql = "SELECT *, (SELECT COUNT(*) FROM AutomobileCarColors AS cc WHERE cc.carId = ? AND cc.colorId = c.id) AS has FROM {$this->table} AS c ORDER BY name";
-		$vals = array($carId);
+	public function getAllWithCar($car_id) {
+		$sql = "SELECT *, (SELECT COUNT(*) FROM automobile_car_colors AS cc WHERE cc.car_id = ? AND cc.color_id = c.id) AS has FROM {$this->table} AS c ORDER BY name";
+		$vals = array($car_id);
 		return $this->db->GetArray($sql, $vals);
 	}
 	
@@ -35,7 +35,7 @@ class ColorModel extends BasicCRUDModel {
 	}
 	
 	public function hasChildren($id) {
-		$sql = "SELECT COUNT(*) FROM AutomobileCarColors WHERE colorId = ?";
+		$sql = "SELECT COUNT(*) FROM automobile_car_colors WHERE color_id = ?";
 		$vals = array($id);
 		return (bool)$this->db->GetOne($sql, $vals);
 	}

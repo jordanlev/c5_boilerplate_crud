@@ -1,6 +1,6 @@
 -- NOTE: only 1 query per file!
 
-INSERT INTO AutomobileBodyTypes (id, name, displayOrder) VALUES
+INSERT INTO automobile_body_types (id, name, sort_order) VALUES
 (1, 'Sedan', 1),
 (2, 'SUV', 2),
 (3, 'Minivan', 3),

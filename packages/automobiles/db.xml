@@ -6,38 +6,38 @@
 	otherwise it is confusing when someone looks at the database and expects to only see C5 tables.
 	-->
 	
-	<table name="AutomobileBodyTypes">
+	<table name="automobile_body_types">
 		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
 		<field name="name" type="C" size="255"><NOTNULL/></field>
-		<field name="displayOrder" type="I"><UNSIGNED/><NOTNULL/></field>
+		<field name="sort_order" type="I"><UNSIGNED/><NOTNULL/></field>
 	</table>
 	
-	<table name="AutomobileCars">
+	<table name="automobile_cars">
 		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
-		<field name="bodyTypeId" type="I"><UNSIGNED/><NOTNULL/></field>
-		<field name="manufacturerId" type="I"><UNSIGNED/><NOTNULL/></field>
+		<field name="body_type_id" type="I"><UNSIGNED/><NOTNULL/></field>
+		<field name="manufacturer_id" type="I"><UNSIGNED/><NOTNULL/></field>
 		<field name="year" type="I"><UNSIGNED/><NOTNULL/></field>
 		<field name="name" type="C" size="255"><NOTNULL/></field>
 		<field name="description" type="X"></field>
-		<field name="photoFID" type="I"><UNSIGNED/></field>
+		<field name="photo_fID" type="I"><UNSIGNED/></field>
 		<field name="price" type="F"></field>
 	</table>
 	
-	<table name="AutomobileManufacturers">
+	<table name="automobile_manufacturers">
 		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
 		<field name="name" type="C" size="255"><NOTNULL/></field>
 		<field name="country" type="C" size="255"><NOTNULL/></field>
-		<field name="isLuxury" type="L"></field>
+		<field name="is_luxury" type="L"></field>
 	</table>
 	
-	<table name="AutomobileColors">
+	<table name="automobile_colors">
 		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
 		<field name="name" type="C" size="255"><NOTNULL/></field>
 	</table>
 	
-	<table name="AutomobileCarColors">
-		<field name="carId" type="I"><KEY/><UNSIGNED/></field>
-		<field name="colorId" type="I"><KEY/><UNSIGNED/></field>
+	<table name="automobile_car_colors">
+		<field name="car_id" type="I"><KEY/><UNSIGNED/></field>
+		<field name="color_id" type="I"><KEY/><UNSIGNED/></field>
 	</table>
 	
 </schema>
