@@ -18,19 +18,18 @@ class AutomobilesPackage extends Package {
 		$this->seedData($pkg, 'cars.sql');
 		$this->seedData($pkg, 'car_colors.sql');
 				
-		$this->installAndUpgrade($pkg);
+		$this->installOrUpgrade($pkg);
 	}
 	
 	public function upgrade() {
-		$pkg = Package::getByHandle($this->pkgHandle);
-		$this->installAndUpgrade($pkg);
+		$this->installOrUpgrade($this);
 		parent::upgrade();
 	}
 	
 	//Put most installation tasks here -- makes development easier
 	// (just make sure the actions you perform are "non-destructive",
 	//  for example, check if a page exists before adding it).
-	private function installAndUpgrade($pkg) {
+	private function installOrUpgrade($pkg) {
 		//Frontend Page:
 		$this->getOrAddSinglePage($pkg, '/automobiles', 'Automobiles');
 		
