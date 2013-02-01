@@ -3,7 +3,7 @@ A Concrete5 package that contains a complete working example of a dashboard inte
 
 A high-level explanation is provided below in this README, and the code is commented to explain why things are the way they are. That being said, it might be difficult to understand if you aren't already familiar with other MVC frameworks such as Rails, Kohana, Symfony, CodeIgniter, etc.
 
-_Note that there is an older version of this code which contains less functionality, but is (arguably) easier to understand. You can access that older version by browsing or downloading the "old-style" tag here: https://github.com/jordanlev/c5_boilerplate_crud/tags _
+_Note that there is an older version of this code which contains less functionality, but is (arguably) easier to understand. You can access that older version by browsing or downloading the "old-style" tag here: https://github.com/jordanlev/c5_boilerplate_crud/tags ._
 
 ## Features
 * Implements the MVC pattern, so data is separated from the markup, and business logic is separated from display logic.
