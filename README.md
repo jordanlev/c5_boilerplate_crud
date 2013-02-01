@@ -1,21 +1,30 @@
 # Boilerplate CRUD (Dashboard Interface for non-page data)
-Sample starter code for custom dashboard interfaces (for data that isn't page-specific... that is, where page attributes aren't enough).
-Uses the example of a car dealership (keeps track of the inventory of available cars -- not sales though).
+A Concrete5 package that contains a complete working example of a dashboard interface for viewing, editing, adding, and deleting database records (a.k.a. "CRUD"). The data is entirely self-contained in this package... it is not related to any site content (pages, blocks, etc.). In a real-world website, you would have your admin users work with this data in the dashboard, then integrate it yourself with the site content (usually via single_pages or custom blocks).
 
-## Entity Model and Controller layout
-Car is the primary model. Each car must have 1 body type (one-to-many rltnshp), 1 manufacturer (one-to-many rltnshp), and may have 0 or more colors (many-to-many rltnshp).
-After talking with the client and understanding their usage needs, we realize that the Car entity is the one that will be edited most frequently. So we will give Cars its own controller / dashboard page, and then put all the other entities (which are not edited frequently... they're basically lookup list data) into one "misc" controller. Our package will have 1 top-level section in the dashboard menu, with 2 pages in it -- cars and misc. Since we want 2 separate dashboard pages, we should have 2 separate controller files. (Note that we have many more view files than this, because each controller deals with a variety of actions, each with their own view -- also, within "Misc" there are many sub-pages (several pages for each "misc." entity). This is ok (desirable even!).
-One caveat: must have a view.php file to correspond with each controller php file... even if the view isn't used (it messes up package installation though if C5 can't find an actual view.php file under the appropriate directory of "single_pages"). In our example, we're actually adding a third controller that just serves as a placeholder for the c5 dashboard menu (so our real pages are navigable from the dashboard menu)... and this controller must have a corresponding view.php file, even though there is nothing to view (the only thing that happens is you get redirected to the cars controller).
-Note that the back-end is complete... but the front-end is just one stub controller/view.
+A high-level explanation is provided below in this README, and the code is commented to explain why things are the way they are. That being said, it might be difficult to understand if you aren't already familiar with other MVC frameworks such as Rails, Kohana, Symfony, CodeIgniter, etc.
 
-## Features represented by each model
-Body Types employs sortable-ness
+## Features
+* Implements the MVC pattern, so data is separated from the markup, and business logic is separated from display logic.
+* One controller can have multiple views (a.k.a. `single_pages`), unlike most C5 examples out there which tie one view (`single_page`) to one controller
+* Data model has many-to-one and many-to-many relationships
+* Data validation rules are declared in the models where they belong (not the controllers)
+* Controller logic is encapsulated in a separate library so your action methods stay clean and focused on your business logic (not C5's architectural requirements)
+* Concrete5 dashboard pages utilize Twitter Bootstrap styles
+* Drag-and-drop record sorting
+* View helper automatically outputs HTML for "list all records"
+* Robust form validation helpers (including support for custom rules)
+* Examples of various complex fields in the "edit" forms (WYSIWYG editor, File Manager file chooser, many-to-many checkbox list)
+* CSRF security tokens included in all forms
 
-Car is primary model, and is always filtered through a specific body type.
-	Also contains photo/file, rich text/wysiwyg, and price/float field examples
+## Data Model
+The data models a very basic car dealership inventory. The primary entity is `Car`, each of which has a `Body Type` (many-to-one relationship), a `Manufacturer` (many-to-one relationship), and several `Colors` (many-to-many relationship).
 
-Manufacturers are another related record to Car (many-to-one), but is not used to filter cars (like body_types is).
-	Also contains boolean/checkbox field example
+## Dashboard Page Structure
+There is one dummy controller at the top-level to serve as a placeholder in the dashboard (so we get a top-level dashboard section for our interface). Below that are two controllers -- one for the primary entity (Cars), one for the "lookup list" data (Body Types, Manufacturers, and Colors).
 
-Colors has a many-to-many relationship with cars
+The list of Car records is segmented by Body Type (which acts as a "category" for Cars), so admin users must choose a Body Type before viewing the list of Cars.
 
+The list of Body Types (in the "Misc. Settings" section) can be sorted via drag-and-drop.
+
+## Front-End
+One sample front-end `single_page` is provided as a starting point -- but it does not contain any special functionality (because the purpose of this package is to show an example of the back-end dashboard interface).
