@@ -32,7 +32,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 	
 	public function edit($id = null, $parent_id = null) { //2nd arg is for adding new records only
 		//process the form
-		$result = $this->process_edit_form($id, $this->model('car'));
+		$result = $this->processEditForm($id, $this->model('car'));
 		
 		if ($result == 'success') {
 			$this->flash('Car Saved!');

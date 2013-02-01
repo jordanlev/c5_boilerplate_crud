@@ -91,7 +91,7 @@ class CrudController extends Controller {
 		exit;
 	}
 	
-	//process_edit_form()
+	//processEditForm()
 	//
 	//Pass in the record id (or null for new records)
 	// and the corresponding model object (which must extend basic_crud_model).
@@ -127,7 +127,7 @@ class CrudController extends Controller {
 	// public function edit($id = null) {
 	//     $model = new ThingyModel;
 	//     
-	//     $result = $this->process_edit_form($id, $model);
+	//     $result = $this->processEditForm($id, $model);
 	//     if ($result == 'success') {
 	//         $this->flash('Thingy Saved!');
 	//         $this->redirect('view');
@@ -138,7 +138,7 @@ class CrudController extends Controller {
 	//     
 	//     $this->render('edit');
 	// }
-	public function process_edit_form(&$id, $model) {
+	public function processEditForm(&$id, $model) {
 		$this->set('id', $id);
 		
 		$post = $this->post();

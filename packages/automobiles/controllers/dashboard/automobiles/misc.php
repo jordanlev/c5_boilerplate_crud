@@ -36,7 +36,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function body_types_edit($id = null) {
-		$result = $this->process_edit_form($id, $this->model('body_type'));
+		$result = $this->processEditForm($id, $this->model('body_type'));
 		if ($result == 'success') {
 			$this->flash('Body Type Saved!');
 			$this->redirect('body_types_list');
@@ -84,7 +84,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function colors_edit($id = null) {
-		$result = $this->process_edit_form($id, $this->model('color'));
+		$result = $this->processEditForm($id, $this->model('color'));
 		if ($result == 'success') {
 			$this->flash('Color Saved!');
 			$this->redirect('colors_list');
@@ -124,7 +124,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function manufacturers_edit($id = null) {
-		$result = $this->process_edit_form($id, $this->model('manufacturer'));
+		$result = $this->processEditForm($id, $this->model('manufacturer'));
 		if ($result == 'success') {
 			$this->flash('Manufacturer Saved!');
 			$this->redirect('manufacturers_list');
