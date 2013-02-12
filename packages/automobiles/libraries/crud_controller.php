@@ -166,9 +166,9 @@ class CrudController extends Controller {
 		}
 	}
 	
+	//Return an instantiated model class (cuts down on lines-of-code needed to call a model method).
 	public function model($entity) {
-		$th = Loader::helper('text');
-		$class = $th->camelcase($entity) . 'Model'; //camelcase() is built-in to C5's "Object" base class
+		$class = Loader::helper('text')->camelcase($entity) . 'Model';
 		$model = new $class;
 		return $model;
 	}
