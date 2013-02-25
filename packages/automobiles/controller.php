@@ -83,8 +83,10 @@ class AutomobilesPackage extends Package {
 		parent::uninstall();
 	
 		//Manually remove database tables (C5 doesn't do this automatically)
+		$table_prefix = 'automobile_'; //<--make sure this is unique enough to not accidentally drop other tables!
 		$db = Loader::db();
-		$sql = 'DROP TABLE automobile_car_colors, automobile_colors, automobile_cars, automobile_manufacturers, automobile_body_types';
+		$tables = $db->GetCol("SHOW TABLES LIKE '{$table_prefix}%'");
+		$sql = 'DROP TABLE ' . implode(',', $tables);
 		$db->Execute($sql);
 	}
 }
