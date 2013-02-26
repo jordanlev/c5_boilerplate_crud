@@ -7,7 +7,7 @@ class CrudController extends Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->initCSRFToken();
-		$this->initFlashMessage();
+		$this->initFlash();
 	}
 	
 	private function initCSRFToken() {
@@ -18,17 +18,22 @@ class CrudController extends Controller {
 		$this->set('token', $token->output('', true));
 	}
 	
-	private function initFlashMessage() {
-		if (!empty($_SESSION['flash_message'])) {
-			$this->set('message', $_SESSION['flash_message']); //C5 automagically displays 'message' for us in dashboard views
-			unset($_SESSION['flash_message']);
+	private function initFlash() {
+		$types = array('message', 'success', 'error');
+		foreach ($types as $type) {
+			$key = "flash_{$type}";
+			if (!empty($_SESSION[$key])) {
+				$this->set($type, $_SESSION[$key]); //C5 automagically displays 'message', 'success', and 'error' for us in dashboard views
+				unset($_SESSION[$key]);
+			}
 		}
 	}
 	
 	
-	//Uses session to set 'message' variable next time the page is loaded
-	public function flash($message) {
-		$_SESSION['flash_message'] = $message;
+	//Uses session to set 'message', 'success', or 'error' variable next time the page is loaded
+	public function flash($text, $type = 'message') {
+		$key = "flash_{$type}";
+		$_SESSION[$key] = $text;
 	}
 	
 	//Redirect to an action in this controller
