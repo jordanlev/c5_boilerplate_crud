@@ -156,11 +156,13 @@ class BasicCRUDModel {
 class SortableCRUDModel extends BasicCRUDModel {
 	
 	protected $order = 'sort_order'; //display order field name (must be an INT)
+	protected $segment = ''; //optional field name of a foreign key that we'll segment sort orders by
 	
 	public function save($post) {
 		if ($this->isNewRecord($post)) {
 			//Add new records at the end of the sort order
-			$post[$this->order] = $this->maxSortOrder() + 1;
+			$segment_id = $this->segment ? $post[$this->segment] : null;
+			$post[$this->order] = $this->maxSortOrder($segment_id) + 1;
 		} else if (empty($post[$this->order])) {
 			//Remove the display order field from the fields list,
 			// so existing value doesn't get null'ed by recordFromPost().
@@ -170,38 +172,46 @@ class SortableCRUDModel extends BasicCRUDModel {
 		return parent::save($post);
 	}
 	
-	private function maxSortOrder() {
+	private function maxSortOrder($segment_id = null) {
 		$sql = "SELECT MAX({$this->order}) FROM {$this->table}";
+		$sql .= $segment_id ? " WHERE {$this->segment} = " . intval($segment_id) : '';
 		$max = $this->db->GetOne($sql);
 		return intval($max);
 	}
 	
-	public function getAll() {
-		$sql = "SELECT * FROM {$this->table} ORDER BY {$this->order}";
+	public function getAll($segment_id = null) {
+		$sql = "SELECT * FROM {$this->table}";
+		$sql .= $segment_id ? " WHERE {$this->segment} = " . intval($segment_id) : '';
+		$sql .= " ORDER BY {$this->order}";
 		return $this->db->GetArray($sql);
 	}
 	
 	//Pass in a comma-separated string of id's, in the order you want those records to be.
-	//The given id string should contain ALL id's for the table -- records whose id's
-	// are not in the string will be moved to the end of the display order.
-	public function setSortOrder($id_string) {
+	//Optionally pass in the "segment id" (if sorting only a subset of the table).
+	//The given $ids should be a one-dimensional array contain ALL id's for the table (or segment)
+	// -- records whose id's are not in the array will be moved to the end of the display order.
+	public function setSortOrder($ids, $segment_id = null) {
 		$sql = "UPDATE {$this->table} SET {$this->order} = 0";
+		$sql .= $segment_id ? " WHERE {$this->segment} = " . intval($segment_id) : '';
 		$this->db->Execute($sql);
 		
-		$next_sort_order = $this->setPartialSortOrder($id_string, 1);
+		$next_sort_order = $this->setPartialSortOrder($ids, 1, $segment_id);
 		
 		//Now move all the ones we didn't have an id for to the end
-		$sql = "SELECT {$this->pkid} FROM {$this->table} WHERE {$this->order} = 0 ORDER BY {$this->pkid}";
-		$id_string = $this->db->GetCol($sql);
-		$this->setPartialSortOrder($id_string, $next_sort_order);
+		$sql = "SELECT {$this->pkid} FROM {$this->table} WHERE {$this->order} = 0";
+		$sql .= $segment_id ? " AND {$this->segment} = " . intval($segment_id) : '';
+		$sql .= " ORDER BY {$this->pkid}";
+		$ids = $this->db->GetCol($sql);
+		$this->setPartialSortOrder($ids, $next_sort_order);
 	}
 		//Helper function for setSortOrder()...
-		private function setPartialSortOrder($id_string, $starting_sort_order) {
+		private function setPartialSortOrder($ids, $starting_sort_order, $segment_id = null) {
 			$current_sort_order = $starting_sort_order;
-			foreach ($id_string as $id) {
-				$sql = "UPDATE {$this->table} SET {$this->order} = ? WHERE {$this->pkid} = ?";
+			$sql = "UPDATE {$this->table} SET {$this->order} = ? WHERE {$this->pkid} = ?";
+			$stmt = $this->db->Prepare($sql);
+			foreach ($ids as $id) {
 				$vals = array($current_sort_order, intval($id));
-				$this->db->Execute($sql, $vals);
+				$this->db->Execute($stmt, $vals);
 				$current_sort_order++;
 			}
 			return $current_sort_order;
