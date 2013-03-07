@@ -186,10 +186,11 @@ class SortableCRUDModel extends BasicCRUDModel {
 		return $this->db->GetArray($sql);
 	}
 	
-	//Pass in a comma-separated string of id's, in the order you want those records to be.
+	//Pass in an array of id's, in the order you want those records to be.
 	//Optionally pass in the "segment id" (if sorting only a subset of the table).
-	//The given $ids should be a one-dimensional array contain ALL id's for the table (or segment)
-	// -- records whose id's are not in the array will be moved to the end of the display order.
+	//The given $ids array should contain ALL id's for the table (or segment)
+	// -- records whose id's are not in the array will be moved to the end
+	// of the display order for that table (or segment).
 	public function setSortOrder($ids, $segment_id = null) {
 		$sql = "UPDATE {$this->table} SET {$this->order} = 0";
 		$sql .= $segment_id ? " WHERE {$this->segment} = " . intval($segment_id) : '';
