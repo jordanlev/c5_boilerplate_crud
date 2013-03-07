@@ -2,7 +2,7 @@
 
 class CrudViewHelper {
 	
-	public function listTable(&$view, $records, $output_fields, $edit_action = 'edit', $delete_action = 'delete', $sort_action = null, $misc_actions = null, $id_field_name = 'id') {
+	public function listTable(&$view, $records, $output_fields, $edit_action = 'edit', $delete_action = 'delete', $sort_action = null, $misc_actions = null, $id_field_name = 'id', $sort_segment_id = null) {
 		
 		$out = array();
 		
@@ -11,7 +11,7 @@ class CrudViewHelper {
 		//open wrappers
 		if (!empty($sort_action)) {
 			$out[] =  '<div class="sortable-container"'
-		           . ' data-sortable-save-url="' . $view->action($sort_action) . '"'
+		           . ' data-sortable-save-url="' . $view->action($sort_action, $sort_segment_id) . '"'
 		           . ' data-sortable-save-token="' . Loader::helper('validation/token')->generate() . '"'
 		           . '>';
 		}
