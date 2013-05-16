@@ -2,14 +2,15 @@
 
 $dh = Loader::helper('concrete/dashboard');
 $ih = Loader::helper('concrete/interface');
-$vh = Loader::helper('crud_view', 'automobiles');
 
 echo $dh->getDashboardPaneHeaderWrapper('Colors');
 
-	$display_columns = array(
-		'name' => 'Name',
-	);
-	echo $vh->listTable($this, $colors, $display_columns, 'colors_edit', 'colors_delete');
+	Loader::library('crud_list_table', 'automobiles');
+	$table = new CrudListTable($this);
+	$table->addColumn('name', 'Name');
+	$table->addAction('colors_edit', 'left', 'Edit', 'icon-pencil');
+	$table->addAction('colors_delete', 'right', 'Delete', 'icon-trash');
+	$table->display($colors);
 	
 	echo '<p>' . $ih->button('Add New...', $this->action('colors_add'), false, 'primary') . '</p>';
 	

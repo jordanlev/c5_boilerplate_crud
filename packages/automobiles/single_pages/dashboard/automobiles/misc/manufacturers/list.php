@@ -2,21 +2,21 @@
 
 $dh = Loader::helper('concrete/dashboard');
 $ih = Loader::helper('concrete/interface');
-$vh = Loader::helper('crud_view', 'automobiles');
 
 echo $dh->getDashboardPaneHeaderWrapper('Manufacturers');
 	
+	Loader::library('crud_list_table', 'automobiles');
+	$table = new CrudListTable($this);
+	$table->addColumn('name', 'Name');
+	$table->addColumn('country', 'Country');
+	$table->addColumn('is_luxury', 'Luxury Brand?');
+	$table->addAction('manufacturers_edit', 'left', 'Edit', 'icon-pencil');
+	$table->addAction('manufacturers_delete', 'right', 'Delete', 'icon-trash');
 	//Reformat boolean column to show "yes" or "no" instead of "1" or "0"
 	foreach ($manufacturers as $key => $mfg) {
 		$manufacturers[$key]['is_luxury'] = $mfg['is_luxury'] ? 'yes'  : 'no';
 	}
-	
-	$display_columns = array(
-		'name' => 'Name',
-		'country' => 'Country',
-		'is_luxury' => 'Luxury Brand?',
-	);
-	echo $vh->listTable($this, $manufacturers, $display_columns, 'manufacturers_edit', 'manufacturers_delete');
+	$table->display($manufacturers);
 	
 	echo '<p>' . $ih->button('Add New...', $this->action('manufacturers_add'), false, 'primary') . '</p>';
 	

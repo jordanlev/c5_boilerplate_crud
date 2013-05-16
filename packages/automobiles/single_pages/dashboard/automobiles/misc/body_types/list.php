@@ -2,14 +2,16 @@
 
 $dh = Loader::helper('concrete/dashboard');
 $ih = Loader::helper('concrete/interface');
-$vh = Loader::helper('crud_view', 'automobiles');
 
 echo $dh->getDashboardPaneHeaderWrapper('Body Types');
 	
-	$display_columns = array(
-		'name' => 'Name',
-	);
-	echo $vh->listTable($this, $body_types, $display_columns, 'body_types_edit', 'body_types_delete', 'body_types_sort');
+	Loader::library('crud_list_table', 'automobiles');
+	$table = new CrudListTable($this);
+	$table->addColumn('name', 'Name');
+	$table->addAction('body_types_edit', 'left', 'Edit', 'icon-pencil');
+	$table->addAction('body_types_sort', 'right', 'Drag To Sort', 'icon-resize-vertical', true);
+	$table->addAction('body_types_delete', 'right', 'Delete', 'icon-trash');
+	$table->display($body_types);
 	
 	echo '<p>' . $ih->button('Add New...', $this->action('body_types_add'), false, 'primary') . '</p>';
 	

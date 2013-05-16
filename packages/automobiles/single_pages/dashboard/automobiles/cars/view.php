@@ -2,7 +2,6 @@
 
 $dh = Loader::helper('concrete/dashboard');
 $ih = Loader::helper('concrete/interface');
-$vh = Loader::helper('crud_view', 'automobiles');
 $form = Loader::helper('form');
 ?>
 
@@ -21,12 +20,17 @@ $form = Loader::helper('form');
 		<hr>
 	
 		<?php
-		$display_columns = array(
-			'manufacturer_name' => 'Manufacturer',
-			'year' => 'Model Year',
-			'name' => 'Name',
-		);
-		echo $vh->listTable($this, $cars, $display_columns);
+		Loader::library('crud_list_table', 'automobiles');
+		$table = new CrudListTable($this);
+		
+		$table->addColumn('manufacturer_name', 'Manufacturer');
+		$table->addColumn('year', 'Model Year');
+		$table->addColumn('name', 'Name');
+		
+		$table->addAction('edit', 'left', 'Edit', 'icon-pencil');
+		$table->addAction('delete', 'right', 'Delete', 'icon-trash');
+		
+		$table->display($cars);
 		?>
 	
 		<p><?php echo $ih->button("Add New {$body_type_options[$body_type_id]}...", $this->action('add', $body_type_id), false, 'primary'); ?></p>
