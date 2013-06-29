@@ -10,12 +10,14 @@ _Note that there is an older version of this code which contains less functional
 * One controller can have multiple views (a.k.a. `single_pages`), unlike most C5 examples out there which tie one view (`single_page`) to one controller
 * Data model has many-to-one and many-to-many relationships
 * Data validation rules are declared in the models where they belong (not the controllers)
+* Basic validation rules (required, max length, numeric-ness) can be automatically set based on db.xml field definitions
 * Controller logic is encapsulated in a separate library so your action methods stay clean and focused on your business logic (not C5's architectural requirements)
 * Concrete5 dashboard pages utilize Twitter Bootstrap styles
 * Drag-and-drop record sorting
 * View helper automatically outputs HTML for "list all records"
 * Robust form validation helpers (including support for custom rules)
 * Examples of various complex fields in the "edit" forms (WYSIWYG editor, File Manager file chooser, many-to-many checkbox list)
+* Dynamically generated "Config" dashboard page provides editing interface for all package-level config settings
 * CSRF security tokens included in all forms
 
 ## Data Model

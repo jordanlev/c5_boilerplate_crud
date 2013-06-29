@@ -17,7 +17,10 @@ class AutomobilesPackage extends Package {
 		$this->seedData($pkg, 'manufacturers.sql');
 		$this->seedData($pkg, 'cars.sql');
 		$this->seedData($pkg, 'car_colors.sql');
-				
+		
+		$pkg->saveConfig('currency_symbol', '$');
+		$pkg->saveConfig('dummy_example', 'test');
+		
 		$this->installOrUpgrade($pkg);
 	}
 	
@@ -39,8 +42,26 @@ class AutomobilesPackage extends Package {
 		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles', 'Automobiles'); //top-level pleaceholder
 		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles/cars', 'Car Listing');
 		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles/misc', 'Misc. Settings'); //this one controller handles colors AND manufacturers
+		
+		//Special 'config' page (for package-wide settings)
+		$config_page = $this->getOrAddSinglePage($pkg, '/dashboard/automobiles/config', 'Configuration');
+		$config_page->setAttribute('exclude_nav', 1); //don't show this page in the dashboard menu
 	}
 	
+	//You might want to remove this in production -- could be dangerous (if package is accidentally removed)!!
+	public function uninstall() {
+		parent::uninstall();
+	
+		//Manually remove database tables (C5 doesn't do this automatically)
+		$table_prefix = 'automobile_'; //<--make sure this is unique enough to not accidentally drop other tables!
+		$db = Loader::db();
+		$tables = $db->GetCol("SHOW TABLES LIKE '{$table_prefix}%'");
+		$sql = 'DROP TABLE ' . implode(',', $tables);
+		$db->Execute($sql);
+	}
+
+
+/*** UTILITY FUNCTIONS ***/
 	private function seedData($pkg, $filename) {
 		//NOTE that you can only run one query at a time,
 		// so each sql statement must be in its own file!
@@ -77,16 +98,5 @@ class AutomobilesPackage extends Package {
 		
 		return $sp;
 	}
-	
-	//You might want to remove this in production -- could be dangerous (if package is accidentally removed)!!
-	public function uninstall() {
-		parent::uninstall();
-	
-		//Manually remove database tables (C5 doesn't do this automatically)
-		$table_prefix = 'automobile_'; //<--make sure this is unique enough to not accidentally drop other tables!
-		$db = Loader::db();
-		$tables = $db->GetCol("SHOW TABLES LIKE '{$table_prefix}%'");
-		$sql = 'DROP TABLE ' . implode(',', $tables);
-		$db->Execute($sql);
-	}
+
 }

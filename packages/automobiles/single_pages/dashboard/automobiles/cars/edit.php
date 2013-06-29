@@ -70,7 +70,7 @@ $action = $is_new ? $this->action('add', $body_type_id) : $this->action('edit', 
 				<td class="right"><?php echo $form->label('price', 'Price:'); ?></td>
 				<td>
 					<div class="input-prepend">
-						<span class="add-on">$</span><?php /* <-- no whitespace between <span> and <input>! */
+						<span class="add-on"><?php echo $currency_symbol; ?></span><?php /* <-- no whitespace between <span> and <input>! */
 						echo $form->text('price', number_format($price, 2), array('class' => 'input-small'));
 						?>
 					</div>

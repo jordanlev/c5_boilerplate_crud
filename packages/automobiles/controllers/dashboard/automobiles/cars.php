@@ -9,12 +9,12 @@ Loader::library('crud_controller', 'automobiles'); //Superset of Concrete5's Con
 class DashboardAutomobilesCarsController extends CrudController {
 
 	public function on_before_render() {
-		//Load javascript and css into <head> of all views for this controller
-		// (If you want to load js/css only for one action, put the addHeaderItem call in that action's method instead)
-		//DEV NOTE: we use "on_before_render()" instead of "on_page_view()" (on_page_view only works in block controllers)
+		//Load css into the <head> and javascript into the footer of all views for this controller
+		// (If you want to load js/css only for one action, put the addHeaderItem/addFooterItem call in that action's method instead)
+		//DEV NOTE: we use "on_before_render()" instead of "on_page_view()" (on_page_view only works in block controllers [??])
 		$hh = Loader::helper('html');
-		$this->addHeaderItem($hh->javascript('dashboard.js', 'automobiles'));
 		$this->addHeaderItem($hh->css('dashboard.css', 'automobiles'));
+		$this->addFooterItem($hh->javascript('dashboard.js', 'automobiles'));
 	}
 	
 	public function view() {
@@ -62,6 +62,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 		$this->set('body_type_options', $this->model('body_type')->getSelectOptions());
 		$this->set('manufacturer_options', $this->model('manufacturer')->getSelectOptions());
 		
+		$this->set('currency_symbol', Package::getByHandle('automobiles')->config('currency_symbol'));
 		//display the form
 		$this->render('edit');
 	}
