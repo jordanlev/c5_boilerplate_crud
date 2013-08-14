@@ -5,8 +5,8 @@ $ih = Loader::helper('concrete/interface');
 
 echo $dh->getDashboardPaneHeaderWrapper('Colors');
 
-	Loader::library('crud_list_table', 'automobiles');
-	$table = new CrudListTable($this);
+	Loader::library('crud_display_table', 'automobiles');
+	$table = new CrudDisplayTable($this);
 	$table->addColumn('name', 'Name');
 	$table->addAction('colors_edit', 'left', 'Edit', 'icon-pencil');
 	$table->addAction('colors_delete', 'right', 'Delete', 'icon-trash');

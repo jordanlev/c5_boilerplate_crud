@@ -20,8 +20,8 @@ $form = Loader::helper('form');
 		<hr>
 	
 		<?php
-		Loader::library('crud_list_table', 'automobiles');
-		$table = new CrudListTable($this);
+		Loader::library('crud_display_table', 'automobiles');
+		$table = new CrudDisplayTable($this);
 		
 		$table->addColumn('manufacturer_name', 'Manufacturer');
 		$table->addColumn('year', 'Model Year');

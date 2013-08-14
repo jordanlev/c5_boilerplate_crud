@@ -5,8 +5,8 @@ $ih = Loader::helper('concrete/interface');
 
 echo $dh->getDashboardPaneHeaderWrapper('Manufacturers');
 	
-	Loader::library('crud_list_table', 'automobiles');
-	$table = new CrudListTable($this);
+	Loader::library('crud_display_table', 'automobiles');
+	$table = new CrudDisplayTable($this);
 	$table->addColumn('name', 'Name');
 	$table->addColumn('country', 'Country');
 	$table->addColumn('is_luxury', 'Luxury Brand?');

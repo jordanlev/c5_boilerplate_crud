@@ -1,9 +1,9 @@
 <?php defined('C5_EXECUTE') or die(_("Access Denied."));
 
-//Outputs a "list table" -- a listing of records in a styled html table with various action buttons in each row.
+//Displays a listing of records in a styled html table with various action buttons in each row.
 //Note that the markup outputted by this class relies on some CSS and JS in dashboard.css/dashboard.js
 
-class CrudListTable {
+class CrudDisplayTable {
 	
 	private $view = null;
 	private $columns = array();
