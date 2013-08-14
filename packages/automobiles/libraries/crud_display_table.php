@@ -15,8 +15,11 @@ class CrudDisplayTable {
 		$this->view =& $c5_view_object;
 	}
 	
-	public function addColumn($field, $label) {
-		$this->columns[$field] = $label;
+	public function addColumn($field, $label, $escape_output = true) {
+		$this->columns[$field] = array(
+			'label' => $label,
+			'escape' => $escape_output,
+		);
 	}
 	
 	//$action: which controller action to direct this link to
@@ -65,8 +68,8 @@ class CrudDisplayTable {
 		foreach ($this->actions as $action) {
 			$out[] = ($action['placement'] == 'left') ? '<th>&nbsp;</th>' : '';
 		}
-		foreach ($this->columns as $field => $label) {
-			$out[] = "<th>{$label}</th>";
+		foreach ($this->columns as $field => $col) {
+			$out[] = "<th>{$col['label']}</th>";
 		}
 		foreach ($this->actions as $action) {
 			$out[] = ($action['placement'] == 'right') ? '<th>&nbsp;</th>' : '';
@@ -82,9 +85,10 @@ class CrudDisplayTable {
 				$out[] = $this->getActionCellMarkup($action, $record[$this->id_field_name], 'left');
 			}
 			$last_field = array_pop(array_keys($this->columns));
-			foreach ($this->columns as $field => $label) {
+			foreach ($this->columns as $field => $col) {
 				$out[] = ($field === $last_field) ?'<td class="last-field">' : '<td>';
-				$out[] = htmlentities($record[$field]);
+				$val = $record[$field];
+				$out[] = $col['escape'] ? htmlentities($val) : $val;
 				$out[] = '</td>';
 			}
 			foreach ($this->actions as $action) {
