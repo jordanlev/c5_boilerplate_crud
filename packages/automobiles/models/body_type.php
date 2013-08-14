@@ -1,6 +1,6 @@
 <?php defined('C5_EXECUTE') or die(_("Access Denied."));
 
-Loader::library('basic_crud_model', 'automobiles');
+Loader::library('crud_model', 'automobiles');
 class BodyTypeModel extends SortableCRUDModel {
 	
 	protected $table = 'automobile_body_types';

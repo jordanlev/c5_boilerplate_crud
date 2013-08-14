@@ -10,7 +10,7 @@ class DashboardAutomobilesController extends CrudController {
 	}
 	
 	//Utility method for refreshing the package schema
-	// (go to <http://localhost/your_site/dashboard/automobiles/refresh> in your browser)
+	// (go to http://localhost/your_site/dashboard/automobiles/refresh in your browser)
 	public function refresh() {
 		$u = new User;
 		if ($u->isSuperUser() && Config::get('SITE_DEBUG_LEVEL')) {

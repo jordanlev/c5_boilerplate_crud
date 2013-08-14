@@ -99,7 +99,7 @@ class CrudController extends Controller {
 	//processEditForm()
 	//
 	//Pass in the record id (or null for new records)
-	// and the corresponding model object (which must extend basic_crud_model).
+	// and the corresponding model object (which must extend BasicCRUDModel or SortableCRUDModel).
 	//We check $_POST and do various things to it, then return a code that tells you the result.
 	//
 	// * If data has been POSTed, we validate the data (via model's validate() method).
