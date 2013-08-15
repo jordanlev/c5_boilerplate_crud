@@ -50,6 +50,7 @@
 		padding-right: 40px;
 	}
 
+
 /* drag-n-drop sorting */
 	.sortable-container {
 		padding: 15px 0; /* add some space above and below for drop target */
@@ -62,7 +63,6 @@
 	.ui-sortable-helper .sortable-handle {
 		background-color: #ccc; /* maintain hover bg color while dragging (even if mouse moves off the drag handle) */
 	}
-
 
 
 /* ajax loading indicator */
