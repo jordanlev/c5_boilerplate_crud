@@ -27,7 +27,7 @@
 		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
 		<field name="name" type="C" size="255"><NOTNULL/></field>
 		<field name="country" type="C" size="255"><NOTNULL/></field>
-		<field name="is_luxury" type="L"></field>
+		<field name="is_luxury" type="L"><NOTNULL/></field><!-- specify NOTNULL so new records default to false/0 -->
 	</table>
 	
 	<table name="automobile_colors">
