@@ -98,5 +98,14 @@ class AutomobilesPackage extends Package {
 		
 		return $sp;
 	}
+	
+	public function getOrInstallBlockType($pkg, $btHandle) {
+		$bt = BlockType::getByHandle($btHandle);
+		if (empty($bt)) {
+			BlockType::installBlockTypeFromPackage($btHandle, $pkg);
+			$bt = BlockType::getByHandle($btHandle);
+		}
+		return $bt;
+	}
 
 }
