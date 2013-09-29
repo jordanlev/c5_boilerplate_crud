@@ -24,7 +24,7 @@ class CrudDisplayTable {
 	
 	//$action: which controller action to direct this link to
 	//$placement: 'left' or 'right' (display this link to the left or right of the data columns)
-	//$title: title of the link (appears when user hovers over the icon)
+	//$title: button text (or hoever/title text for the sort action)
 	//$icon: class name of twitter bootstrap icon glyph (see http://twitter.github.io/bootstrap/base-css.html#icons )
 	//$is_sort_action: true if this is the "sort" action (we do a bunch of special things for this, because it is unlike other actions)
 	//$override_id_value: IF you don't want the record's id being passed to the action, set this (e.g. for sorting within a "segment" / parent id)
@@ -117,12 +117,27 @@ class CrudDisplayTable {
 			return ''; //this action did not have the 'placement' that we're looking for
 		}
 		
+		$markup = '';
+		
+		$markup .= '<td class="action">';
+		
 		if ($action['sort']) {
-			return '<td><span class="row-button sortable-handle" title="' . $action['title'] . '"><i class="' . $action['icon'] . '"></i></span></td>';
+			$markup .= '<span class="sortable-handle" title="' . $action['title'] . '"><i class="' . $action['icon'] . '"></i></span>';
 		} else {
 			$href = $this->view->action($action['action'], $id);
-			return '<td><a class="row-button" href="' . $href . '" title="' . $action['title'] . '"><i class="' . $action['icon'] . '"></i></a></td>';
+			$markup .= '<a class="btn" href="' . $href . '">';
+			if ($action['icon']) {
+				$markup .= '<i class="' . $action['icon'] . '"></i>';
+			}
+			if ($action['title']) {
+				$markup .= ' ' . $action['title'];
+			}
+			$markup .= '</a>';
 		}
+		
+		$markup .= '</td>';
+		
+		return $markup;
 	}
 	
 }

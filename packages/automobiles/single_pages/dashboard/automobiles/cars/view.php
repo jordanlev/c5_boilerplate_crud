@@ -27,7 +27,7 @@ $form = Loader::helper('form');
 		$table->addColumn('year', 'Model Year');
 		$table->addColumn('name', 'Name');
 		
-		$table->addAction('edit', 'left', 'Edit', 'icon-pencil');
+		$table->addAction('edit', 'right', 'Edit', 'icon-pencil');
 		$table->addAction('delete', 'right', 'Delete', 'icon-trash');
 		
 		$table->display($cars);

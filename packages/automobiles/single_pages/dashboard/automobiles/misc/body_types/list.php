@@ -8,8 +8,8 @@ echo $dh->getDashboardPaneHeaderWrapper('Body Types');
 	Loader::library('crud_display_table', 'automobiles');
 	$table = new CrudDisplayTable($this);
 	$table->addColumn('name', 'Name');
-	$table->addAction('body_types_edit', 'left', 'Edit', 'icon-pencil');
-	$table->addAction('body_types_sort', 'right', 'Drag To Sort', 'icon-resize-vertical', true);
+	$table->addAction('body_types_sort', 'left', 'Drag To Sort', 'icon-resize-vertical', true);
+	$table->addAction('body_types_edit', 'right', 'Edit', 'icon-pencil');
 	$table->addAction('body_types_delete', 'right', 'Delete', 'icon-trash');
 	$table->display($body_types);
 	

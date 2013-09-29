@@ -26,10 +26,22 @@
 	.ccm-ui .table td {
 		vertical-align: middle;
 	}
+	.ccm-ui .table td.last-field {
+		padding-right: 40px;
+	}
+	.ccm-ui .table td.action {
+		padding-left: 5px;
+		padding-right: 0;
+	}
 
 
-/* buttons in lists (prepend w/ .ccm-ui to override default bootstrap styles) */
-	.ccm-ui .row-button {
+/* drag-n-drop sorting */
+	.sortable-container {
+		padding: 15px 0; /* add some space above and below for drop target */
+	}
+
+	.ccm-ui .sortable-handle { /* <--prepend w/ .ccm-ui to override default bootstrap styles */
+		cursor: move;
 		display: block;
 		text-align: center;
 		padding-top: 8px;
@@ -41,27 +53,10 @@
 		/* useful if you don't want a bg color from leaking outside the border: */
 		-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
 	}
-	
-	.ccm-ui .row-button:hover {
+
+	.ccm-ui .sortable-handle:hover, /* <--prepend w/ .ccm-ui to override default bootstrap styles */
+	.ui-sortable-helper .sortable-handle { /* <--this selector is to maintain hover bg color while dragging (even if mouse moves off the drag handle) */
 		background-color: #ccc;
-	}
-	
-	.ccm-ui .table td.last-field {
-		padding-right: 40px;
-	}
-
-
-/* drag-n-drop sorting */
-	.sortable-container {
-		padding: 15px 0; /* add some space above and below for drop target */
-	}
-
-	.sortable-handle {
-		cursor: move;
-	}
-
-	.ui-sortable-helper .sortable-handle {
-		background-color: #ccc; /* maintain hover bg color while dragging (even if mouse moves off the drag handle) */
 	}
 
 
