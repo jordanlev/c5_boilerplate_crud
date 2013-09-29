@@ -5,7 +5,7 @@ $ih = Loader::helper('concrete/interface');
 $disabled = isset($disabled) && $disabled;
 ?>
 
-<?php echo $dh->getDashboardPaneHeaderWrapper('Delete Color', false, 'span9 offset1', false); ?>
+<?php echo $dh->getDashboardPaneHeaderWrapper('Delete Color', false, 'span6 offset3', false); ?>
 
 	<div class="ccm-pane-body">
 

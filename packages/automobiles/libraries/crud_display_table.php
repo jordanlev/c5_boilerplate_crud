@@ -10,16 +10,21 @@ class CrudDisplayTable {
 	private $actions = array();
 	private $sort_action_key = null;
 	private $id_field_name = 'id';
+	private $has_table_header = false; //if all columns have an empty "label", then don't output the table header row
 	
 	public function __construct(&$c5_view_object) {
 		$this->view =& $c5_view_object;
 	}
 	
-	public function addColumn($field, $label, $escape_output = true) {
+	public function addColumn($field, $label = '', $escape_output = true) {
 		$this->columns[$field] = array(
 			'label' => $label,
 			'escape' => $escape_output,
 		);
+		
+		if (!empty($label)) {
+			$this->has_table_header = true;
+		}
 	}
 	
 	//$action: which controller action to direct this link to
@@ -63,19 +68,21 @@ class CrudDisplayTable {
 		$out[] = '<table class="table table-striped">';
 		
 		//headings
-		$out[] = '<thead>';
-		$out[] = '<tr>';
-		foreach ($this->actions as $action) {
-			$out[] = ($action['placement'] == 'left') ? '<th>&nbsp;</th>' : '';
+		if ($this->has_table_header) {
+			$out[] = '<thead>';
+			$out[] = '<tr>';
+			foreach ($this->actions as $action) {
+				$out[] = ($action['placement'] == 'left') ? '<th>&nbsp;</th>' : '';
+			}
+			foreach ($this->columns as $field => $col) {
+				$out[] = "<th>{$col['label']}</th>";
+			}
+			foreach ($this->actions as $action) {
+				$out[] = ($action['placement'] == 'right') ? '<th>&nbsp;</th>' : '';
+			}
+			$out[] = '</tr>';
+			$out[] = '</thead>';
 		}
-		foreach ($this->columns as $field => $col) {
-			$out[] = "<th>{$col['label']}</th>";
-		}
-		foreach ($this->actions as $action) {
-			$out[] = ($action['placement'] == 'right') ? '<th>&nbsp;</th>' : '';
-		}
-		$out[] = '</tr>';
-		$out[] = '</thead>';
 		
 		//rows
 		$out[] = '<tbody>';

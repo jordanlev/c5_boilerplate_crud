@@ -3,7 +3,7 @@
 $dh = Loader::helper('concrete/dashboard');
 $ih = Loader::helper('concrete/interface');
 
-echo $dh->getDashboardPaneHeaderWrapper('Manufacturers');
+echo $dh->getDashboardPaneHeaderWrapper('Manufacturers', false, 'span8 offset2');
 	
 	Loader::library('crud_display_table', 'automobiles');
 	$table = new CrudDisplayTable($this);

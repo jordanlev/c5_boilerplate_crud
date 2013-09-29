@@ -4,7 +4,7 @@ $dh = Loader::helper('concrete/dashboard');
 $ih = Loader::helper('concrete/interface');
 ?>
 
-<?php echo $dh->getDashboardPaneHeaderWrapper('Misc. Settings'); ?>
+<?php echo $dh->getDashboardPaneHeaderWrapper('Misc. Settings', false, 'span6 offset3'); ?>
 
 	<ul class="unstyled">
 		<li><a href="<?php echo $this->action('body_types_list'); ?>">Body Types</a></li>

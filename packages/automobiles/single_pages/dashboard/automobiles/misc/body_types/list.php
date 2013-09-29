@@ -3,11 +3,11 @@
 $dh = Loader::helper('concrete/dashboard');
 $ih = Loader::helper('concrete/interface');
 
-echo $dh->getDashboardPaneHeaderWrapper('Body Types');
+echo $dh->getDashboardPaneHeaderWrapper('Body Types', false, 'span6 offset3');
 	
 	Loader::library('crud_display_table', 'automobiles');
 	$table = new CrudDisplayTable($this);
-	$table->addColumn('name', 'Name');
+	$table->addColumn('name');
 	$table->addAction('body_types_sort', 'left', 'Drag To Sort', 'icon-resize-vertical', true);
 	$table->addAction('body_types_edit', 'right', 'Edit', 'icon-pencil');
 	$table->addAction('body_types_delete', 'right', 'Delete', 'icon-trash');

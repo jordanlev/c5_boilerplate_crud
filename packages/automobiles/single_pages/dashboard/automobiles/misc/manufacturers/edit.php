@@ -9,7 +9,7 @@ $heading = ($is_new ? 'Add New' : 'Edit') . ' Manufacturer';
 $action = $is_new ? $this->action('manufacturers_add') : $this->action('manufacturers_edit', (int)$id);
 ?>
 
-<?php echo $dh->getDashboardPaneHeaderWrapper($heading, false, 'span10 offset1', false); ?>
+<?php echo $dh->getDashboardPaneHeaderWrapper($heading, false, 'span8 offset2', false); ?>
 
 	<form method="post" action="<?php echo $action; ?>">
 		<?php echo $token; ?>

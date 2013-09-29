@@ -3,11 +3,11 @@
 $dh = Loader::helper('concrete/dashboard');
 $ih = Loader::helper('concrete/interface');
 
-echo $dh->getDashboardPaneHeaderWrapper('Colors');
+echo $dh->getDashboardPaneHeaderWrapper('Colors', false, 'span6 offset3');
 
 	Loader::library('crud_display_table', 'automobiles');
 	$table = new CrudDisplayTable($this);
-	$table->addColumn('name', 'Name');
+	$table->addColumn('name');
 	$table->addAction('colors_edit', 'right', 'Edit', 'icon-pencil');
 	$table->addAction('colors_delete', 'right', 'Delete', 'icon-trash');
 	$table->display($colors);

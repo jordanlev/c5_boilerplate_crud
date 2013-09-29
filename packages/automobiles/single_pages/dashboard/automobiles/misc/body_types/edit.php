@@ -9,7 +9,7 @@ $heading = ($is_new ? 'Add New' : 'Edit') . ' Body Type';
 $action = $is_new ? $this->action('body_types_add') : $this->action('body_types_edit', (int)$id);
 ?>
 
-<?php echo $dh->getDashboardPaneHeaderWrapper($heading, false, 'span10 offset1', false); ?>
+<?php echo $dh->getDashboardPaneHeaderWrapper($heading, false, 'span6 offset3', false); ?>
 
 	<form method="post" action="<?php echo $action; ?>">
 		<?php echo $token; ?>

@@ -9,7 +9,7 @@ $heading = ($is_new ? 'Add New' : 'Edit') . ' Color';
 $action = $is_new ? $this->action('colors_add') : $this->action('colors_edit', (int)$id);
 ?>
 
-<?php echo $dh->getDashboardPaneHeaderWrapper($heading, false, 'span10 offset1', false); ?>
+<?php echo $dh->getDashboardPaneHeaderWrapper($heading, false, 'span6 offset3', false); ?>
 
 	<form method="post" action="<?php echo $action; ?>">
 		<?php echo $token; ?>
