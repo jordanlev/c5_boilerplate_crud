@@ -14,8 +14,14 @@ class AutomobilesController extends CrudController {
 		$this->addFooterItem($hh->javascript('automobiles.js', 'automobiles'));
 	}
 	
-	public function view() {
-		$this->set('cars', $this->model('car')->getAll());
+	public function view($body_type_url_slug = null) {
+		if (!empty($body_type_url_slug)) {
+			$cars = $this->model('car')->getByBodyTypeUrlSlug($body_type_url_slug);
+		} else {
+			$cars = $this->model('car')->getAll();
+		}
+		
+		$this->set('cars', $cars);
 	}
 	
 }

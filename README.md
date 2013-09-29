@@ -14,10 +14,10 @@ _Note that there is an older version of this code which contains less functional
 * Controller logic is encapsulated in a separate library so your action methods stay clean and focused on your business logic (not C5's architectural requirements)
 * Concrete5 dashboard pages utilize Twitter Bootstrap styles
 * Drag-and-drop record sorting
-* View helper automatically outputs HTML for "list all records"
+* View helper automatically outputs HTML for "list all records" (with edit/delete buttons for each)
 * Robust form validation helpers (including support for custom rules)
-* Examples of various complex fields in the "edit" forms (WYSIWYG editor, File Manager file chooser, many-to-many checkbox list)
-* Dynamically generated "Config" dashboard page provides editing interface for all package-level config settings
+* Examples of various complex fields in the "edit" forms (WYSIWYG editor, File Manager file chooser, many-to-many checkbox list, URL Slug guesser)
+* Dynamically generated "Config" dashboard page provides editing interface for package-level config settings
 * CSRF security tokens included in all forms
 
 ## Data Model

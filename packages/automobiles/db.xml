@@ -9,6 +9,7 @@
 	<table name="automobile_body_types">
 		<field name="id" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
 		<field name="name" type="C" size="255"><NOTNULL/></field>
+		<field name="url_slug" type="C" size="255"><NOTNULL/></field>
 		<field name="display_order" type="I"><UNSIGNED/><NOTNULL/></field>
 	</table>
 	

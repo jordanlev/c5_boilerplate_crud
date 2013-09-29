@@ -32,6 +32,18 @@ class CarModel extends BasicCRUDModel {
 		return $this->db->GetArray($sql, $vals);
 	}
 	
+	public function getByBodyTypeUrlSlug($body_type_url_slug) {
+		$sql = "SELECT car.*, manufacturer.name AS manufacturer_name"
+		     . " FROM {$this->table} car"
+		     . " INNER JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id"
+		     . " INNER JOIN automobile_body_types body_type ON body_type.id = car.body_type_id"
+		     . " WHERE body_type.url_slug = ?"
+		     . " ORDER BY car.name";
+		$vals = array($body_type_url_slug);
+		
+		return $this->db->GetArray($sql, $vals);
+	}
+	
 	public function validate(&$post) {
 		Loader::library('kohana_validation', 'automobiles');
 		$v = new KohanaValidation($post);
