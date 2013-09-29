@@ -8,7 +8,7 @@ $form = Loader::helper('form');
 
 <?php echo $dh->getDashboardPaneHeaderWrapper('Cars'); ?>
 
-	<form action="<?php echo $this->action('view'); ?>" method="get" class="body-type-filter form-inline">
+	<form action="<?php echo $this->action('view'); ?>" method="get" class="segment-filter form-inline">
 		<label for="type">Body Type:</label>
 		<?php echo $form->select('type', $body_type_options, $body_type_id); ?>
 		<input type="submit" class="btn ccm-input-submit" value="Go">

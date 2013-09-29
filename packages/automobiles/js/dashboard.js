@@ -33,10 +33,10 @@ $(document).ready(function() {
 });
 
 
-/*** Body Types dropdown filter on cars/view page ***/
+/*** segment dropdown filter ***/
 $(document).ready(function() {
-	$('.body-type-filter input[type="submit"]').hide();
-	$('.body-type-filter select').on('change', function() {
+	$('.segment-filter input[type="submit"]').hide();
+	$('.segment-filter select').on('change', function() {
 		var $form = $(this).closest('form');
 		$form.find('.loading-indicator').show();
 		$form.trigger('submit');
