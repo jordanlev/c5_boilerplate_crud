@@ -26,7 +26,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 		$this->set('cars', $this->model('car')->getByBodyTypeId($body_type_id));
 	}
 	
-	public function add($body_type_id) {
+	public function add($body_type_id = null) {
 		$this->edit(null, $body_type_id);
 	}
 	
