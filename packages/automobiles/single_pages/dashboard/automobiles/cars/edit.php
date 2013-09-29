@@ -91,7 +91,7 @@ $action = $is_new ? $this->action('add', $body_type_id) : $this->action('edit', 
 					<td>
 						<?php foreach ($colors as $color): ?>
 						<label class="checkbox">
-							<input type="checkbox" name="color_ids[]" value="<?php echo $color['id']; ?>" <?php echo $color['has'] ? 'checked="checked"' : ''; ?>>
+							<input type="checkbox" name="color_ids[]" value="<?php echo $color['id']; ?>" <?php echo empty($color['has']) ? '' : 'checked="checked"'; ?>>
 							<?php echo htmlentities($color['name']); ?>
 						</label>
 						<?php endforeach; ?>
