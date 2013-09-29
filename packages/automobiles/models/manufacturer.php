@@ -30,7 +30,7 @@ class ManufacturerModel extends BasicCRUDModel {
 	
 	public function hasChildren($id) {
 		$sql = "SELECT COUNT(*) FROM automobile_cars WHERE manufacturer_id = ?";
-		$vals = array($id);
+		$vals = array(intval($id));
 		return (bool)$this->db->GetOne($sql, $vals);
 	}
 	

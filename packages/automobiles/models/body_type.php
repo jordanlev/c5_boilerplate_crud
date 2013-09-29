@@ -24,7 +24,7 @@ class BodyTypeModel extends SortableCRUDModel {
 	
 	public function hasChildren($id) {
 		$sql = "SELECT COUNT(*) FROM automobile_cars WHERE body_type_id = ?";
-		$vals = array($id);
+		$vals = array(intval($id));
 		return (bool)$this->db->GetOne($sql, $vals);
 	}
 	

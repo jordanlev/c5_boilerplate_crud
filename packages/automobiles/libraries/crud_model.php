@@ -42,7 +42,7 @@ class BasicCRUDModel {
 	
 	public function getById($id) {
 		$sql = "SELECT * FROM {$this->table} WHERE {$this->pkid} = ? LIMIT 1";
-		$vals = array($id);
+		$vals = array(intval($id));
 		return $this->db->GetRow($sql, $vals);
 	}
 	
@@ -54,7 +54,7 @@ class BasicCRUDModel {
 	
 	public function delete($id) {
 		$sql = "DELETE FROM {$this->table} WHERE {$this->pkid} = ?";
-		$vals = array($id);
+		$vals = array(intval($id));
 		$this->db->Execute($sql, $vals);
 	}
 	
