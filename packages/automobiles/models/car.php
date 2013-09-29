@@ -78,12 +78,12 @@ class CarModel extends BasicCRUDModel {
 	/* end save */
 	
 	public function delete($id) {
-		parent::delete($id);
-		
 		//delete car's color associations
 		$sql = "DELETE FROM automobile_car_colors WHERE car_id = ?";
 		$vals = array($id);
 		$this->db->Execute($sql, $vals);
+		
+		parent::delete($id);
 	}
 	
 	
