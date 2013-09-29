@@ -18,9 +18,6 @@ class AutomobilesPackage extends Package {
 		$this->seedData($pkg, 'cars.sql');
 		$this->seedData($pkg, 'car_colors.sql');
 		
-		$pkg->saveConfig('currency_symbol', '$');
-		$pkg->saveConfig('dummy_example', 'test');
-		
 		$this->installOrUpgrade($pkg);
 	}
 	
@@ -33,6 +30,7 @@ class AutomobilesPackage extends Package {
 	// (just make sure the actions you perform are "non-destructive",
 	//  for example, check if a page exists before adding it).
 	private function installOrUpgrade($pkg) {
+		
 		//Frontend Page:
 		$this->getOrAddSinglePage($pkg, '/automobiles', 'Automobiles');
 		
@@ -46,6 +44,10 @@ class AutomobilesPackage extends Package {
 		//Special 'config' page (for package-wide settings)
 		$config_page = $this->getOrAddSinglePage($pkg, '/dashboard/automobiles/config', 'Configuration');
 		$config_page->setAttribute('exclude_nav', 1); //don't show this page in the dashboard menu
+		
+		//Config settings:
+		$this->getOrAddConfig($pkg, 'currency_symbol', '$');
+		$this->getOrAddConfig($pkg, 'dummy_example', 'test');
 	}
 	
 	//You might want to remove this in production -- could be dangerous (if package is accidentally removed)!!
@@ -106,6 +108,16 @@ class AutomobilesPackage extends Package {
 			$bt = BlockType::getByHandle($btHandle);
 		}
 		return $bt;
+	}
+	
+	public function getOrAddConfig($pkg, $key, $default_value_if_new = null) {
+		$cfg = $pkg->config($key, true); //pass true to retrieve the full object (so we can differentiate between a non-existent config versus an existing config that has value set to null)
+		if (is_null($cfg)) {
+			$pkg->saveConfig($key, $default_value_if_new);
+			return $default_value_if_new;
+		} else {
+			return $pkg->config($key);
+		}
 	}
 
 }
