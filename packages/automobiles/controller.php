@@ -1,5 +1,4 @@
-<?php
-defined('C5_EXECUTE') or die(_("Access Denied."));
+<?php defined('C5_EXECUTE') or die(_("Access Denied."));
 
 class AutomobilesPackage extends Package {
 	
@@ -101,7 +100,7 @@ class AutomobilesPackage extends Package {
 		return $sp;
 	}
 	
-	public function getOrInstallBlockType($pkg, $btHandle) {
+	private function getOrInstallBlockType($pkg, $btHandle) {
 		$bt = BlockType::getByHandle($btHandle);
 		if (empty($bt)) {
 			BlockType::installBlockTypeFromPackage($btHandle, $pkg);
@@ -110,7 +109,7 @@ class AutomobilesPackage extends Package {
 		return $bt;
 	}
 	
-	public function getOrAddConfig($pkg, $key, $default_value_if_new = null) {
+	private function getOrAddConfig($pkg, $key, $default_value_if_new = null) {
 		$cfg = $pkg->config($key, true); //pass true to retrieve the full object (so we can differentiate between a non-existent config versus an existing config that has value set to null)
 		if (is_null($cfg)) {
 			$pkg->saveConfig($key, $default_value_if_new);
