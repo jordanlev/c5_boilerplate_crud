@@ -54,6 +54,10 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function body_types_delete($id) {
+		if (empty($id) || !intval($id)) {
+			$this->render404AndExit();
+		}
+		
 		$model = $this->model('body_type');
 		
 		if ($model->hasChildren($id)) {
@@ -94,6 +98,10 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function colors_delete($id) {
+		if (empty($id) || !intval($id)) {
+			$this->render404AndExit();
+		}
+		
 		$model = $this->model('color');
 		
 		if ($model->hasChildren($id)) {
@@ -143,6 +151,10 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function manufacturers_delete($id) {
+		if (empty($id) || !intval($id)) {
+			$this->render404AndExit();
+		}
+		
 		$model = $this->model('manufacturer');
 		
 		if ($model->hasChildren($id)) {

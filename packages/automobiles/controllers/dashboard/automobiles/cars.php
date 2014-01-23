@@ -69,9 +69,10 @@ class DashboardAutomobilesCarsController extends CrudController {
 	
 	
 	public function delete($id) {
-	//Note that we don't need to check for empty $id, because it's
-	// a required function arg (so an error is thrown if it's missing).
-	
+		if (empty($id) || !intval($id)) {
+			$this->render404AndExit();
+		}
+		
 		$model = $this->model('car');
 		
 		$record = $model->getById($id);
