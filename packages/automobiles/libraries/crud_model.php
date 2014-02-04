@@ -42,19 +42,19 @@ class BasicCRUDModel {
 	
 	public function getById($id) {
 		$sql = "SELECT * FROM {$this->table} WHERE {$this->pkid} = ? LIMIT 1";
-		$vals = array(intval($id));
+		$vals = array((int)$id);
 		return $this->db->GetRow($sql, $vals);
 	}
 	
 	public function exists($id) {
 		$sql = "SELECT COUNT(*) FROM {$this->table} WHERE {$this->pkid} = ?";
-		$vals = array(intval($id));
+		$vals = array((int)$id);
 		return (bool)$this->db->GetOne($sql, $vals);
 	}
 	
 	public function delete($id) {
 		$sql = "DELETE FROM {$this->table} WHERE {$this->pkid} = ?";
-		$vals = array(intval($id));
+		$vals = array((int)$id);
 		$this->db->Execute($sql, $vals);
 	}
 	
@@ -211,7 +211,7 @@ class SortableCRUDModel extends BasicCRUDModel {
 			$sql = "UPDATE {$this->table} SET {$this->order} = ? WHERE {$this->pkid} = ?";
 			$stmt = $this->db->Prepare($sql);
 			foreach ($ids as $id) {
-				$vals = array($current_display_order, intval($id));
+				$vals = array($current_display_order, (int)$id);
 				$this->db->Execute($stmt, $vals);
 				$current_display_order++;
 			}
