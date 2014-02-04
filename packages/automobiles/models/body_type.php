@@ -36,7 +36,7 @@ class BodyTypeModel extends SortableCRUDModel {
 			//if this is an UPDATE (as opposed to an INSERT), ignore this record's own url slug
 			if (!empty($v[$this->pkid])) {
 				$sql .= " AND {$this->pkid} <> ?";
-				$vals[] = $v[$this->pkid];
+				$vals[] = (int)$v[$this->pkid];
 			}
 	
 			$count = $this->db->GetOne($sql, $vals);
