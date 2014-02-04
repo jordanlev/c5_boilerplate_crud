@@ -12,7 +12,7 @@ class CarModel extends BasicCRUDModel {
 		     . " INNER JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id"
 		     . " WHERE car.{$this->pkid} = ?"
 		     . " LIMIT 1";
-		$vals = array(intval($id));
+		$vals = array((int)$id);
 		return $this->db->GetRow($sql, $vals);
 	}
 	
@@ -24,7 +24,7 @@ class CarModel extends BasicCRUDModel {
 		
 		if (!empty($body_type_id)) {
 			$sql .= " WHERE car.body_type_id = ?";
-			$vals[] = intval($body_type_id);
+			$vals[] = (int)$body_type_id;
 		}
 		
 		$sql .= " ORDER BY car.name";
@@ -77,13 +77,13 @@ class CarModel extends BasicCRUDModel {
 	}
 		private function saveColors($car_id, $post) {
 			$sql = "DELETE FROM automobile_car_colors WHERE car_id = ?";
-			$vals = array(intval($car_id));
+			$vals = array((int)$car_id);
 			$this->db->Execute($sql, $vals);
 		
 			$color_ids = empty($post['color_ids']) ? array() : $post['color_ids'];
 			$stmt = $this->db->Prepare("INSERT INTO automobile_car_colors (car_id, color_id) VALUES (?, ?)");
 			foreach ($color_ids as $color_id) {
-				$vals = array(intval($car_id), intval($color_id));
+				$vals = array((int)$car_id, (int)$color_id);
 				$this->db->Execute($stmt, $vals);
 			}
 		}
@@ -92,7 +92,7 @@ class CarModel extends BasicCRUDModel {
 	public function delete($id) {
 		//delete car's color associations
 		$sql = "DELETE FROM automobile_car_colors WHERE car_id = ?";
-		$vals = array(intval($id));
+		$vals = array((int)$id);
 		$this->db->Execute($sql, $vals);
 		
 		parent::delete($id);
