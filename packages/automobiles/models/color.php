@@ -18,8 +18,8 @@ class ColorModel extends BasicCRUDModel {
 		return $this->db->GetArray($sql, $vals);
 	}
 	
-	public function getSelectOptions() {
-		return $this->selectOptionsFromArray($this->getAll(), 'id', 'name', array(0 => '&lt;Choose One&gt;'));
+	public function getSelectOptions($header_item = array()) {
+		return $this->selectOptionsFromArray($this->getAll(), 'id', 'name', $header_item);
 	}
 	
 	public function validate(&$post) {

@@ -21,7 +21,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 		$btm = $this->model('body_type');
 		$body_type_id = empty($_GET['type']) ? 0 : ( $btm->exists($_GET['type']) ? intval($_GET['type']) : 0 );
 		$this->set('body_type_id', $body_type_id);
-		$this->set('body_type_options', $btm->getSelectOptions());
+		$this->set('body_type_options', $btm->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
 		
 		$this->set('cars', $this->model('car')->getByBodyTypeId($body_type_id));
 	}
@@ -59,8 +59,8 @@ class DashboardAutomobilesCarsController extends CrudController {
 		
 		//populate data
 		$this->set('colors', $colors);
-		$this->set('body_type_options', $this->model('body_type')->getSelectOptions());
-		$this->set('manufacturer_options', $this->model('manufacturer')->getSelectOptions());
+		$this->set('body_type_options', $this->model('body_type')->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
+		$this->set('manufacturer_options', $this->model('manufacturer')->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
 		
 		$this->set('currency_symbol', Package::getByHandle('automobiles')->config('currency_symbol'));
 		//display the form
