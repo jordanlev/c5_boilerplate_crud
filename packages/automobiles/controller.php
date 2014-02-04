@@ -52,13 +52,15 @@ class AutomobilesPackage extends Package {
 	//You might want to remove this in production -- could be dangerous (if package is accidentally removed)!!
 	public function uninstall() {
 		parent::uninstall();
-	
-		//Manually remove database tables (C5 doesn't do this automatically)
-		$table_prefix = 'automobile_'; //<--make sure this is unique enough to not accidentally drop other tables!
-		$db = Loader::db();
-		$tables = $db->GetCol("SHOW TABLES LIKE '{$table_prefix}%'");
-		$sql = 'DROP TABLE ' . implode(',', $tables);
-		$db->Execute($sql);
+		
+		if (Config::get('SITE_DEBUG_LEVEL')) {
+			//Manually remove database tables (C5 doesn't do this automatically)
+			$table_prefix = 'automobile_'; //<--make sure this is unique enough to not accidentally drop other tables!
+			$db = Loader::db();
+			$tables = $db->GetCol("SHOW TABLES LIKE '{$table_prefix}%'");
+			$sql = 'DROP TABLE ' . implode(',', $tables);
+			$db->Execute($sql);
+		}
 	}
 
 
