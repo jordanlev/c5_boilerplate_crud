@@ -35,7 +35,6 @@ $(document).ready(function() {
 
 /*** segment dropdown filter ***/
 $(document).ready(function() {
-	$('.segment-filter input[type="submit"]').hide();
 	$('.segment-filter select').on('change', function() {
 		var $form = $(this).closest('form');
 		$form.find('.loading-indicator').show();

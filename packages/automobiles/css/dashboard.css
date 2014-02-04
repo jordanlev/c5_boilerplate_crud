@@ -61,10 +61,6 @@
 
 
 /* ajax loading indicator */
-	.loading-indicator {
-		display: none;
-	}
-	
 	.loading-indicator img {
 		vertical-align: middle;
 		padding-left: 5px;
