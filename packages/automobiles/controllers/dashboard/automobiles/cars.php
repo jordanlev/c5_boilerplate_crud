@@ -39,7 +39,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 			$this->redirect("view?type={$_POST['body_type_id']}");
 			
 		} else if ($result == 'error') {
-			$this->set('body_type_id', $parent_id);
+			$this->set('body_type_id', $this->post('body_type_id', $parent_id));
 			
 			//Manually repopulate the checkbox list
 			$colors = $this->model('color')->getAll();
