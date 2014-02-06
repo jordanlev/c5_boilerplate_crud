@@ -5,7 +5,7 @@ $ih = Loader::helper('concrete/interface');
 $disabled = isset($disabled) && $disabled;
 ?>
 
-<?php echo $dh->getDashboardPaneHeaderWrapper('Delete Color', false, 'span6 offset3', false); ?>
+<?=$dh->getDashboardPaneHeaderWrapper('Delete Color', false, 'span6 offset3', false)?>
 
 	<div class="ccm-pane-body">
 
@@ -16,18 +16,18 @@ $disabled = isset($disabled) && $disabled;
 		<table class="form-table">
 			<tr>
 				<td class="right">Name:</td>
-				<td><?php echo h($name); ?></td>
+				<td><?=h($name)?></td>
 			</tr>
 		</table>
 		
 	</div>
 
 	<div class="ccm-pane-footer">
-		<form method="post" action="<?php echo $this->action('colors_delete', (int)$id); ?>" style="margin: 0;">
-			<?php echo $token; ?>
-			<?php echo $disabled ? '' : $ih->submit('Delete', false, 'right', 'error'); ?>
-			<?php echo $ih->button('Cancel', $this->action('colors_list'), 'left'); ?>
+		<form method="post" action="<?=$this->action('colors_delete', (int)$id)?>" style="margin: 0;">
+			<?=$token?>
+			<?=($disabled ? '' : $ih->submit('Delete', false, 'right', 'error'))?>
+			<?=$ih->button('Cancel', $this->action('colors_list'), 'left')?>
 		</form>
 	</div>
 
-<?php echo $dh->getDashboardPaneFooterWrapper(); ?>
+<?=$dh->getDashboardPaneFooterWrapper()?>

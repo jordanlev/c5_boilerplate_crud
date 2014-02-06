@@ -16,24 +16,24 @@ $heading = 'Configuration';
 $action = $this->action('');
 ?>
 
-<?php echo $dh->getDashboardPaneHeaderWrapper($heading); ?>
+<?=$dh->getDashboardPaneHeaderWrapper($heading)?>
 
-	<form method="post" action="<?php echo $action; ?>">
-		<?php echo $token; ?>
+	<form method="post" action="<?=$action?>">
+		<?=$token?>
 		<table class="form-table">
 			<?php foreach ($configs as $config): ?>
 			<tr>
-				<td class="right"><?php echo $form->label($config->key, $th->unhandle($config->key) . ':'); ?></td>
-				<td><?php echo $form->text($config->key, h($config->value), array('maxlength' => '255', 'class' => 'input-small')); ?></td>
+				<td class="right"><?=$form->label($config->key, $th->unhandle($config->key) . ':')?></td>
+				<td><?=$form->text($config->key, h($config->value), array('maxlength' => '255', 'class' => 'input-small'))?></td>
 			</tr>
 			<?php endforeach; ?>
 			<tr>
 				<td class="right">&nbsp;</td>
 				<td>
-					<?php echo $ih->submit('Save', false, false, 'primary'); ?>
+					<?=$ih->submit('Save', false, false, 'primary')?>
 				</td>
 			</tr>
 		</table>
 	</form>
 	
-<?php echo $dh->getDashboardPaneFooterWrapper(); ?>
+<?=$dh->getDashboardPaneFooterWrapper()?>
