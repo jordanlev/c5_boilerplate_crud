@@ -5,6 +5,11 @@ class BodyTypeModel extends SortableCRUDModel {
 	
 	protected $table = 'automobile_body_types';
 	
+	//use this for one-off's to reduce a line of code -- e.g. BodyTypeModel::factory()->getAll()
+	public static function factory() {
+		return new BodyTypeModel;
+	}
+	
 	public function getSelectOptions($header_item = array()) {
 		return $this->selectOptionsFromArray($this->getAll(), 'id', 'name', $header_item);
 	}

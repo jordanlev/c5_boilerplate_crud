@@ -5,6 +5,11 @@ class ColorModel extends BasicCRUDModel {
 	
 	protected $table = 'automobile_colors';
 	
+	//use this for one-off's to reduce a line of code -- e.g. ColorModel::factory()->getAll()
+	public static function factory() {
+		return new ColorModel;
+	}
+	
 	public function getAll() {
 		$sql = "SELECT * FROM {$this->table} ORDER BY name";
 		return $this->db->GetArray($sql);

@@ -5,6 +5,11 @@ class ManufacturerModel extends BasicCRUDModel {
 	
 	protected $table = 'automobile_manufacturers';
 	
+	//use this for one-off's to reduce a line of code -- e.g. ManufacturerModel::factory()->getAll()
+	public static function factory() {
+		return new ManufacturerModel;
+	}
+	
 	public function getAll() {
 		$sql = "SELECT * FROM {$this->table} ORDER BY name";
 		return $this->db->GetArray($sql);
