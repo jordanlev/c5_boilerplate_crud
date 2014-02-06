@@ -34,14 +34,14 @@ $action = $is_new ? $this->action('add', $body_type_id) : $this->action('edit', 
 				<tr>
 					<td class="right"><?php echo $form->label('year', 'Model Year:'); ?></td>
 					<td>
-						<?php echo $form->text('year', htmlentities($year), array('maxlength' => '4', 'class' => 'input-mini')); ?>
+						<?php echo $form->text('year', h($year), array('maxlength' => '4', 'class' => 'input-mini')); ?>
 						<i>4-digit year</i>
 					</td>
 				</tr>
 
 				<tr>
 					<td class="right"><?php echo $form->label('name', 'Name:'); ?></td>
-					<td><?php echo $form->text('name', htmlentities($name), array('maxlength' => '255')); ?></td>
+					<td><?php echo $form->text('name', h($name), array('maxlength' => '255')); ?></td>
 				</tr>
 			
 			<tr><td colspan="2"><hr></td></tr>
@@ -92,7 +92,7 @@ $action = $is_new ? $this->action('add', $body_type_id) : $this->action('edit', 
 						<?php foreach ($colors as $color): ?>
 						<label class="checkbox">
 							<input type="checkbox" name="color_ids[]" value="<?php echo $color['id']; ?>" <?php echo empty($color['has']) ? '' : 'checked="checked"'; ?>>
-							<?php echo htmlentities($color['name']); ?>
+							<?php echo h($color['name']); ?>
 						</label>
 						<?php endforeach; ?>
 					</td>

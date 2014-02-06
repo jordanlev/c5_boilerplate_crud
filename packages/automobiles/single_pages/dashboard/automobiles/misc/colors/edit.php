@@ -19,7 +19,7 @@ $action = $is_new ? $this->action('colors_add') : $this->action('colors_edit', (
 			<table class="form-table">
 				<tr>
 					<td class="right"><?php echo $form->label('name', 'Name:'); ?></td>
-					<td><?php echo $form->text('name', htmlentities($name), array('maxlength' => '255')); ?></td>
+					<td><?php echo $form->text('name', h($name), array('maxlength' => '255')); ?></td>
 				</tr>
 			</table>
 		</div>

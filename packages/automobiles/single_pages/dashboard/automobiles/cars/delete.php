@@ -15,19 +15,19 @@ $ih = Loader::helper('concrete/interface');
 		<table class="form-table">
 			<tr>
 				<td class="right">Body Type:</td>
-				<td><?php echo htmlentities($body_type_name); ?></td>
+				<td><?php echo h($body_type_name); ?></td>
 			</tr>
 			<tr>
 				<td class="right">Manufacturer:</td>
-				<td><?php echo htmlentities($manufacturer_name); ?></td>
+				<td><?php echo h($manufacturer_name); ?></td>
 			</tr>
 			<tr>
 				<td class="right">Model Year:</td>
-				<td><?php echo htmlentities($year); ?></td>
+				<td><?php echo h($year); ?></td>
 			</tr>
 			<tr>
 				<td class="right">Name:</td>
-				<td><?php echo htmlentities($name); ?></td>
+				<td><?php echo h($name); ?></td>
 			</tr>
 		</table>
 		

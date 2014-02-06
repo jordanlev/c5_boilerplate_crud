@@ -5,7 +5,7 @@ class AutomobilesPackage extends Package {
 	protected $pkgHandle = 'automobiles';
 	protected $pkgName = 'Automobiles';
 	protected $pkgDescription = 'Manage and display automobile inventory';
-	protected $appVersionRequired = '5.5';
+	protected $appVersionRequired = '5.6.1'; //requires 5.6.1 due to copious use of the "h()" function
 	protected $pkgVersion = '0.1';
 	
 	public function install() {

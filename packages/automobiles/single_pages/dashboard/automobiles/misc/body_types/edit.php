@@ -19,12 +19,12 @@ $action = $is_new ? $this->action('body_types_add') : $this->action('body_types_
 			<table class="form-table">
 				<tr>
 					<td class="right"><?php echo $form->label('name', 'Name:'); ?></td>
-					<td><?php echo $form->text('name', htmlentities($name), array('maxlength' => '255')); ?></td>
+					<td><?php echo $form->text('name', h($name), array('maxlength' => '255')); ?></td>
 				</tr>
 				<tr>
 					<td class="right"><?php echo $form->label('url_slug', 'URL Slug:'); ?></td>
 					<td>
-						<?php echo $form->text('url_slug', htmlentities($url_slug), array('maxlength' => '255')); ?>
+						<?php echo $form->text('url_slug', h($url_slug), array('maxlength' => '255')); ?>
 						<img src="<?php echo ASSETS_URL_IMAGES?>/loader_intelligent_search.gif" width="43" height="11" id="ccm-url-slug-loader" style="display: none" />
 					</td>
 				</tr>

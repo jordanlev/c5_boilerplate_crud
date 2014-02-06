@@ -15,7 +15,7 @@ $disabled = isset($disabled) && $disabled;
 		<table class="form-table">
 			<tr>
 				<td class="right">Name:</td>
-				<td><?php echo htmlentities($name); ?></td>
+				<td><?php echo h($name); ?></td>
 			</tr>
 		</table>
 	</div>

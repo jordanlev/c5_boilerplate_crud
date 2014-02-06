@@ -24,7 +24,7 @@ $action = $this->action('');
 			<?php foreach ($configs as $config): ?>
 			<tr>
 				<td class="right"><?php echo $form->label($config->key, $th->unhandle($config->key) . ':'); ?></td>
-				<td><?php echo $form->text($config->key, htmlentities($config->value), array('maxlength' => '255', 'class' => 'input-small')); ?></td>
+				<td><?php echo $form->text($config->key, h($config->value), array('maxlength' => '255', 'class' => 'input-small')); ?></td>
 			</tr>
 			<?php endforeach; ?>
 			<tr>

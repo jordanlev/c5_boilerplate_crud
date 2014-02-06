@@ -20,7 +20,7 @@ $action = $is_new ? $this->action('manufacturers_add') : $this->action('manufact
 			<table class="form-table">
 				<tr>
 					<td class="right"><?php echo $form->label('name', 'Name:'); ?></td>
-					<td><?php echo $form->text('name', htmlentities($name), array('maxlength' => '255')); ?></td>
+					<td><?php echo $form->text('name', h($name), array('maxlength' => '255')); ?></td>
 				</tr>
 			
 				<tr>

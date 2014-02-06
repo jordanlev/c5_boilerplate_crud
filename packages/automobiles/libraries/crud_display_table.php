@@ -95,7 +95,7 @@ class CrudDisplayTable {
 			foreach ($this->columns as $field => $col) {
 				$out[] = ($field === $last_field) ?'<td class="last-field">' : '<td>';
 				$val = $record[$field];
-				$out[] = $col['escape'] ? htmlentities($val) : $val;
+				$out[] = $col['escape'] ? h($val) : $val;
 				$out[] = '</td>';
 			}
 			foreach ($this->actions as $action) {
