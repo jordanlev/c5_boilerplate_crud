@@ -8,12 +8,17 @@
 //This, on the other hand, is a very lightweight model that doesn't try to do too much.
 //It provides very basic "CRUD" (insert/update, delete, and 'get one') functionality.
 
+
+// https://github.com/jordanlev/c5_boilerplate_crud
+
+
 class BasicCRUDModel {
 	
 	protected $table = '';
 	protected $pkid = 'id'; //primary key id field name
 	protected $fields = array(); //all other field names (including foreign keys)
 	protected $db = null;
+	protected $order = 'id'; //you probably want to override this with a 'name' or 'title' field -- UNLESS using SortableCRUDModel (which defaults this to an explicit `display_order` field)
 	
 	public function __construct() {
 		if (empty($this->table)) {
@@ -34,9 +39,7 @@ class BasicCRUDModel {
 	}
 	
 	public function getAll() {
-		//You should always override this (so there's a sort order,
-		// and possibly to include extra related data not from the primary record).
-		$sql = "SELECT * FROM {$this->table}";
+		$sql = "SELECT * FROM {$this->table} ORDER BY {$this->order}";
 		return $this->db->GetArray($sql);
 	}
 	

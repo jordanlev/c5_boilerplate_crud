@@ -3,6 +3,9 @@
 //Displays a listing of records in a styled html table with various action buttons in each row.
 //Note that the markup outputted by this class relies on some CSS and JS in dashboard.css/dashboard.js
 
+// https://github.com/jordanlev/c5_boilerplate_crud
+
+
 class CrudDisplayTable {
 	
 	private $view = null;

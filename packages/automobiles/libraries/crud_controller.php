@@ -2,6 +2,9 @@
 
 //Provides some improved convenience methods for our single_page controllers
 
+// https://github.com/jordanlev/c5_boilerplate_crud
+
+
 class CrudController extends Controller {
 	
 	public function __construct() {
