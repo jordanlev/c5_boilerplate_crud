@@ -29,14 +29,16 @@ class BodyTypeModel extends SortableCRUDModel {
 
 		$v->validate();
 		return $v->errors(true); //pass true to get a C5 "validation/error" object back
-	} //Validation custom rules...
+	}
+	
+	//Custom validation rules (must be public so they can be called via add_rule/add_callback/pre_filter)...
 		public function validate_url_slug_format($value) {
 			return !preg_match('/[^a-z0-9_-]/', $value);
 		}
 	
 		public function validate_url_slug_uniqueness(KohanaValidation $v, $field_name) {
-			$sql = "SELECT COUNT(*) FROM {$this->table} WHERE url_slug = ?";
-			$vals = array($v['url_slug']);
+			$sql = "SELECT COUNT(*) FROM {$this->table} WHERE {$field_name} = ?";
+			$vals = array($v[$field_name]);
 	
 			//if this is an UPDATE (as opposed to an INSERT), ignore this record's own url slug
 			if (!empty($v[$this->pkid])) {
@@ -49,7 +51,7 @@ class BodyTypeModel extends SortableCRUDModel {
 		        $v->add_error($field_name, 'validate_url_slug_uniqueness'); //2nd arg MUST match the function name
 			}
 		}
-	//END Validation
+	//END Custom validation rules
 	
 	public function hasChildren($id) {
 		$sql = "SELECT COUNT(*) FROM automobile_cars WHERE body_type_id = ?";
