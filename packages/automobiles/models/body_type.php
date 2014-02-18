@@ -25,7 +25,7 @@ class BodyTypeModel extends SortableCRUDModel {
 		// Don't validate displayOrder -- that's handled separately (not during a normal save() operation).
 		
 		$v->add_rule('url_slug', array($this, 'validate_url_slug_format'), 'URL Slug can only contain lowercase letters, numbers, dashes, and underscores');
-		$v->add_callback('url_slug', array($this, 'validate_url_slug_uniqueness'), 'URL Slug is already in use by another record.');
+		$v->add_callback('url_slug', array($this, 'validate_uniqueness'), 'URL Slug is already in use by another record.');
 
 		$v->validate();
 		return $v->errors(true); //pass true to get a C5 "validation/error" object back
@@ -36,11 +36,11 @@ class BodyTypeModel extends SortableCRUDModel {
 			return !preg_match('/[^a-z0-9_-]/', $value);
 		}
 	
-		public function validate_url_slug_uniqueness(KohanaValidation $v, $field_name) {
+		public function validate_uniqueness(KohanaValidation $v, $field_name) {
 			$sql = "SELECT COUNT(*) FROM {$this->table} WHERE {$field_name} = ?";
 			$vals = array($v[$field_name]);
 	
-			//if this is an UPDATE (as opposed to an INSERT), ignore this record's own url slug
+			//if this is an UPDATE (as opposed to an INSERT), ignore this record's existing value
 			if (!empty($v[$this->pkid])) {
 				$sql .= " AND {$this->pkid} <> ?";
 				$vals[] = (int)$v[$this->pkid];
@@ -48,7 +48,7 @@ class BodyTypeModel extends SortableCRUDModel {
 	
 			$count = $this->db->GetOne($sql, $vals);
 			if ($count) {
-		        $v->add_error($field_name, 'validate_url_slug_uniqueness'); //2nd arg MUST match the function name
+		        $v->add_error($field_name, 'validate_uniqueness'); //2nd arg MUST match the function name
 			}
 		}
 	//END Custom validation rules
