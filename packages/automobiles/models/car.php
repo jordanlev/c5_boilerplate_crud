@@ -4,6 +4,7 @@ Loader::library('crud_model', 'automobiles');
 class CarModel extends BasicCRUDModel {
 	
 	protected $table = 'automobile_cars';
+	protected $order = 'name';
 	
 	//use this for one-off's to reduce a line of code -- e.g. CarModel::factory()->getAll()
 	public static function factory() {
@@ -32,7 +33,7 @@ class CarModel extends BasicCRUDModel {
 			$vals[] = (int)$body_type_id;
 		}
 		
-		$sql .= " ORDER BY car.name";
+		$sql .= " ORDER BY car.{$this->order}";
 		
 		return $this->db->GetArray($sql, $vals);
 	}
@@ -43,7 +44,7 @@ class CarModel extends BasicCRUDModel {
 		     . " INNER JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id"
 		     . " INNER JOIN automobile_body_types body_type ON body_type.id = car.body_type_id"
 		     . " WHERE body_type.url_slug = ?"
-		     . " ORDER BY car.name";
+		     . " ORDER BY car.{$this->order}";
 		$vals = array($body_type_url_slug);
 		
 		return $this->db->GetArray($sql, $vals);
