@@ -25,7 +25,6 @@ $action = $is_new ? $this->action('body_types_add') : $this->action('body_types_
 					<td class="right"><?=$form->label('url_slug', 'URL Slug:')?></td>
 					<td>
 						<?=$form->text('url_slug', h($url_slug), array('maxlength' => '255'))?>
-						<img src="<?=ASSETS_URL_IMAGES?>/loader_intelligent_search.gif" width="43" height="11" id="ccm-url-slug-loader" style="display: none" />
 					</td>
 				</tr>
 			</table>
@@ -45,15 +44,9 @@ var url_slug_was_manually_changed = false;
 $(document).ready(function() {
 	$('input#name').on('change keyup paste', function() { //http://stackoverflow.com/a/17317620/477513
 		if (!url_slug_was_manually_changed) {
-			var val = $(this).val();
-			$('#ccm-url-slug-loader').show();
-			$.post('<?=REL_DIR_FILES_TOOLS_REQUIRED?>/pages/url_slug', {
-				'token': '<?=Loader::helper('validation/token')->generate('get_url_slug')?>',
-				'name': val
-			}, function(response) {
-				$('#ccm-url-slug-loader').hide();
-				$('input#url_slug').val(response);
-			});
+			var name = $(this).val();
+			var slug = name.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''); //https://gist.github.com/bentruyman/1211400
+			$('input#url_slug').val(slug);
 		}
 	});
 	$('input#url_slug').on('change', function() {
