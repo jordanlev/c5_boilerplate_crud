@@ -173,11 +173,4 @@ class CrudController extends Controller {
 			return 'edit'; // caller should populate form fields with existing record data
 		}
 	}
-	
-	//Return an instantiated model class (cuts down on lines-of-code needed to call a model method).
-	public function model($entity) {
-		$class = Loader::helper('text')->camelcase($entity) . 'Model';
-		$model = new $class;
-		return $model;
-	}
 }

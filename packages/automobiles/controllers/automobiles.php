@@ -16,9 +16,9 @@ class AutomobilesController extends CrudController {
 	
 	public function view($body_type_url_slug = null) {
 		if (!empty($body_type_url_slug)) {
-			$cars = $this->model('car')->getByBodyTypeUrlSlug($body_type_url_slug);
+			$cars = CarModel::factory()->getByBodyTypeUrlSlug($body_type_url_slug);
 		} else {
-			$cars = $this->model('car')->getAll();
+			$cars = CarModel::factory()->getAll();
 		}
 		
 		$this->set('cars', $cars);

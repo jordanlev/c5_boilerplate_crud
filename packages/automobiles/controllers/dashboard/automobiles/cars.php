@@ -18,12 +18,12 @@ class DashboardAutomobilesCarsController extends CrudController {
 	}
 	
 	public function view() {
-		$btm = $this->model('body_type');
-		$body_type_id = empty($_GET['type']) ? 0 : ( $btm->exists($_GET['type']) ? intval($_GET['type']) : 0 );
+		$body_type_model = new BodyTypeModel;
+		$body_type_id = empty($_GET['type']) ? 0 : ( $body_type_model->exists($_GET['type']) ? intval($_GET['type']) : 0 );
 		$this->set('body_type_id', $body_type_id);
-		$this->set('body_type_options', $btm->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
+		$this->set('body_type_options', $body_type_model->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
 		
-		$this->set('cars', $this->model('car')->getByBodyTypeId($body_type_id));
+		$this->set('cars', CarModel::factory()->getByBodyTypeId($body_type_id));
 	}
 	
 	public function add($body_type_id = null) {
@@ -32,7 +32,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 	
 	public function edit($id = null, $parent_id = null) { //2nd arg is for adding new records only
 		//process the form
-		$result = $this->processEditForm($id, $this->model('car'));
+		$result = $this->processEditForm($id, CarModel::factory());
 		
 		if ($result == 'success') {
 			$this->flash('Car Saved!');
@@ -42,7 +42,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 			$this->set('body_type_id', $this->post('body_type_id', $parent_id));
 			
 			//Manually repopulate the checkbox list
-			$colors = $this->model('color')->getAll();
+			$colors = ColorModel::factory()->getAll();
 			$chosen_color_ids = $this->post('color_ids', array());
 			foreach ($colors as $key => $color) {
 				$colors[$key]['has'] = in_array($color['id'], $chosen_color_ids);
@@ -50,17 +50,17 @@ class DashboardAutomobilesCarsController extends CrudController {
 			
 		} else if ($result == 'add') {
 			$this->set('body_type_id', $parent_id);
-			$colors = $this->model('color')->getAll();
+			$colors = ColorModel::factory()->getAll();
 			
 		} else if ($result == 'edit') {
-			$colors = $this->model('color')->getAllWithCar($id);
+			$colors = ColorModel::factory()->getAllWithCar($id);
 			
 		}
 		
 		//populate data
 		$this->set('colors', $colors);
-		$this->set('body_type_options', $this->model('body_type')->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
-		$this->set('manufacturer_options', $this->model('manufacturer')->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
+		$this->set('body_type_options', BodyTypeModel::factory()->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
+		$this->set('manufacturer_options', ManufacturerModel::factory()->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
 		
 		$this->set('currency_symbol', Package::getByHandle('automobiles')->config('currency_symbol'));
 		//display the form
@@ -73,7 +73,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 			$this->render404AndExit();
 		}
 		
-		$model = $this->model('car');
+		$model = new CarModel;
 		
 		$record = $model->getById($id);
 		if (!$record) {
