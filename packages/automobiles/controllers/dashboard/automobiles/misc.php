@@ -35,7 +35,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function body_types_edit($id = null) {
-		$model = new BodyTypeModel;
+		$model = BodyTypeModel::factory();
 		
 		//This function serves several purposes:
 		// * Display "add new" form
@@ -106,7 +106,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 			$this->render404AndExit();
 		}
 		
-		$model = new BodyTypeModel;
+		$model = BodyTypeModel::factory();
 		
 		if ($model->hasChildren($id)) {
 			$this->set('error', 'This body type cannot be deleted because one or more cars is assigned to it.');
@@ -136,7 +136,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function colors_edit($id = null) {
-		$model = new ColorModel;
+		$model = ColorModel::factory();
 		
 		//This function serves several purposes:
 		// * Display "add new" form
@@ -199,7 +199,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 			$this->render404AndExit();
 		}
 		
-		$model = new ColorModel;
+		$model = ColorModel::factory();
 		
 		if ($model->hasChildren($id)) {
 			$this->set('error', 'This color cannot be deleted because it is assigned to one or more cars.');
@@ -229,7 +229,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function manufacturers_edit($id = null) {
-		$model = new ManufacturerModel;
+		$model = ManufacturerModel::factory();
 		
 		//This function serves several purposes:
 		// * Display "add new" form
@@ -301,7 +301,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 			$this->render404AndExit();
 		}
 		
-		$model = new ManufacturerModel;
+		$model = ManufacturerModel::factory();
 		
 		if ($model->hasChildren($id)) {
 			$this->set('error', 'This manufacturer cannot be deleted because it has one or more cars.');

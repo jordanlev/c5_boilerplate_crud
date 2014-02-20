@@ -18,7 +18,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 	}
 	
 	public function view() {
-		$body_type_model = new BodyTypeModel;
+		$body_type_model = BodyTypeModel::factory();
 		$body_type_id = empty($_GET['type']) ? 0 : ( $body_type_model->exists($_GET['type']) ? intval($_GET['type']) : 0 );
 		$this->set('body_type_id', $body_type_id);
 		$this->set('body_type_options', $body_type_model->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
@@ -31,7 +31,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 	}
 	
 	public function edit($id = null, $parent_id = null) { //2nd arg is for adding new records only
-		$model = new CarModel;
+		$model = CarModel::factory();
 		
 		//This function serves several purposes:
 		// * Display "add new" form
@@ -108,7 +108,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 			$this->render404AndExit();
 		}
 		
-		$model = new CarModel;
+		$model = CarModel::factory();
 		
 		$record = $model->getById($id);
 		if (!$record) {
