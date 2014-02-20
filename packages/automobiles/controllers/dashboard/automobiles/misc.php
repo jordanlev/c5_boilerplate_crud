@@ -20,8 +20,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 	public function view() {
 		//this page just shows some links ot other pages, so we don't need to do anything here
 	}
-	
-	
+		
 	
 	
 	/*** BODY TYPES **********************************************************/
@@ -36,12 +35,61 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function body_types_edit($id = null) {
-		$result = $this->processEditForm($id, BodyTypeModel::factory());
-		if ($result == 'success') {
-			$this->flash('Body Type Saved!');
-			$this->redirect('body_types_list');
+		$model = new BodyTypeModel;
+		
+		//This function serves several purposes:
+		// * Display "add new" form
+		// * Display "edit existing" form
+		// * Process submitted form (validate data and save to db)
+		//
+		//We can determine which action to take based on a combination of
+		// whether or not valid data was POST'ed and whether or not an $id was provided...
+		if ($_POST) {
+			$error = $model->validate($_POST);
+			$result = $error->has() ? 'error' : 'success';
+		} else {
+			$result = empty($id) ? 'add' : 'edit';
 		}
 		
+		
+		//form was submitted and data is valid -- save to db and redirect...
+		if ($result == 'success') {
+			$id = $model->save($_POST);
+			$this->flash('Body Type Saved!');
+			$this->redirect('body_types_list');
+		
+		
+		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
+		} else if ($result == 'error') {
+			$this->set('error', $error); //C5 automagically displays these errors for us in the view
+			
+			//C5 form helpers will automatically repopulate form fields from $_POST data,
+			// but we need to manually repopulate any data that isn't in $_POST,
+			// or data that is used in places other than form fields...
+			
+			//[nothing needs to be done here]
+		
+			
+		//form was not submitted, user wants to add a new record -- populate any form fields that should have default values...
+		} else if ($result == 'add') {
+			
+			//[nothing needs to be done here]
+		
+		
+		//form was not submitted, user wants to edit an existing record -- populate form fields with db data...
+		} else if ($result == 'edit') {
+			$record = $model->getById($id);
+			if (!$record) {
+				$this->render404AndExit();
+			}
+			
+			$this->setArray($record); //sets variables for every field in $record
+		}
+		
+		//now populate data that is the same regardless of the action taken...
+		$this->set('id', $id);
+		
+		//finally, display the form with the data we populated above
 		$this->render('body_types/edit');
 	}
 	
@@ -88,12 +136,61 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function colors_edit($id = null) {
-		$result = $this->processEditForm($id, ColorModel::factory());
-		if ($result == 'success') {
-			$this->flash('Color Saved!');
-			$this->redirect('colors_list');
+		$model = new ColorModel;
+		
+		//This function serves several purposes:
+		// * Display "add new" form
+		// * Display "edit existing" form
+		// * Process submitted form (validate data and save to db)
+		//
+		//We can determine which action to take based on a combination of
+		// whether or not valid data was POST'ed and whether or not an $id was provided...
+		if ($_POST) {
+			$error = $model->validate($_POST);
+			$result = $error->has() ? 'error' : 'success';
+		} else {
+			$result = empty($id) ? 'add' : 'edit';
 		}
 		
+		
+		//form was submitted and data is valid -- save to db and redirect...
+		if ($result == 'success') {
+			$id = $model->save($_POST);
+			$this->flash('Color Saved!');
+			$this->redirect('colors_list');
+		
+		
+		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
+		} else if ($result == 'error') {
+			$this->set('error', $error); //C5 automagically displays these errors for us in the view
+			
+			//C5 form helpers will automatically repopulate form fields from $_POST data,
+			// but we need to manually repopulate any data that isn't in $_POST,
+			// or data that is used in places other than form fields...
+			
+			//[nothing needs to be done here]
+		
+			
+		//form was not submitted, user wants to add a new record -- populate any form fields that should have default values...
+		} else if ($result == 'add') {
+			
+			//[nothing needs to be done here]
+		
+		
+		//form was not submitted, user wants to edit an existing record -- populate form fields with db data...
+		} else if ($result == 'edit') {
+			$record = $model->getById($id);
+			if (!$record) {
+				$this->render404AndExit();
+			}
+			
+			$this->setArray($record); //sets variables for every field in $record
+		}
+		
+		//now populate data that is the same regardless of the action taken...
+		$this->set('id', $id);
+		
+		//finally, display the form with the data we populated above
 		$this->render('colors/edit');
 	}
 	
@@ -132,13 +229,60 @@ class DashboardAutomobilesMiscController extends CrudController {
 	}
 	
 	public function manufacturers_edit($id = null) {
-		$result = $this->processEditForm($id, ManufacturerModel::factory());
-		if ($result == 'success') {
-			$this->flash('Manufacturer Saved!');
-			$this->redirect('manufacturers_list');
+		$model = new ManufacturerModel;
+		
+		//This function serves several purposes:
+		// * Display "add new" form
+		// * Display "edit existing" form
+		// * Process submitted form (validate data and save to db)
+		//
+		//We can determine which action to take based on a combination of
+		// whether or not valid data was POST'ed and whether or not an $id was provided...
+		if ($_POST) {
+			$error = $model->validate($_POST);
+			$result = $error->has() ? 'error' : 'success';
+		} else {
+			$result = empty($id) ? 'add' : 'edit';
 		}
 		
-		//populate lookup data
+		
+		//form was submitted and data is valid -- save to db and redirect...
+		if ($result == 'success') {
+			$id = $model->save($_POST);
+			$this->flash('Manufacturer Saved!');
+			$this->redirect('manufacturers_list');
+		
+		
+		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
+		} else if ($result == 'error') {
+			$this->set('error', $error); //C5 automagically displays these errors for us in the view
+			
+			//C5 form helpers will automatically repopulate form fields from $_POST data,
+			// but we need to manually repopulate any data that isn't in $_POST,
+			// or data that is used in places other than form fields...
+			
+			//[nothing needs to be done here]
+		
+			
+		//form was not submitted, user wants to add a new record -- populate any form fields that should have default values...
+		} else if ($result == 'add') {
+			
+			//[nothing needs to be done here]
+		
+		
+		//form was not submitted, user wants to edit an existing record -- populate form fields with db data...
+		} else if ($result == 'edit') {
+			$record = $model->getById($id);
+			if (!$record) {
+				$this->render404AndExit();
+			}
+			
+			$this->setArray($record); //sets variables for every field in $record
+		}
+		
+		//now populate data that is the same regardless of the action taken...
+		$this->set('id', $id);
+		
 		$this->set('country_options', array(
 			'' => '&lt;Choose One&gt;',
 			'Japan' => 'Japan',
@@ -147,6 +291,8 @@ class DashboardAutomobilesMiscController extends CrudController {
 			'Australia' => 'Australia',
 		));
 		
+		
+		//finally, display the form with the data we populated above
 		$this->render('manufacturers/edit');
 	}
 	
