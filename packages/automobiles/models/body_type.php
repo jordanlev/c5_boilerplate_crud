@@ -48,7 +48,7 @@ class BodyTypeModel extends SortableCRUDModel {
 	
 			$count = $this->db->GetOne($sql, $vals);
 			if ($count) {
-		        $v->add_error($field_name, 'validate_uniqueness'); //2nd arg MUST match the function name
+				$v->add_error($field_name, __FUNCTION__);
 			}
 		}
 	//END Custom validation rules
