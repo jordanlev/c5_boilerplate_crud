@@ -31,4 +31,4 @@ The list of Car records is segmented by Body Type (which acts as a "category" fo
 The list of Body Types (in the "Misc. Settings" section) can be sorted via drag-and-drop.
 
 ## Front-End
-One sample front-end `single_page` is provided as a starting point -- but it does not contain any special functionality (because the purpose of this package is to show an example of the back-end dashboard interface).
+A very basic blocktype and a sample front-end `single_page` are provided as a starting points -- but they do not contain much functionality (because the purpose of this package is to show an example of the back-end dashboard interface).
