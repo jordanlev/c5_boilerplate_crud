@@ -104,7 +104,7 @@ $action = $is_new ? $this->action('add', $body_type_id) : $this->action('edit', 
 		
 		<div class="ccm-pane-footer">
 			<?=$ih->submit(t('Save'), false, 'right', 'primary')?>
-			<?=$ih->button(t('Cancel'), $this->action("view?type={$body_type_id}"), 'left')?>
+			<?=$ih->button(t('Cancel'), $this->action("view?body_type={$body_type_id}"), 'left')?>
 		</div>
 
 	</form>

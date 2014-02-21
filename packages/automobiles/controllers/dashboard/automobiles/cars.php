@@ -19,7 +19,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 	
 	public function view() {
 		$body_type_model = BodyTypeModel::factory();
-		$body_type_id = empty($_GET['type']) ? 0 : ( $body_type_model->exists($_GET['type']) ? intval($_GET['type']) : 0 );
+		$body_type_id = empty($_GET['body_type']) ? 0 : ( $body_type_model->exists($_GET['body_type']) ? intval($_GET['body_type']) : 0 );
 		$this->set('body_type_id', $body_type_id);
 		$this->set('body_type_options', $body_type_model->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
 		
@@ -52,7 +52,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 		if ($result == 'success') {
 			$id = $model->save($_POST);
 			$this->flash('Car Saved!');
-			$this->redirect("view?type={$_POST['body_type_id']}");
+			$this->redirect("view?body_type={$_POST['body_type_id']}");
 		
 		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
@@ -118,7 +118,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 		if ($this->post()) {
 			$model->delete($id);
 			$this->flash('Car Deleted.');
-			$this->redirect("view?type={$record['body_type_id']}");
+			$this->redirect("view?body_type={$record['body_type_id']}");
 		}
 		
 		$this->setArray($record);
