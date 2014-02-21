@@ -33,12 +33,15 @@ class AutomobilesPackage extends Package {
 		//Frontend Page:
 		$this->getOrAddSinglePage($pkg, '/automobiles', 'Automobiles');
 		
+		//Frontend Blocktype:
+		$this->getOrInstallBlockType($pkg, 'automobiles_car_list');
+		
 		//Dashboard Pages:
 		//Install one page for each *controller* (not each view),
 		// plus one at the top-level to serve as a placeholder in the dashboard menu
 		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles', 'Automobiles'); //top-level pleaceholder
-		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles/cars', 'Car Listing');
-		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles/misc', 'Misc. Settings'); //this one controller handles colors AND manufacturers
+		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles/cars', 'Car Listing'); //primary model
+		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles/misc', 'Misc. Settings'); //ALL secondary models handled by one controller
 		
 		//Special 'config' page (for package-wide settings)
 		$config_page = $this->getOrAddSinglePage($pkg, '/dashboard/automobiles/config', 'Configuration');
