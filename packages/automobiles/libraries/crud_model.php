@@ -85,6 +85,11 @@ class BasicCRUDModel {
 		}
 	}
 	
+	public function update($id, $update_array){
+		$this->db->AutoExecute($this->table, $update_array, 'UPDATE', "{$this->pkid}={$id}");
+		return $id;
+	}
+	
 	protected function isNewRecord($post) {
 		$id = isset($post[$this->pkid]) ? intval($post[$this->pkid]) : 0;
 		return ($id == 0);
