@@ -85,6 +85,8 @@ class BasicCRUDModel {
 		}
 	}
 	
+	//This function will allow you to update a row without worrying about NULLing the other fields.
+	//Used in Edit if ID is known, and business logic updates
 	public function update($id, $update_array){
 		$this->db->AutoExecute($this->table, $update_array, 'UPDATE', "{$this->pkid}={$id}");
 		return $id;
