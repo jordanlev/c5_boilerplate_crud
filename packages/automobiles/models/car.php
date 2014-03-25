@@ -14,8 +14,8 @@ class CarModel extends BasicCRUDModel {
 	public function getById($id) {
 		$sql = "SELECT car.*, body_type.name AS body_type_name, manufacturer.name AS manufacturer_name"
 		     . " FROM {$this->table} car"
-		     . " INNER JOIN automobile_body_types body_type ON body_type.id = car.body_type_id"
-		     . " INNER JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id"
+		     . " LEFT JOIN automobile_body_types body_type ON body_type.id = car.body_type_id"
+		     . " LEFT JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id"
 		     . " WHERE car.{$this->pkid} = ?"
 		     . " LIMIT 1";
 		$vals = array((int)$id);
@@ -25,7 +25,7 @@ class CarModel extends BasicCRUDModel {
 	public function getByBodyTypeId($body_type_id) {
 		$sql = "SELECT car.*, manufacturer.name AS manufacturer_name"
 		     . " FROM {$this->table} car"
-		     . " INNER JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id";
+		     . " LEFT JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id";
 		$vals = array();
 		
 		if (!empty($body_type_id)) {
@@ -41,8 +41,8 @@ class CarModel extends BasicCRUDModel {
 	public function getByBodyTypeUrlSlug($body_type_url_slug) {
 		$sql = "SELECT car.*, manufacturer.name AS manufacturer_name"
 		     . " FROM {$this->table} car"
-		     . " INNER JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id"
-		     . " INNER JOIN automobile_body_types body_type ON body_type.id = car.body_type_id"
+		     . " LEFT JOIN automobile_manufacturers manufacturer ON manufacturer.id = car.manufacturer_id"
+		     . " LEFT JOIN automobile_body_types body_type ON body_type.id = car.body_type_id"
 		     . " WHERE body_type.url_slug = ?"
 		     . " ORDER BY car.{$this->order}";
 		$vals = array($body_type_url_slug);

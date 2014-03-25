@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+	<table name="btAutomobilesCarList">
+		<field name="bID" type="I"><UNSIGNED/><KEY/><AUTOINCREMENT/></field>
+		<field name="body_type_id" type="I"><UNSIGNED/><NOTNULL/></field>
+	</table>
+</schema>

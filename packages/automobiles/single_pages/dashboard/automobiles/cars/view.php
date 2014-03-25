@@ -10,7 +10,7 @@ $form = Loader::helper('form');
 
 	<form action="<?=$this->action('view')?>" method="get" class="segment-filter form-inline">
 		<label for="type">Body Type:</label>
-		<?=$form->select('type', $body_type_options, $body_type_id)?>
+		<?=$form->select('body_type', $body_type_options, $body_type_id)?>
 		<noscript><input type="submit" class="btn ccm-input-submit" value="Go"></noscript>
 		<span class="loading-indicator" style="display:none;"><img src="<?=ASSETS_URL_IMAGES?>/throbber_white_16.gif" width="16" height="16" alt="loading..." /></span>
 	</form>

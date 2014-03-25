@@ -38,7 +38,7 @@ $ih = Loader::helper('concrete/interface');
 		<form method="post" action="<?=$this->action('delete', (int)$id)?>" style="margin: 0;">
 			<?=$token?>
 			<?=$ih->submit('Delete', false, 'right', 'error')?>
-			<?=$ih->button('Cancel', $this->action("view?type={$body_type_id}"), 'left')?>
+			<?=$ih->button('Cancel', $this->action("view?body_type={$body_type_id}"), 'left')?>
 		</form>
 		
 	</div>

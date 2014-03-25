@@ -33,12 +33,15 @@ class AutomobilesPackage extends Package {
 		//Frontend Page:
 		$this->getOrAddSinglePage($pkg, '/automobiles', 'Automobiles');
 		
+		//Frontend Blocktype:
+		$this->getOrInstallBlockType($pkg, 'automobiles_car_list');
+		
 		//Dashboard Pages:
 		//Install one page for each *controller* (not each view),
 		// plus one at the top-level to serve as a placeholder in the dashboard menu
 		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles', 'Automobiles'); //top-level pleaceholder
-		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles/cars', 'Car Listing');
-		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles/misc', 'Misc. Settings'); //this one controller handles colors AND manufacturers
+		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles/cars', 'Car Listing'); //primary model
+		$this->getOrAddSinglePage($pkg, '/dashboard/automobiles/misc', 'Misc. Settings'); //ALL secondary models handled by one controller
 		
 		//Special 'config' page (for package-wide settings)
 		$config_page = $this->getOrAddSinglePage($pkg, '/dashboard/automobiles/config', 'Configuration');
@@ -49,20 +52,6 @@ class AutomobilesPackage extends Package {
 		$this->getOrAddConfig($pkg, 'dummy_example', 'test');
 	}
 	
-	//You might want to remove this in production -- could be dangerous (if package is accidentally removed)!!
-	public function uninstall() {
-		parent::uninstall();
-		
-		if (Config::get('SITE_DEBUG_LEVEL')) {
-			//Manually remove database tables (C5 doesn't do this automatically)
-			$table_prefix = 'automobile_'; //<--make sure this is unique enough to not accidentally drop other tables!
-			$db = Loader::db();
-			$tables = $db->GetCol("SHOW TABLES LIKE '{$table_prefix}%'");
-			$sql = 'DROP TABLE ' . implode(',', $tables);
-			$db->Execute($sql);
-		}
-	}
-
 
 /*** UTILITY FUNCTIONS ***/
 	private function seedData($pkg, $filename) {
