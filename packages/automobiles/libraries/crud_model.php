@@ -115,6 +115,15 @@ class BasicCRUDModel {
 		return $options;
 	}
 	
+	//Select Options to be used for Key=>Value pairs. Field array to be used for simple arrays of a field (like ids)
+	public static function getFieldArray($arr, $fieldName) {
+		$fields = array();
+		foreach ($arr as $item) {
+			$fields[] = $item[$fieldName];
+		}
+		return $fields;
+	}
+	
 	//Calls add_rule() on the given KohanaValidation object for a variety of "standard" rules.
 	//We will only add rules for fields that exist in the given $fields_and_labels array,
 	// which should have keys of field names and values of human-readable labels (for error messages).
