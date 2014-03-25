@@ -85,6 +85,13 @@ class BasicCRUDModel {
 		}
 	}
 	
+	//This function will allow you to update a row without worrying about NULLing the other fields.
+	//Used in Edit if ID is known, and business logic updates
+	public function update($id, $update_array){
+		$this->db->AutoExecute($this->table, $update_array, 'UPDATE', "{$this->pkid}={$id}");
+		return $id;
+	}
+	 
 	protected function isNewRecord($post) {
 		$id = isset($post[$this->pkid]) ? intval($post[$this->pkid]) : 0;
 		return ($id == 0);
@@ -106,6 +113,15 @@ class BasicCRUDModel {
 			$options[$item[$keyField]] = h($item[$valField], ENT_QUOTES, APP_CHARSET);
 		}
 		return $options;
+	}
+	
+	//Select Options to be used for Key=>Value pairs. Field array to be used for simple arrays of a field (like ids)
+	public static function getFieldArray($arr, $fieldName) {
+		$fields = array();
+		foreach ($arr as $item) {
+			$fields[] = $item[$fieldName];
+		}
+		return $fields;
 	}
 	
 	//Calls add_rule() on the given KohanaValidation object for a variety of "standard" rules.

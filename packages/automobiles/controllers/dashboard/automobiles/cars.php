@@ -50,7 +50,11 @@ class DashboardAutomobilesCarsController extends CrudController {
 		
 		//form was submitted and data is valid -- save to db and redirect...
 		if ($result == 'success') {
-			$id = $model->save($_POST);
+			if(empty($id)){
+				$id = $model->save($_POST);
+			} else {
+				$model->update($id, $_POST);
+			}
 			$this->flash('Car Saved!');
 			$this->redirect("view?body_type={$_POST['body_type_id']}");
 		

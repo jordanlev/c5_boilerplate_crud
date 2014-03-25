@@ -54,7 +54,11 @@ class DashboardAutomobilesMiscController extends CrudController {
 		
 		//form was submitted and data is valid -- save to db and redirect...
 		if ($result == 'success') {
-			$id = $model->save($_POST);
+			if(empty($id)){
+				$id = $model->save($_POST);
+			} else {
+				$model->update($id, $_POST);
+			}
 			$this->flash('Body Type Saved!');
 			$this->redirect('body_types_list');
 		
@@ -155,7 +159,11 @@ class DashboardAutomobilesMiscController extends CrudController {
 		
 		//form was submitted and data is valid -- save to db and redirect...
 		if ($result == 'success') {
-			$id = $model->save($_POST);
+			if(empty($id)){
+				$id = $model->save($_POST);
+			} else {
+				$model->update($id, $_POST);
+			}
 			$this->flash('Color Saved!');
 			$this->redirect('colors_list');
 		
@@ -248,7 +256,11 @@ class DashboardAutomobilesMiscController extends CrudController {
 		
 		//form was submitted and data is valid -- save to db and redirect...
 		if ($result == 'success') {
-			$id = $model->save($_POST);
+			if(empty($id)){
+				$id = $model->save($_POST);
+			} else {
+				$model->update($id, $_POST);
+			}
 			$this->flash('Manufacturer Saved!');
 			$this->redirect('manufacturers_list');
 		
