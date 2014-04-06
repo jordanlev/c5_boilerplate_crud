@@ -6,16 +6,16 @@ $form = Loader::helper('form');
 ?>
 
 
-<?=$dh->getDashboardPaneHeaderWrapper('Cars')?>
+<?php echo $dh->getDashboardPaneHeaderWrapper('Cars')?>
 
-	<form action="<?=$this->action('view')?>" method="get" class="segment-filter form-inline">
+	<form action="<?php echo $this->action('view')?>" method="get" class="segment-filter form-inline">
 		<label for="type">Body Type:</label>
-		<?=$form->select('body_type', $body_type_options, $body_type_id)?>
+		<?php echo $form->select('body_type', $body_type_options, $body_type_id); ?>
 		<noscript><input type="submit" class="btn ccm-input-submit" value="Go"></noscript>
-		<span class="loading-indicator" style="display:none;"><img src="<?=ASSETS_URL_IMAGES?>/throbber_white_16.gif" width="16" height="16" alt="loading..." /></span>
+		<span class="loading-indicator" style="display:none;"><img src="<?php echo ASSETS_URL_IMAGES; ?>/throbber_white_16.gif" width="16" height="16" alt="loading..." /></span>
 	</form>
 
-	<?php if (!empty($body_type_id)): ?>
+	<?php if (!empty($body_type_id)){ ?>
 	
 		<hr>
 	
@@ -33,8 +33,8 @@ $form = Loader::helper('form');
 		$table->display($cars);
 		?>
 	
-		<p><?=$ih->button("Add New {$body_type_options[$body_type_id]}...", $this->action('add', $body_type_id), false, 'primary')?></p>
+		<p><?php echo $ih->button("Add New {$body_type_options[$body_type_id]}...", $this->action('add', $body_type_id), false, 'primary'); ?></p>
 	
-	<?php endif ?>
+	<?php } ?>
 	
-<?=$dh->getDashboardPaneFooterWrapper()?>
+<?php echo $dh->getDashboardPaneFooterWrapper(); ?>
