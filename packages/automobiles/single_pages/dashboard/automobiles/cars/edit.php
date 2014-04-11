@@ -16,7 +16,7 @@ $action = $is_new ? $this->action('add', $body_type_id) : $this->action('edit', 
 
 	<form method="post" action="<?=$action?>">
 		<?=$token?>
-		<?=$form->hidden('id', (int)$id); /* redundant, but simplifies processing */ ?>
+		<input type="hidden" id="id" name="id" value="<?= (int)$id?>" /><?php /* redundant, but simplifies processing */ /*manual hidden, since C5 overrides with post values */ ?>
 		
 		<div class="ccm-pane-body">
 
@@ -103,7 +103,8 @@ $action = $is_new ? $this->action('add', $body_type_id) : $this->action('edit', 
 		</div>
 		
 		<div class="ccm-pane-footer">
-			<?=$ih->submit(t('Save'), false, 'right', 'primary')?>
+			<?=$form->submit('add-new','Save & Add New',array('class'=>'ccm-button-v2-right'))?>
+			<?=$form->submit('save','Save',array('class'=>'ccm-button-v2-right primary'))?>
 			<?=$ih->button(t('Cancel'), $this->action("view?body_type={$body_type_id}"), 'left')?>
 		</div>
 

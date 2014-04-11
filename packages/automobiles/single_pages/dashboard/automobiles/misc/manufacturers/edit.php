@@ -13,7 +13,7 @@ $action = $is_new ? $this->action('manufacturers_add') : $this->action('manufact
 
 	<form method="post" action="<?=$action?>">
 		<?=$token?>
-		<?=$form->hidden('id', (int)$id); /* redundant, but simplifies processing */ ?>
+		<input type="hidden" id="id" name="id" value="<?= (int)$id?>" /><?php /* redundant, but simplifies processing */ /*manual hidden, since C5 overrides with post values */ ?>
 		
 		<div class="ccm-pane-body">
 
@@ -44,7 +44,8 @@ $action = $is_new ? $this->action('manufacturers_add') : $this->action('manufact
 		</div>
 		
 		<div class="ccm-pane-footer">
-			<?=$ih->submit('Save', false, 'right', 'primary')?>
+			<?=$form->submit('add-new','Save & Add New',array('class'=>'ccm-button-v2-right'))?>
+			<?=$form->submit('save','Save',array('class'=>'ccm-button-v2-right primary'))?>
 			<?=$ih->button('Cancel', $this->action('manufacturers_list'), 'left')?>
 		</div>
 
