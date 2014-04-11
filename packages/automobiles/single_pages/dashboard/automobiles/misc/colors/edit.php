@@ -13,7 +13,7 @@ $action = $is_new ? $this->action('colors_add') : $this->action('colors_edit', (
 
 	<form method="post" action="<?=$action?>">
 		<?=$token?>
-		<?=$form->hidden('id', (int)$id); /* redundant, but simplifies processing */ ?>
+		<input type="hidden" id="id" name="id" value="<?= (int)$id?>" /><?php /* redundant, but simplifies processing */ /*manual hidden, since C5 overrides with post values */ ?>
 		
 		<div class="ccm-pane-body">
 			<table class="form-table">
@@ -25,7 +25,8 @@ $action = $is_new ? $this->action('colors_add') : $this->action('colors_edit', (
 		</div>
 		
 		<div class="ccm-pane-footer">
-			<?=$ih->submit('Save', false, 'right', 'primary')?>
+			<?=$form->submit('add-new','Save & Add New',array('class'=>'ccm-button-v2-right'))?>
+			<?=$form->submit('save','Save',array('class'=>'ccm-button-v2-right primary'))?>
 			<?=$ih->button('Cancel', $this->action('colors_list'), 'left')?>
 		</div>
 	</form>
