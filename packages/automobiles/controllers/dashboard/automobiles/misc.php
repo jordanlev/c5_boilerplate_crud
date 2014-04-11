@@ -196,8 +196,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 		}
 		
 		//now populate data that is the same regardless of the action taken...
-		//if duplicating data, force this to be empty
-		$this->set('id', ($_POST['duplicate'] ? null:$id));
+		$this->set('id', $id);
 		
 		//finally, display the form with the data we populated above
 		$this->render('colors/edit');
@@ -266,7 +265,6 @@ class DashboardAutomobilesMiscController extends CrudController {
 			} //No else here in case the user is duplicating items
 			
 		
-		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
 		} else if ($result == 'error') {
 			$this->set('error', $error); //C5 automagically displays these errors for us in the view
@@ -295,8 +293,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 		}
 		
 		//now populate data that is the same regardless of the action taken...
-		//if duplicating data, force this to be empty
-		$this->set('id', ($_POST['duplicate'] ? null:$id));
+		$this->set('id', $id);
 		
 		$this->set('country_options', array(
 			'' => '&lt;Choose One&gt;',

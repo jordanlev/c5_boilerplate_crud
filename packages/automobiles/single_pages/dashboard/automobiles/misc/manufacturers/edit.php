@@ -44,7 +44,6 @@ $action = $is_new ? $this->action('manufacturers_add') : $this->action('manufact
 		</div>
 		
 		<div class="ccm-pane-footer">
-			<?=$form->submit('duplicate','Save & Duplicate',array('class'=>'ccm-button-v2-right'))?>
 			<?=$form->submit('add-new','Save & Add New',array('class'=>'ccm-button-v2-right'))?>
 			<?=$form->submit('save','Save',array('class'=>'ccm-button-v2-right primary'))?>
 			<?=$ih->button('Cancel', $this->action('manufacturers_list'), 'left')?>

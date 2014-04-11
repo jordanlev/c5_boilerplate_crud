@@ -60,6 +60,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 				$this->set('colors', ColorModel::factory()->getAllWithCar($id)); //populate the 'colors' checkbox list with previous choices checked
 			}		
 		
+		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
 		} else if ($result == 'error') {
 			$this->set('error', $error); //C5 automagically displays these errors for us in the view
@@ -98,8 +99,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 		}
 		
 		//now populate data that is the same regardless of the action taken...
-		//if duplicating data, force this to be empty
-		$this->set('id', ($_POST['duplicate'] ? null: $id));
+		$this->set('id', $id);
 		$this->set('body_type_options', BodyTypeModel::factory()->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
 		$this->set('manufacturer_options', ManufacturerModel::factory()->getSelectOptions(array(0 => '&lt;Choose One&gt;')));
 		$this->set('currency_symbol', Package::getByHandle('automobiles')->config('currency_symbol'));

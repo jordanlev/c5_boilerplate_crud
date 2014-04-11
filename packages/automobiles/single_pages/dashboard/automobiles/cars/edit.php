@@ -103,7 +103,6 @@ $action = $is_new ? $this->action('add', $body_type_id) : $this->action('edit', 
 		</div>
 		
 		<div class="ccm-pane-footer">
-			<?=$form->submit('duplicate','Save & Duplicate',array('class'=>'ccm-button-v2-right'))?>
 			<?=$form->submit('add-new','Save & Add New',array('class'=>'ccm-button-v2-right'))?>
 			<?=$form->submit('save','Save',array('class'=>'ccm-button-v2-right primary'))?>
 			<?=$ih->button(t('Cancel'), $this->action("view?body_type={$body_type_id}"), 'left')?>
