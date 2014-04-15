@@ -28,6 +28,7 @@ $form = Loader::helper('form');
 		$table->addColumn('name', 'Name');
 		
 		$table->addAction('edit', 'right', 'Edit', 'icon-pencil');
+		$table->addAction('duplicate', 'right', 'Duplicate', 'icon-share-alt');
 		$table->addAction('delete', 'right', 'Delete', 'icon-trash');
 		
 		$table->display($cars);

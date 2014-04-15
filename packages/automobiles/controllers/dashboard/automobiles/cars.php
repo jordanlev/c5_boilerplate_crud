@@ -30,7 +30,14 @@ class DashboardAutomobilesCarsController extends CrudController {
 		$this->edit(null, $body_type_id);
 	}
 	
-	public function edit($id = null, $parent_id = null) { //2nd arg is for adding new records only
+	public function duplicate($duplicate_id) {
+		if (empty($duplicate_id) || !intval($duplicate_id)) {
+			$this->render404AndExit();
+		}
+		$this->edit(null, null, $duplicate_id);
+	}
+	
+	public function edit($id = null, $parent_id = null, $duplicate_id = null) { //2nd arg is for adding new records only, 3rd arg is for duplicating existing records only
 		$model = CarModel::factory();
 		
 		//This function serves several purposes:
@@ -44,7 +51,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 			$error = $model->validate($_POST);
 			$result = $error->has() ? 'error' : 'success';
 		} else {
-			$result = empty($id) ? 'add' : 'edit';
+			$result = (empty($id) && empty($duplicate_id)) ? 'add' : 'edit';
 		}
 		
 		
@@ -80,9 +87,10 @@ class DashboardAutomobilesCarsController extends CrudController {
 			$this->set('colors', ColorModel::factory()->getAll()); //populate the 'colors' checkbox list with nothing checked
 		
 		
-		//form was not submitted, user wants to edit an existing record -- populate form fields with db data...
+		//form was not submitted, user wants to edit or duplicate an existing record -- populate form fields with db data...
 		} else if ($result == 'edit') {
-			$record = $model->getById($id);
+			$retrieve_id = empty($duplicate_id) ? $id : $duplicate_id;
+			$record = $model->getById($retrieve_id);
 			if (!$record) {
 				$this->render404AndExit();
 			}

@@ -34,7 +34,14 @@ class DashboardAutomobilesMiscController extends CrudController {
 		$this->body_types_edit(null);
 	}
 	
-	public function body_types_edit($id = null) {
+	public function body_types_duplicate($duplicate_id) {
+		if (empty($duplicate_id) || !intval($duplicate_id)) {
+			$this->render404AndExit();
+		}
+		$this->body_types_edit(null, $duplicate_id);
+	}
+	
+	public function body_types_edit($id = null, $duplicate_id = null) { //2nd arg is for duplicating existing records only
 		$model = BodyTypeModel::factory();
 		
 		//This function serves several purposes:
@@ -48,7 +55,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 			$error = $model->validate($_POST);
 			$result = $error->has() ? 'error' : 'success';
 		} else {
-			$result = empty($id) ? 'add' : 'edit';
+			$result = (empty($id) && empty($duplicate_id)) ? 'add' : 'edit';
 		}
 		
 		
@@ -76,9 +83,10 @@ class DashboardAutomobilesMiscController extends CrudController {
 			//[nothing needs to be done here]
 		
 		
-		//form was not submitted, user wants to edit an existing record -- populate form fields with db data...
+		//form was not submitted, user wants to edit or duplicate an existing record -- populate form fields with db data...
 		} else if ($result == 'edit') {
-			$record = $model->getById($id);
+			$retrieve_id = empty($duplicate_id) ? $id : $duplicate_id;
+			$record = $model->getById($retrieve_id);
 			if (!$record) {
 				$this->render404AndExit();
 			}
@@ -135,7 +143,14 @@ class DashboardAutomobilesMiscController extends CrudController {
 		$this->colors_edit(null);
 	}
 	
-	public function colors_edit($id = null) {
+	public function colors_duplicate($duplicate_id) {
+		if (empty($duplicate_id) || !intval($duplicate_id)) {
+			$this->render404AndExit();
+		}
+		$this->colors_edit(null, $duplicate_id);
+	}
+	
+	public function colors_edit($id = null, $duplicate_id = null) { //2nd arg is for duplicating existing records only
 		$model = ColorModel::factory();
 		
 		//This function serves several purposes:
@@ -149,7 +164,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 			$error = $model->validate($_POST);
 			$result = $error->has() ? 'error' : 'success';
 		} else {
-			$result = empty($id) ? 'add' : 'edit';
+			$result = (empty($id) && empty($duplicate_id)) ? 'add' : 'edit';
 		}
 		
 		
@@ -177,9 +192,10 @@ class DashboardAutomobilesMiscController extends CrudController {
 			//[nothing needs to be done here]
 		
 		
-		//form was not submitted, user wants to edit an existing record -- populate form fields with db data...
+		//form was not submitted, user wants to edit or duplicate an existing record -- populate form fields with db data...
 		} else if ($result == 'edit') {
-			$record = $model->getById($id);
+			$retrieve_id = empty($duplicate_id) ? $id : $duplicate_id;
+			$record = $model->getById($retrieve_id);
 			if (!$record) {
 				$this->render404AndExit();
 			}
@@ -228,7 +244,14 @@ class DashboardAutomobilesMiscController extends CrudController {
 		$this->manufacturers_edit(null);
 	}
 	
-	public function manufacturers_edit($id = null) {
+	public function manufacturers_duplicate($duplicate_id) {
+		if (empty($duplicate_id) || !intval($duplicate_id)) {
+			$this->render404AndExit();
+		}
+		$this->manufacturers_edit(null, $duplicate_id);
+	}
+	
+	public function manufacturers_edit($id = null, $duplicate_id = null) { //2nd arg is for duplicating existing records only
 		$model = ManufacturerModel::factory();
 		
 		//This function serves several purposes:
@@ -242,7 +265,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 			$error = $model->validate($_POST);
 			$result = $error->has() ? 'error' : 'success';
 		} else {
-			$result = empty($id) ? 'add' : 'edit';
+			$result = (empty($id) && empty($duplicate_id)) ? 'add' : 'edit';
 		}
 		
 		
@@ -270,9 +293,10 @@ class DashboardAutomobilesMiscController extends CrudController {
 			//[nothing needs to be done here]
 		
 		
-		//form was not submitted, user wants to edit an existing record -- populate form fields with db data...
+		//form was not submitted, user wants to edit or duplicate an existing record -- populate form fields with db data...
 		} else if ($result == 'edit') {
-			$record = $model->getById($id);
+			$retrieve_id = empty($duplicate_id) ? $id : $duplicate_id;
+			$record = $model->getById($retrieve_id);
 			if (!$record) {
 				$this->render404AndExit();
 			}

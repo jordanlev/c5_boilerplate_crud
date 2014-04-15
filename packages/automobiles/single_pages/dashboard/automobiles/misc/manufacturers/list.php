@@ -11,6 +11,7 @@ echo $dh->getDashboardPaneHeaderWrapper('Manufacturers', false, 'span8 offset2')
 	$table->addColumn('country', 'Country');
 	$table->addColumn('is_luxury', 'Luxury Brand?');
 	$table->addAction('manufacturers_edit', 'right', 'Edit', 'icon-pencil');
+	$table->addAction('manufacturers_duplicate', 'right', 'Duplicate', 'icon-share-alt');
 	$table->addAction('manufacturers_delete', 'right', 'Delete', 'icon-trash');
 	//Reformat boolean column to show "yes" or "no" instead of "1" or "0"
 	foreach ($manufacturers as $key => $mfg) {

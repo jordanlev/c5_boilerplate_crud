@@ -10,6 +10,7 @@ echo $dh->getDashboardPaneHeaderWrapper('Body Types', false, 'span6 offset3');
 	$table->addColumn('name');
 	$table->addAction('body_types_sort', 'left', 'Drag To Sort', 'icon-resize-vertical', true);
 	$table->addAction('body_types_edit', 'right', 'Edit', 'icon-pencil');
+	$table->addAction('body_types_duplicate', 'right', 'Duplicate', 'icon-share-alt');
 	$table->addAction('body_types_delete', 'right', 'Delete', 'icon-trash');
 	$table->display($body_types);
 	

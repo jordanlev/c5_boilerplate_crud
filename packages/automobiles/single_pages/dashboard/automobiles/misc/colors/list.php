@@ -9,6 +9,7 @@ echo $dh->getDashboardPaneHeaderWrapper('Colors', false, 'span6 offset3');
 	$table = new CrudDisplayTable($this);
 	$table->addColumn('name');
 	$table->addAction('colors_edit', 'right', 'Edit', 'icon-pencil');
+	$table->addAction('colors_duplicate', 'right', 'Duplicate', 'icon-share-alt');
 	$table->addAction('colors_delete', 'right', 'Delete', 'icon-trash');
 	$table->display($colors);
 	
