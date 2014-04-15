@@ -6,11 +6,6 @@ class ManufacturerModel extends BasicCRUDModel {
 	protected $table = 'automobile_manufacturers';
 	protected $order = 'name';
 	
-	//use this for one-off's to reduce a line of code -- e.g. ManufacturerModel::factory()->getAll()
-	public static function factory() {
-		return new ManufacturerModel;
-	}
-	
 	public function getSelectOptions($header_item = array()) {
 		return $this->selectOptionsFromArray($this->getAll(), 'id', 'name', $header_item);
 	}
