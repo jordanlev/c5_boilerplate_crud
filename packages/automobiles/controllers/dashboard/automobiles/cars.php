@@ -59,7 +59,13 @@ class DashboardAutomobilesCarsController extends CrudController {
 		if ($result == 'success') {
 			$id = $model->save($_POST);
 			$this->flash('Car Saved!');
+			if($_POST['save']) { //only redirect to list if save is clicked
 			$this->redirect("view?body_type={$_POST['body_type_id']}");
+			} elseif ($_POST['add-new']) {
+				$this->redirect("add/{$_POST['body_type_id']}");
+			} elseif ($_POST['duplicate']) { //sets colors for duplicated item, but continues script
+				$this->set('colors', ColorModel::factory()->getAllWithCar($id)); //populate the 'colors' checkbox list with previous choices checked
+			}		
 		
 		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...

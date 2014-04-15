@@ -63,7 +63,11 @@ class DashboardAutomobilesMiscController extends CrudController {
 		if ($result == 'success') {
 			$id = $model->save($_POST);
 			$this->flash('Body Type Saved!');
+			if($_POST['save']) { //only redirect to list if save is clicked
 			$this->redirect('body_types_list');
+			} elseif ($_POST['add-new']) {
+				$this->redirect('body_types_add');
+			}
 		
 		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
@@ -172,7 +176,11 @@ class DashboardAutomobilesMiscController extends CrudController {
 		if ($result == 'success') {
 			$id = $model->save($_POST);
 			$this->flash('Color Saved!');
+			if($_POST['save']) { //only redirect to list if save is clicked
 			$this->redirect('colors_list');
+			} elseif ($_POST['add-new']) {
+				$this->redirect('color_add');
+			} //No else here in case the user is duplicating items
 		
 		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
@@ -273,7 +281,11 @@ class DashboardAutomobilesMiscController extends CrudController {
 		if ($result == 'success') {
 			$id = $model->save($_POST);
 			$this->flash('Manufacturer Saved!');
+			if($_POST['save']) { //only redirect to list if save is clicked
 			$this->redirect('manufacturers_list');
+			} elseif ($_POST['add-new']) {
+				$this->redirect('manufacturer_add');
+			} //No else here in case the user is duplicating items
 		
 		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
