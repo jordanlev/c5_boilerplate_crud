@@ -103,7 +103,7 @@ class DashboardAutomobilesCarsController extends CrudController {
 			
 			$this->setArray($record); //sets variables for every field in $record
 			
-			$this->set('colors', ColorModel::factory()->getAllWithCar($id)); //populate the 'colors' checkbox list with saved choices checked
+			$this->set('colors', ColorModel::factory()->getAllWithCar($retrieve_id)); //populate the 'colors' checkbox list with saved choices checked
 		}
 		
 		//now populate data that is the same regardless of the action taken...
