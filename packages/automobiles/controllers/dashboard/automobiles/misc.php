@@ -62,7 +62,9 @@ class DashboardAutomobilesMiscController extends CrudController {
 		//form was submitted and data is valid -- save to db and redirect...
 		if ($result == 'success') {
 			$id = $model->save($_POST);
+			
 			$this->flash('Body Type Saved!');
+			
 			if (!empty($_POST['save-and-add'])) {
 				$this->redirect('body_types_add');
 			} else if (!empty($_POST['save-and-duplicate'])) {
@@ -177,7 +179,9 @@ class DashboardAutomobilesMiscController extends CrudController {
 		//form was submitted and data is valid -- save to db and redirect...
 		if ($result == 'success') {
 			$id = $model->save($_POST);
+			
 			$this->flash('Color Saved!');
+			
 			if (!empty($_POST['save-and-add'])) {
 				$this->redirect('colors_add');
 			} else if (!empty($_POST['save-and-duplicate'])) {
@@ -284,7 +288,9 @@ class DashboardAutomobilesMiscController extends CrudController {
 		//form was submitted and data is valid -- save to db and redirect...
 		if ($result == 'success') {
 			$id = $model->save($_POST);
+			
 			$this->flash('Manufacturer Saved!');
+			
 			if (!empty($_POST['save-and-add'])) {
 				$this->redirect('manufacturers_add');
 			} else if (!empty($_POST['save-and-duplicate'])) {
