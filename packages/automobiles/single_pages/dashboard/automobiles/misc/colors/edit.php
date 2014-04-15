@@ -26,6 +26,10 @@ $action = $is_new ? $this->action('colors_add') : $this->action('colors_edit', (
 		
 		<div class="ccm-pane-footer">
 			<?=$ih->submit('Save', false, 'right', 'primary')?>
+			<?php if ($is_new): ?>
+				<?=$form->submit('save-and-duplicate', 'Save &amp; Duplicate&hellip;', array('class' => 'ccm-button-v2-right'))?>
+				<?=$form->submit('save-and-add', 'Save &amp; Add New&hellip;', array('class' => 'ccm-button-v2-right'))?>
+			<?php endif; ?>
 			<?=$ih->button('Cancel', $this->action('colors_list'), 'left')?>
 		</div>
 	</form>

@@ -63,7 +63,13 @@ class DashboardAutomobilesMiscController extends CrudController {
 		if ($result == 'success') {
 			$id = $model->save($_POST);
 			$this->flash('Body Type Saved!');
-			$this->redirect('body_types_list');
+			if (!empty($_POST['save-and-add'])) {
+				$this->redirect('body_types_add');
+			} else if (!empty($_POST['save-and-duplicate'])) {
+				$this->redirect('body_types_duplicate', $id);
+			} else {
+				$this->redirect('body_types_list');
+			}
 		
 		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
@@ -172,7 +178,13 @@ class DashboardAutomobilesMiscController extends CrudController {
 		if ($result == 'success') {
 			$id = $model->save($_POST);
 			$this->flash('Color Saved!');
-			$this->redirect('colors_list');
+			if (!empty($_POST['save-and-add'])) {
+				$this->redirect('colors_add');
+			} else if (!empty($_POST['save-and-duplicate'])) {
+				$this->redirect('colors_duplicate', $id);
+			} else {
+				$this->redirect('colors_list');
+			}
 		
 		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...
@@ -273,7 +285,13 @@ class DashboardAutomobilesMiscController extends CrudController {
 		if ($result == 'success') {
 			$id = $model->save($_POST);
 			$this->flash('Manufacturer Saved!');
-			$this->redirect('manufacturers_list');
+			if (!empty($_POST['save-and-add'])) {
+				$this->redirect('manufacturers_add');
+			} else if (!empty($_POST['save-and-duplicate'])) {
+				$this->redirect('manufacturers_duplicate', $id);
+			} else {
+				$this->redirect('manufacturers_list');
+			}
 		
 		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...

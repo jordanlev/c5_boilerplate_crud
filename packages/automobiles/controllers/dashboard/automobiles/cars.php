@@ -59,7 +59,13 @@ class DashboardAutomobilesCarsController extends CrudController {
 		if ($result == 'success') {
 			$id = $model->save($_POST);
 			$this->flash('Car Saved!');
-			$this->redirect("view?body_type={$_POST['body_type_id']}");
+			if (!empty($_POST['save-and-add'])) {
+				$this->redirect('add', $_POST['body_type_id']);
+			} else if (!empty($_POST['save-and-duplicate'])) {
+				$this->redirect('duplicate', $id);
+			} else {
+				$this->redirect("view?body_type={$_POST['body_type_id']}");
+			}
 		
 		
 		//form was submitted with invalid data -- display errors and repopulate form fields with user's submitted data...

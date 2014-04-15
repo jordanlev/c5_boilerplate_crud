@@ -32,6 +32,10 @@ $action = $is_new ? $this->action('body_types_add') : $this->action('body_types_
 		
 		<div class="ccm-pane-footer">
 			<?=$ih->submit('Save', false, 'right', 'primary')?>
+			<?php if ($is_new): ?>
+				<?=$form->submit('save-and-duplicate', 'Save &amp; Duplicate&hellip;', array('class' => 'ccm-button-v2-right'))?>
+				<?=$form->submit('save-and-add', 'Save &amp; Add New&hellip;', array('class' => 'ccm-button-v2-right'))?>
+			<?php endif; ?>
 			<?=$ih->button('Cancel', $this->action('body_types_list'), 'left')?>
 		</div>
 	</form>
