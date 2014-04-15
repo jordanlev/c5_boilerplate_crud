@@ -38,6 +38,15 @@ class BasicCRUDModel {
 		}
 	}
 	
+	//use this for one-off's to reduce a line of code -- e.g. BodyTypeModel::factory()->getAll()
+	//If you are using a version of php < 5.3.0, this needs to be overrided in each model like this:
+	//	public static function factory() {
+	//		return new BodyTypeModel;
+	//	}
+	public static function factory() {
+		return new static;
+	}
+	
 	public function getAll() {
 		$sql = "SELECT * FROM {$this->table} ORDER BY {$this->order}";
 		return $this->db->GetArray($sql);

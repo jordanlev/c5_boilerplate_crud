@@ -6,11 +6,6 @@ class ColorModel extends BasicCRUDModel {
 	protected $table = 'automobile_colors';
 	protected $order = 'name';
 	
-	//use this for one-off's to reduce a line of code -- e.g. ColorModel::factory()->getAll()
-	public static function factory() {
-		return new ColorModel;
-	}
-	
 	//returns *all* color records, with an additional column called 'has'
 	// that denotes if the given car has the color or not
 	public function getAllWithCar($car_id) {

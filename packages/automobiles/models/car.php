@@ -6,11 +6,6 @@ class CarModel extends BasicCRUDModel {
 	protected $table = 'automobile_cars';
 	protected $order = 'name';
 	
-	//use this for one-off's to reduce a line of code -- e.g. CarModel::factory()->getAll()
-	public static function factory() {
-		return new CarModel;
-	}
-	
 	public function getById($id) {
 		$sql = "SELECT car.*, body_type.name AS body_type_name, manufacturer.name AS manufacturer_name"
 		     . " FROM {$this->table} car"
