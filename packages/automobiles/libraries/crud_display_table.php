@@ -19,6 +19,10 @@ class CrudDisplayTable {
 		$this->view =& $c5_view_object;
 	}
 	
+	public function setIDField($id_field){
+		$this->id_field_name = $id_field;
+	}
+	
 	public function addColumn($field, $label = '', $escape_output = true) {
 		$this->columns[$field] = array(
 			'label' => $label,
