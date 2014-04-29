@@ -86,7 +86,7 @@ class BasicCRUDModel {
 	}
 	
 	protected function isNewRecord($post) {
-		$id = isset($post[$this->pkid]) ? intval($post[$this->pkid]) : 0;
+		$id = isset($post['id']) ? intval($post['id']) : 0;
 		return ($id == 0);
 	}
 	
