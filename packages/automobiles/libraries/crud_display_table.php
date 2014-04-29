@@ -12,11 +12,12 @@ class CrudDisplayTable {
 	private $columns = array();
 	private $actions = array();
 	private $sort_action_key = null;
-	private $id_field_name = 'id';
+	private $id_field_name; //will be set in the constructor (or defaults to 'id')
 	private $has_table_header = false; //if all columns have an empty "label", then don't output the table header row
 	
-	public function __construct(&$c5_view_object) {
+	public function __construct(&$c5_view_object, $id_field_name = 'id') {
 		$this->view =& $c5_view_object;
+		$this->id_field_name = $id_field_name;
 	}
 	
 	public function addColumn($field, $label = '', $escape_output = true) {
@@ -49,11 +50,6 @@ class CrudDisplayTable {
 		if ($is_sort_action) {
 			$this->sort_action_key = $action;
 		}
-	}
-	
-	//if the name of the id field is something other than 'id', set that here
-	public function overrideIdFieldName($field) {
-		$this->id_field_name = $field;
 	}
 	
 	public function display($records) {
