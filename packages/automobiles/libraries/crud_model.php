@@ -69,11 +69,19 @@ class BasicCRUDModel {
 	}
 	
 	//Saves a record in the database using data from the provided $post array.
-	// The $post array must have our "pkid" field name as an item key
+	//The $post array must have our "pkid" field name as an item key
 	// (if its value is empty we INSERT, otherwise we UPDATE the record having that id).
+	//Note that to avoid potential security issues, you should never blindly save POST'ed
+	// data to the database. (See http://en.wikipedia.org/wiki/Mass_assignment_vulnerability).
+	// To avoid this problem, we will "whitelist" the given $post data against the fields
+	// that are defined for this table. But if you need to save data that comes from
+	// somewhere other than $_POST (and hence you don't want the whitelist to strip away
+	// those values), you can override the whitelist by passing false for the 2nd arg.
+	// CAUTION: If you do this, it is critical that you do your own "whitelisting" by explicitly
+	// setting the desired fields in the $post array (do not just blindly copy $_POST)!
 	//Returns the id of the inserted/updated record.
-	public function save($post) {
-		$record = $this->recordFromPost($post);
+	public function save($post, $auto_whitelist = true) {
+		$record = $auto_whitelist ? $this->recordFromPost($post) : $post;
 		
 		if ($this->isNewRecord($post)) {
 			$this->db->AutoExecute($this->table, $record, 'INSERT');
@@ -90,7 +98,7 @@ class BasicCRUDModel {
 		return ($id == 0);
 	}
 	
-	private function recordFromPost($post) {
+	protected function recordFromPost($post) {
 		$record = array();
 		foreach ($this->fields as $field) {
 			$val = array_key_exists($field, $post) ? $post[$field] : null;
@@ -161,7 +169,7 @@ class SortableCRUDModel extends BasicCRUDModel {
 	protected $order = 'display_order'; //display order field name (must be an INT)
 	protected $segment = ''; //optional field name of a foreign key that we'll segment display orders by
 	
-	public function save($post) {
+	public function save($post, $auto_whitelist = true) {
 		if ($this->isNewRecord($post)) {
 			//Add new records at the end of the display order
 			$segment_id = $this->segment ? $post[$this->segment] : null;
@@ -172,7 +180,7 @@ class SortableCRUDModel extends BasicCRUDModel {
 			$this->fields = array_diff($this->fields, array($this->order));
 		}
 		
-		return parent::save($post);
+		return parent::save($post, $auto_whitelist);
 	}
 	
 	private function maxDisplayOrder($segment_id = null) {
