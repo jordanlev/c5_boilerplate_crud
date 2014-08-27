@@ -124,6 +124,11 @@ class DashboardAutomobilesMiscController extends CrudController {
 		
 		$model = BodyTypeModel::factory();
 		
+		$record = $model->getById($id);
+		if (!$record) {
+			$this->render404AndExit();
+		}
+		
 		if ($model->hasChildren($id)) {
 			$this->set('error', 'This body type cannot be deleted because one or more cars is assigned to it.');
 			$this->set('disabled', true);
@@ -133,7 +138,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 			$this->redirect('body_types_list');
 		}
 		
-		$this->setArray($model->getById($id));
+		$this->setArray($record);
 		
 		$this->render('body_types/delete');
 	}
@@ -233,6 +238,11 @@ class DashboardAutomobilesMiscController extends CrudController {
 		
 		$model = ColorModel::factory();
 		
+		$record = $model->getById($id);
+		if (!$record) {
+			$this->render404AndExit();
+		}
+		
 		if ($model->hasChildren($id)) {
 			$this->set('error', 'This color cannot be deleted because it is assigned to one or more cars.');
 			$this->set('disabled', true);
@@ -242,7 +252,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 			$this->redirect('colors_list');
 		}
 		
-		$this->setArray($model->getById($id));
+		$this->setArray($record);
 		
 		$this->render('colors/delete');
 	}
@@ -351,6 +361,11 @@ class DashboardAutomobilesMiscController extends CrudController {
 		
 		$model = ManufacturerModel::factory();
 		
+		$record = $model->getById($id);
+		if (!$record) {
+			$this->render404AndExit();
+		}
+		
 		if ($model->hasChildren($id)) {
 			$this->set('error', 'This manufacturer cannot be deleted because it has one or more cars.');
 			$this->set('disabled', true);
@@ -360,7 +375,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 			$this->redirect('manufacturers_list');
 		}
 		
-		$this->setArray($model->getById($id));
+		$this->setArray($record;
 		
 		$this->render('manufacturers/delete');
 	}
