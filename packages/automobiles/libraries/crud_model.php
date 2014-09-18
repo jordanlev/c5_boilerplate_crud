@@ -48,6 +48,18 @@ class BasicCRUDModel {
 		$vals = array((int)$id);
 		return $this->db->GetRow($sql, $vals);
 	}
+
+	public function getColumnNames() {
+		$sql = "DESCRIBE {$this->table}";
+		$descriptions = $this->db->getArray($sql);
+		unset($descriptions[0]); // Drop the ID field
+
+		foreach($descriptions as $desc) {
+			$columns[] = $desc['Field'];
+		}
+		
+		return $columns;
+	}
 	
 	public function exists($id) {
 		$sql = "SELECT COUNT(*) FROM {$this->table} WHERE {$this->pkid} = ?";
