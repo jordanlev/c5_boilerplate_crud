@@ -13,20 +13,20 @@
 
 
 class BasicCRUDModel {
-	
+
 	protected $table = '';
 	protected $pkid = 'id'; //primary key id field name
 	protected $fields = array(); //all other field names (including foreign keys)
 	protected $db = null;
 	protected $order = 'id'; //you probably want to override this with a 'name' or 'title' field -- UNLESS using SortableCRUDModel (which defaults this to an explicit `display_order` field)
-	
+
 	public function __construct() {
 		if (empty($this->table)) {
 			throw new Exception('BasicCRUDModel class error: table not set!');
 		}
-		
+
 		$this->db = Loader::db();
-		
+
 		//Auto-populate field names if not explicitly set already
 		if (empty($this->fields)) {
 			$cols = $this->db->MetaColumns($this->table);
@@ -37,12 +37,12 @@ class BasicCRUDModel {
 			}
 		}
 	}
-	
+
 	public function getAll() {
 		$sql = "SELECT * FROM {$this->table} ORDER BY {$this->order}";
 		return $this->db->GetArray($sql);
 	}
-	
+
 	public function getById($id) {
 		$sql = "SELECT * FROM {$this->table} WHERE {$this->pkid} = ? LIMIT 1";
 		$vals = array((int)$id);
@@ -50,36 +50,31 @@ class BasicCRUDModel {
 	}
 
 	public function getColumnNames() {
-		$sql = "DESCRIBE {$this->table}";
-		$descriptions = $this->db->getArray($sql);
-		unset($descriptions[0]); // Drop the ID field
+		$descriptions = $this->db->MetaColumns($this->table);
+		unset($descriptions['ID']); // Drop the ID field
 
-		foreach($descriptions as $desc) {
-			$columns[] = $desc['Field'];
-		}
-		
-		return $columns;
+		return array_keys($descriptions);
 	}
-	
+
 	public function exists($id) {
 		$sql = "SELECT COUNT(*) FROM {$this->table} WHERE {$this->pkid} = ?";
 		$vals = array((int)$id);
 		return (bool)$this->db->GetOne($sql, $vals);
 	}
-	
+
 	public function delete($id) {
 		$sql = "DELETE FROM {$this->table} WHERE {$this->pkid} = ?";
 		$vals = array((int)$id);
 		$this->db->Execute($sql, $vals);
 	}
-	
+
 	public function validate(&$post) {
 		//This method should always be over-ridden.
 		//Note that we don't bother calling add_standard_rules() here
 		// because we don't know what the labels should be or which fields to ignore.
 		return Loader::helper('validation/error');
 	}
-	
+
 	//Saves a record in the database using data from the provided $post array.
 	//The $post array must have our "pkid" field name as an item key
 	// (if its value is empty we INSERT, otherwise we UPDATE the record having that id).
@@ -94,7 +89,7 @@ class BasicCRUDModel {
 	//Returns the id of the inserted/updated record.
 	public function save($post, $auto_whitelist = true) {
 		$record = $auto_whitelist ? $this->recordFromPost($post) : $post;
-		
+
 		if ($this->isNewRecord($post)) {
 			$this->db->AutoExecute($this->table, $record, 'INSERT');
 			return $this->db->Insert_ID();
@@ -104,12 +99,12 @@ class BasicCRUDModel {
 			return $id;
 		}
 	}
-	
+
 	protected function isNewRecord($post) {
 		$id = isset($post[$this->pkid]) ? intval($post[$this->pkid]) : 0;
 		return ($id == 0);
 	}
-	
+
 	protected function recordFromPost($post) {
 		$record = array();
 		foreach ($this->fields as $field) {
@@ -119,7 +114,7 @@ class BasicCRUDModel {
 		}
 		return $record;
 	}
-	
+
 	public static function selectOptionsFromArray($arr, $keyField, $valField, $headerItem = array()) {
 		$options = $headerItem; //e.g. array(0 => 'Choose One')
 		foreach ($arr as $item) {
@@ -127,7 +122,7 @@ class BasicCRUDModel {
 		}
 		return $options;
 	}
-	
+
 	//Calls add_rule() on the given KohanaValidation object for a variety of "standard" rules.
 	//We will only add rules for fields that exist in the given $fields_and_labels array,
 	// which should have keys of field names and values of human-readable labels (for error messages).
@@ -146,19 +141,19 @@ class BasicCRUDModel {
 				$field = $col->name;
 				$label = $fields_and_labels[$field];
 				$type = $col->type;
-				
+
 				if ($col->not_null) {
 					$v->add_rule($field, 'required', "{$label} is required.");
 				}
-				
+
 				if ($type == 'varchar') {
 					$v->add_rule($field, "length[0,{$col->max_length}]", "{$label} cannot exceed {$col->max_length} characters in length.");
 				}
-				
+
 				if ($type == 'float') {
 					$v->add_rule($field, 'numeric', "{$label} must be a number.");
 				}
-				
+
 				if ($type == 'int') {
 					$v->add_rule($field, 'digit', "{$label} must be a whole number.");
 					if ($col->unsigned) {
@@ -177,10 +172,10 @@ class BasicCRUDModel {
 
 //Extends the basic crud model with functionality for a display order field.
 class SortableCRUDModel extends BasicCRUDModel {
-	
+
 	protected $order = 'display_order'; //display order field name (must be an INT)
 	protected $segment = ''; //optional field name of a foreign key that we'll segment display orders by
-	
+
 	public function save($post, $auto_whitelist = true) {
 		if ($this->isNewRecord($post)) {
 			//Add new records at the end of the display order
@@ -191,24 +186,24 @@ class SortableCRUDModel extends BasicCRUDModel {
 			// so existing value doesn't get null'ed by recordFromPost().
 			$this->fields = array_diff($this->fields, array($this->order));
 		}
-		
+
 		return parent::save($post, $auto_whitelist);
 	}
-	
+
 	private function maxDisplayOrder($segment_id = null) {
 		$sql = "SELECT MAX({$this->order}) FROM {$this->table}";
 		$sql .= $segment_id ? " WHERE {$this->segment} = " . intval($segment_id) : '';
 		$max = $this->db->GetOne($sql);
 		return intval($max);
 	}
-	
+
 	public function getAll($segment_id = null) {
 		$sql = "SELECT * FROM {$this->table}";
 		$sql .= $segment_id ? " WHERE {$this->segment} = " . intval($segment_id) : '';
 		$sql .= " ORDER BY {$this->order}";
 		return $this->db->GetArray($sql);
 	}
-	
+
 	//Pass in an array of id's, in the order you want those records to be.
 	//Optionally pass in the "segment id" (if sorting only a subset of the table).
 	//The given $ids array should contain ALL id's for the table (or segment)
@@ -218,9 +213,9 @@ class SortableCRUDModel extends BasicCRUDModel {
 		$sql = "UPDATE {$this->table} SET {$this->order} = 0";
 		$sql .= $segment_id ? " WHERE {$this->segment} = " . intval($segment_id) : '';
 		$this->db->Execute($sql);
-		
+
 		$next_display_order = $this->setPartialDisplayOrder($ids, 1, $segment_id);
-		
+
 		//Now move all the ones we didn't have an id for to the end
 		$sql = "SELECT {$this->pkid} FROM {$this->table} WHERE {$this->order} = 0";
 		$sql .= $segment_id ? " AND {$this->segment} = " . intval($segment_id) : '';
