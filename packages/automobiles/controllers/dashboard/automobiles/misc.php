@@ -375,7 +375,7 @@ class DashboardAutomobilesMiscController extends CrudController {
 			$this->redirect('manufacturers_list');
 		}
 		
-		$this->setArray($record;
+		$this->setArray($record);
 		
 		$this->render('manufacturers/delete');
 	}
