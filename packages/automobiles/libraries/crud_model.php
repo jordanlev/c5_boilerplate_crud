@@ -111,7 +111,7 @@ class BasicCRUDModel {
 	public static function selectOptionsFromArray($arr, $keyField, $valField, $headerItem = array()) {
 		$options = $headerItem; //e.g. array(0 => 'Choose One')
 		foreach ($arr as $item) {
-			$options[$item[$keyField]] = h($item[$valField], ENT_QUOTES, APP_CHARSET);
+			$options[$item[$keyField]] = h($item[$valField]);
 		}
 		return $options;
 	}
